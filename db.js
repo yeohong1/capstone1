@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
-    host: '127.0.0.1',
+    host: 'localhost',
     user: 'root',
     password: 'pqlamz31',
     port: 3306,
@@ -9,14 +9,7 @@ const connection = mysql.createConnection({
 });
 
 
-// 연결 열기
-connection.connect((err) => {
-    if (err) {
-        console.error('Error connecting to MySQL:', err);
-        return;
-    }
-    console.log('Connected to MySQL');
-});
+
 
 function get_connection() {
     return connection;
