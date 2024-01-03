@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang='utf-8'>
+    <meta charset="utf-8">
+    <head>
+        <title>register</title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <div class="container mt-4">
+            <div class="card" style="width: 18rem;">            
+                <div class="card-header">Login Form</div>    
+                <div class="card-body">
+                    <form action="/auth/login_process" method="POST">
+                        <div class="mb-3">
+                            <label for="name-lgn" class="form-label">ID</label>
+                            <input type="text" class="login" name="username">                        
+                        </div> 
+                                                            
+                        <div class="mb-3">
+                            <label for="password-lgn" class="form-label">Password</label>
+                            <input type="password" class="login" name="pwd">
+                        </div>
+                        
+                        <button type="submit" class="btn">Login</button>
+                        <input type="button" value="back" onclick="javascript:location.href='/'">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
