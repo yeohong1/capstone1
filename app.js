@@ -6,6 +6,7 @@ var logger = require('morgan');
 const session = require('express-session')//추가
 const FileStore = require('session-file-store')(session)//추가
 var authRouter = require('./routes/auth');//추가//수정
+var mypageRouter = require('./routes/mypage');
 
 const bodyParser = require('body-parser');//추가
 
@@ -27,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/auth', authRouter);//인증라우터 //추가
-
+app.use('/mypage', mypageRouter);//인증라우터
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,7 +36,19 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(cookieParser());
+
+
+// 정적 파일 제공을 위한 미들웨어 설정
 app.use(express.static(path.join(__dirname, 'public')));
+
+// "/mypage" 경로로 접근하면 "mypage.html" 파일을 제공
+app.get('/mypage', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'page', 'mypage.html'));
+});
+
+// app.get("/mypage",(req,res)=>{//가상경로로 매칭
+//   res.sendFile(__dirname+"/index.html");
+// })
 
 
 // app.get('/',(req,res)=>{
