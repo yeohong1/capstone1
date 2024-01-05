@@ -50,9 +50,8 @@ section .inner {
 header {
     width: 100%;
     background: #fff;
-    position: relative;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
 }
 
 header .container {
@@ -717,7 +716,8 @@ section .inner h3 {
 /* mypage1.html */
 .menu {
     position: fixed;
-    background-color: #ff8b8b7f;
+    z-index: 1;
+    background-color: #faafaffb;
     width: 100%;
     height: 100px;
     padding-top: 64px;
