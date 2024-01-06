@@ -19,7 +19,7 @@
         <img src="../images/health-logo.png" alt="logo-name" class="logo-name">
         <h1>Healthly Life</h1>
         <nav class="word-menu">
-          <a href="/logout">로그아웃</a>
+          <a href="mypage/logout">로그아웃</a>
         </nav>
       </div>
     </div>
@@ -53,9 +53,11 @@
         <ul class="eat">
           <li>
             <h3>Breakfast</h3><img src="../images/sun.png" alt="sun" class="sun"><br>
-            <textarea rows="1.5" cols="20" placeholder="식단을 입력해주세요"></textarea><br>
-            <input type="file">
-            <button>제출</button><br>
+            <form action="/mypage/getCalories" method="POST">
+              <textarea rows="1.5" cols="20" placeholder="식단을 입력해주세요" id="foodName" name="foodName" required></textarea><br>
+              <input type="file">
+              <button type="submit" class="btn">제출</button><br>
+            </form>
           </li>
           <li>
             <h3>Lunch</h3><img src="../images/lunch.png" alt="lunch" class="lunch"><br>

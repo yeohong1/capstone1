@@ -90,7 +90,7 @@ router.post('/login_process', function (req, res) {
 });
 
 //로그아웃
-router.get('/logout', function (req, res) {
+router.get('mypage/logout', function (req, res) {
     console.log("TEST!");
     if (req.session == null) { 
         res.send(`<script type="text/javascript">alert("로그인 정보가 없습니다."); 

@@ -27,6 +27,9 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 app.use('/auth', authRouter);//인증라우터 //추가
 app.use('/mypage', mypageRouter);//인증라우터
 
@@ -46,20 +49,16 @@ app.get('/mypage', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'page', 'mypage.html'));
 });
 
-// app.get("/mypage",(req,res)=>{//가상경로로 매칭
-//   res.sendFile(__dirname+"/index.html");
-// })
 
-
-// app.get('/',(req,res)=>{
-//   if(!authCheck.isOwner(req,res)){  // 로그인 안되어있으면 로그인 페이지로 이동시킴
-//     res.redirect('/auth/login');//수정 /auth/login->/login
-//     return false;
-//   }else{
-//     res.redirect('/index');//로그인 되어있는 거: 경로수정
-//     return false;
-//   }
-// });
+app.get('/mypage',(req,res)=>{
+  if(!authCheck.isOwner(req,res)){  // 로그인 안되어있으면 로그인 페이지로 이동시킴
+    res.redirect('/auth/login');//수정 /auth/login->/login
+    return false;
+  }else{
+    res.redirect('/mypage');//로그인 되어있는 거: 경로수정
+    return false;
+  }
+});
 
 
 
