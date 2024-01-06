@@ -3,7 +3,7 @@ const knexConfiguration = {
   connection: {
     user: 'test',
     password: 'test',
-    server: '172.30.1.41',
+    server: '172.30.1.80',
     database: 'CODU',
     port: 1433,
   }
