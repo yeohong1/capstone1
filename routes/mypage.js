@@ -2,16 +2,19 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
+const app = express()
+app.use('/static',express.static('static'));
+
 //mypage
 router.get('/mypage', function (req, res, next) {
-    res.render('mypage.html');
+    res.render('mypage.ejs', { caloriesResult: req.session.caloriesResult });
 });
 
 // HTTP 요청 보내기
-router.post('/getCalories', async (req, res) => {
+router.post('/getCalories', async (req, res, next) => {
     try {
         const foodName = req.body.foodName;
-
+console.log(foodName);
         // 인증키
         const apiKey = 'e171d9fac4cc4db0ae29';
         const serviceName = 'I2790';
@@ -35,13 +38,23 @@ router.post('/getCalories', async (req, res) => {
              const calories = result.NUTR_CONT1;
              const foodname = result.DESC_KOR;
              resultString += `${foodname}: ${calories}칼로리\n`;
+             //console.log(resultString);
         });
- 
-        res.send(resultString); // 모든 결과를 클라이언트에 전송
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('Internal Server Error');
-    }
+
+         // 세션에 결과 저장
+         res.locals.caloriesResult = { foodName, resultString };
+         console.log(res.locals.caloriesResult);
+        
+        } catch (error) {
+            console.error('Error:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    });
+
+  // /mypage 라우트 핸들러
+router.get('/mypage', (req, res) => {
+ res.render('mypage.ejs', { caloriesResult: res.locals.caloriesResult });
+console.log(caloriesResult);
 });
 
 module.exports = router;

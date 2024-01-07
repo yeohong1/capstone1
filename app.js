@@ -7,11 +7,8 @@ const session = require('express-session')//추가
 const FileStore = require('session-file-store')(session)//추가
 var authRouter = require('./routes/auth');//추가//수정
 var mypageRouter = require('./routes/mypage');
-
+var http = require('http');
 const bodyParser = require('body-parser');//추가
-
-
-
 
 //추가
 // app.use(bodyParser.urlencoded({ extended: false }));//extended: 중첩된 객체표현을 허용할지 말지
@@ -24,6 +21,11 @@ app.use(session({
   store: new FileStore(),//확인필요 //세션 객체에 세션스토어를 적용
   
 }))
+
+var port = normalizePort(process.env.PORT || '3000');
+var server = http.createServer(app);
+server.on('listening', onListening);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -36,6 +38,7 @@ app.use('/mypage', mypageRouter);//인증라우터
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use('/static', express.static('static'));
 
 app.use(logger('dev'));
 app.use(cookieParser());
@@ -44,21 +47,23 @@ app.use(cookieParser());
 // 정적 파일 제공을 위한 미들웨어 설정
 app.use(express.static(path.join(__dirname, 'public')));
 
-// "/mypage" 경로로 접근하면 "mypage.html" 파일을 제공
+// "/mypage" 경로로 접근하면 "mypage" 파일을 제공
 app.get('/mypage', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'page', 'mypage.html'));
+  res.render(path.join(__dirname, 'views', 'mypage.ejs'));
 });
 
 
-app.get('/mypage',(req,res)=>{
-  if(!authCheck.isOwner(req,res)){  // 로그인 안되어있으면 로그인 페이지로 이동시킴
-    res.redirect('/auth/login');//수정 /auth/login->/login
-    return false;
-  }else{
-    res.redirect('/mypage');//로그인 되어있는 거: 경로수정
-    return false;
-  }
-});
+
+
+// app.get('/mypage',(req,res)=>{
+//   if(!authCheck.isOwner(req,res)){  // 로그인 안되어있으면 로그인 페이지로 이동시킴
+//     res.redirect('/auth/login');//수정 /auth/login->/login
+//     return false;
+//   }else{
+//     res.redirect('/mypage');//로그인 되어있는 거: 경로수정
+//     return false;
+//   }
+// });
 
 
 
@@ -101,5 +106,31 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.listen(port);
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
 
 module.exports = app;
