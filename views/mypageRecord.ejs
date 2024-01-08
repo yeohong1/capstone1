@@ -18,7 +18,7 @@
         <img src="../images/health-logo.png" alt="logo-name" class="logo-name">
         <h1>Healthly Life</h1>
         <nav class="word-menu">
-          <a href="mypage/logout">로그아웃</a>
+          <a href="javascript">로그아웃</a>
         </nav>
       </div>
     </div>
@@ -131,19 +131,19 @@
   $('.inputValue').on('input', function () {
     var inputValue = parseInt($(this).val(), 10);
 
-    $('.water img').attr('src', '../images/empty-water.png');
+    $('.water img').attr('src', 'images/empty-water.png');
 
     if (inputValue >= 500) {
-      $('.water1').attr('src', '../images/water.png');
+      $('.water1').attr('src', 'images/water.png');
     }
     if (inputValue >= 1000) {
-      $('.water2').attr('src', '../images/water.png');
+      $('.water2').attr('src', 'images/water.png');
     }
     if (inputValue >= 1500) {
-      $('.water3').attr('src', '../images/water.png');
+      $('.water3').attr('src', 'images/water.png');
     }
     if (inputValue >= 2000) {
-      $('.water4').attr('src', '../images/water.png');
+      $('.water4').attr('src', 'images/water.png');
     }
   });
 </script>

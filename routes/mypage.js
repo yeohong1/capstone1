@@ -6,8 +6,13 @@ const app = express()
 app.use('/static',express.static('static'));
 
 //mypage
-router.get('/mypage', function (req, res, next) {
-    res.render('mypage.ejs', { caloriesResult: req.session.caloriesResult });
+router.get('/mypage/record', function (req, res) {
+    res.render('mypageRecord.ejs', { caloriesResult: req.session.caloriesResult });
+});
+
+//mypage
+router.get('/mypage/weight', function (req, res) {
+    res.render('mypageWeight.ejs');
 });
 
 // HTTP 요청 보내기
@@ -52,8 +57,8 @@ console.log(foodName);
     });
 
   // /mypage 라우트 핸들러
-router.get('/mypage', (req, res) => {
- res.render('mypage.ejs', { caloriesResult: res.locals.caloriesResult });
+router.get('/mypage/record', (req, res) => {
+ res.render('mypageRecord.ejs', { caloriesResult: res.locals.caloriesResult });
 console.log(caloriesResult);
 });
 

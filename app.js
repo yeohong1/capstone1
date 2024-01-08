@@ -48,11 +48,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // "/mypage" 경로로 접근하면 "mypage" 파일을 제공
-app.get('/mypage', (req, res) => {
-  res.render(path.join(__dirname, 'views', 'mypage.ejs'));
+app.get('/mypage/record', (req, res) => {
+  res.render(path.join(__dirname, 'views', 'mypageRecord'));
 });
 
-
+app.get('/mypage/weight', (req, res) => {
+  res.render(path.join(__dirname, 'views', 'mypageWeight'));
+});
 
 
 // app.get('/mypage',(req,res)=>{
