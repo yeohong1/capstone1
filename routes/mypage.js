@@ -11,14 +11,36 @@ app.use('/static',express.static('static'));
    
 });
 
-
 //mypage
 router.get('/weight', function (req, res) {
-    res.render('mypageWeight.ejs');
+ const date = new Date();
+
+const year = date.getFullYear();
+const month = date.getMonth() + 1;
+const day = date.getDate();
+
+
+res.render('mypageWeight.ejs');
+console.log('date: ' + date.toLocaleDateString('ko-kr'));
+console.log('year: ' + year);
+console.log('month: ' + month);
+console.log('day: ' + day);
+});
+
+router.post('/placeholder',function(req,res){
+   
+    const weight = req.body.Weight;
+    const tall = req.body.Tall;
+    console.log(weight);
+    console.log(tall);
+    res.send('Received data successfully.'); 
 });
 
 // HTTP 요청 보내기
 router.post('/record', async (req, res) => {
+   
+
+    //api연동
     try {
         const foodName = req.body.foodName;
         console.log(foodName);
@@ -60,6 +82,7 @@ router.post('/record', async (req, res) => {
             res.status(500).send('Internal Server Error');
         }
     });
+
    
 
 

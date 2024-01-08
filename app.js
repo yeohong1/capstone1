@@ -56,6 +56,14 @@ app.get('/weight', (req, res) => {
   res.render(path.join(__dirname, 'views', 'mypageWeight'));
 });
 
+// app.post('/placeholder', function (req, res) {
+//   const weight = req.body.Weight;
+//   const tall = req.body.Tall;
+//   console.log('Received Weight:', weight);
+//   console.log('Received Tall:', tall);
+//   res.render(path.join(__dirname, 'views', 'mypageRecord'));
+ 
+// });
 
 // app.get('/mypage',(req,res)=>{
 //   if(!authCheck.isOwner(req,res)){  // 로그인 안되어있으면 로그인 페이지로 이동시킴
