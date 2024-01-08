@@ -3,14 +3,14 @@ const knexConfiguration = {
   connection: {
     user: 'test',
     password: 'test',
-    server: '172.30.1.80',
-    database: 'CODU',
+    server: '125.135.61.140',
+    database: 'CAPD',
     port: 1433,
   }
 }
 const knex = require('knex')(knexConfiguration)
 
-Select('emp')
+Select('commmeal')
 function Insert(table,data) {//data는 {column:value} 형식
 //테이블을 가지고 있는 상태에서 받아온 data가 구조에 맞는지 확인 후 실행할것.
   knex(table)
