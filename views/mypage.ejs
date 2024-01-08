@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="css/main.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -15,10 +15,10 @@
   <header>
     <div class="container">
       <div class="header-logo">
-        <img src="../images/health-logo.png" alt="logo-name" class="logo-name">
+        <img src="images/health-logo.png" alt="logo-name" class="logo-name">
         <h1>Healthly Life</h1>
         <nav class="word-menu">
-          <a href="mypage/logout">로그아웃</a>
+          <a href="javascript">로그아웃</a>
         </nav>
       </div>
     </div>
@@ -28,7 +28,7 @@
       <li class="first-menu"><a href="">식단</a>
         <ul class="dropdown-menu">
           <li><a href="">기록하기</a></li>
-          <li><a href="">체중</a></li>
+          <li><a href="">체중 및 신장</a></li>
           <li><a href="">식단</a></li>
         </ul>
       </li>
@@ -47,7 +47,7 @@
           <li>
             <h3>오늘 하루 식단을 입력해주세요</h3>
           </li>
-          <li><img src="../images/eat.jpg" alt="weight" class="eating"></li>
+          <li><img src="images/eat.jpg" alt="weight" class="eating"></li>
         </ul>
         <ul class="eat">
           <li>
@@ -86,29 +86,31 @@
         </ul>
       </li>
       <ul class="right">
-        <h3>오늘 체중을 입력해주세요</h3>
+        <h3>오늘 체중과 신장을 입력해주세요</h3>
         <li class="right-content">
-          <div class="weight">
-            <img src="../images/weight.jpg" alt="weight"><br>
-          </div>
-          <input type="text" placeholder="00kg" class="input-weight"><button class="weight-submit">제출</button>
+          <ul class="weight">
+            <li><img src="images/weight.jpg" alt="weight" class="kg"></li>
+            <li><img src="images/tall.jpeg" alt="tall" class="cm"></li>
+          </ul>
+          <input type="text" placeholder="00kg" class="input-weight">
+          <input type="text" placeholder="000cm" class="input-tall"><button class="right-btn">제출</button>
         </li>
         <h3>오늘 음수량을 입력해주세요</h3>
         <li class="right-content">
           <div class="water">
-            <img class="water1" src="../images/empty-water.png" alt="empty-water">
-            <img class="water2" src="../images/empty-water.png" alt="empty-water">
-            <img class="water3" src="../images/empty-water.png" alt="empty-water">
-            <img class="water4" src="../images/empty-water.png" alt="empty-water">
+            <img class="water1" src="images/empty-water.png" alt="empty-water">
+            <img class="water2" src="images/empty-water.png" alt="empty-water">
+            <img class="water3" src="images/empty-water.png" alt="empty-water">
+            <img class="water4" src="images/empty-water.png" alt="empty-water">
             <p>500ml당 물 한 방울이 채워져요!</p>
-            <input type="text" class="inputValue" placeholder="ml단위로 입력해주세요"> <button>제출</button>
+            <input type="text" class="inputValue" placeholder="ml단위로 입력해주세요">&nbsp;<button>제출</button>
           </div>
         </li>
         <h3>오늘 걸음수를 입력해주세요</h3>
         <li class="right-content">
           <div class="walk">
-            <img src="../images/walking.gif" alt="walking">
-            <input type="text" placeholder="걸음수를 입력해주세요"> <button>제출</button>
+            <img src="images/walking.gif" alt="walking">
+            <input type="text" placeholder="걸음수를 입력해주세요">&nbsp;<button>제출</button>
           </div>
         </li>
       </ul>
