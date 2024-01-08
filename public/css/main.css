@@ -801,11 +801,6 @@ section .inner h3 {
     left: 0;
 }
 
-.recorder .left-content textarea{
-    font-size: 16px;
-    padding: 8px;
-}
-
 .recorder .left-content button,
 .recorder .right-content button{
     background-color: #ff8b8bd9;
@@ -829,12 +824,24 @@ section .inner h3 {
     border: 2px solid #ff8b8bd9;
     padding: 25px;
 }
+.recorder .right-btn{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+.recorder .right-content{
+    width: 700px;
+    position: relative;
+    right: 0;
+    border: 2px solid #ff8b8bd9;
+    padding: 25px;
+}
 .recorder .eat li+li{
     border-top: 2px dotted #ff8b8bd9;
 }
 .recorder .eat li{
     height: 372.5px;
-    padding: 10px;
+    padding: 20px;
     position: relative;
 }
 .recorder .eat li img{
@@ -848,7 +855,8 @@ section .inner h3 {
 }
 .recorder .eat li input{
     position: absolute;
-    bottom: 5px;
+    bottom: 20px;
+    left: 20px;
 }
 .recorder .eat .sun,
 .recorder .eat .dinner{
@@ -858,6 +866,13 @@ section .inner h3 {
 .recorder .eat .lunch{
     width: 50px; 
     height: 35px;
+}
+
+.recorder .eat-btn{
+    display: flex;
+    position: absolute;
+    right: 25px;
+    gap: 10px;
 }
 
 .recorder h3{
