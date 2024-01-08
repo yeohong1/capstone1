@@ -6,17 +6,17 @@ const app = express()
 app.use('/static',express.static('static'));
 
 //mypage
-router.get('/mypage/record', function (req, res) {
+router.get('/record', function (req, res) {
     res.render('mypageRecord.ejs', { caloriesResult: req.session.caloriesResult });
 });
 
 //mypage
-router.get('/mypage/weight', function (req, res) {
+router.get('/weight', function (req, res) {
     res.render('mypageWeight.ejs');
 });
 
 // HTTP 요청 보내기
-router.post('/getCalories', async (req, res, next) => {
+router.post('/record', async (req, res, next) => {
     try {
         const foodName = req.body.foodName;
 console.log(foodName);
@@ -56,10 +56,10 @@ console.log(foodName);
         }
     });
 
-  // /mypage 라우트 핸들러
-router.get('/mypage/record', (req, res) => {
- res.render('mypageRecord.ejs', { caloriesResult: res.locals.caloriesResult });
-console.log(caloriesResult);
-});
+//   // /mypage 라우트 핸들러
+// router.get('/mypage/record', (req, res) => {
+//  res.render('mypageRecord.ejs', { caloriesResult: res.locals.caloriesResult });
+// console.log(caloriesResult);
+// });
 
 module.exports = router;

@@ -27,8 +27,8 @@
     <ul class="show-menu">
       <li class="first-menu"><a href="">식단</a>
         <ul class="dropdown-menu">
-          <li><a href="" method="GET">기록하기</a></li>
-          <li><a href="mypage/weight" method="GET">체중 및 신장</a></li>
+          <li><a href="">기록하기</a></li>
+          <li><a href="">체중 및 신장</a></li>
           <li><a href="">식단</a></li>
         </ul>
       </li>
@@ -52,13 +52,17 @@
         <ul class="eat">
           <li>
             <h3>Breakfast</h3><img src="images/sun.png" alt="sun" class="sun"><br>
-            <form action="/mypage/record" method="POST">
-              <textarea rows="1.5" cols="20" placeholder="식단을 입력해주세요" id="foodName" name="foodName" required></textarea><br>
-              <input type="file">
-              <button type="submit" class="btn">제출</button><br>
-             
-            </form>
-            
+            <div class="eat-btn">
+              <button>추가</button>
+              <button>제출</button>
+            </div>
+            <select>
+              <option value="">선택</option>
+              <option value="">바나나</option>
+              <option value="">요거트</option>
+              <option value="">고구마</option>
+            </select>
+            <input type="file">
           </li>
           <li>
             <h3>Lanch</h3><img src="images/lunch.png" alt="lunch" class="lunch"><br>
