@@ -934,3 +934,34 @@ section .inner h3 {
     padding: 3px;
     width: 500px;
 }
+/* mypageWeight.html */
+.chart{
+    padding-top: 105px;
+}
+.chart .inner{
+    padding: 60px 0px;
+}
+.chart h1{
+    display: flex;
+    justify-content: center;
+    font-size: 40px;
+    color: #333;
+    border: 2px dotted #ff8b8bd9;
+}
+.chart .content h3{
+    padding-top: 50px;
+}
+.chart .explain p{
+    font-size: 18px;
+}
+.chart .explain h5{
+    font-size: 23px;
+}
+.chart .explain p span{
+    font-weight: 700;
+    font-size: 20px;
+    color: #fa6868d9;
+}
+.chart canvas{
+    padding-top: 30px;
+}

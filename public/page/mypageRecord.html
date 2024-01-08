@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="header-logo">
+        <img src="images/health-logo.png" alt="logo-name" class="logo-name">
+        <h1>Healthly Life</h1>
+        <nav class="word-menu">
+          <a href="javascript">로그아웃</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <div class="menu">
+    <ul class="show-menu">
+      <li class="first-menu"><a href="">식단</a>
+        <ul class="dropdown-menu">
+          <li><a href="">기록하기</a></li>
+          <li><a href="">체중 및 신장</a></li>
+          <li><a href="">식단</a></li>
+        </ul>
+      </li>
+      <li class="last-menu"><a href="">운동</a>
+        <ul class="dropdown-menu">
+          <li><a href="">걸음수</a></li>
+          <li><a href="">음수량</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <section class="recorder">
+    <ul class="inner">
+      <li class="left-content">
+        <ul class="title">
+          <li>
+            <h3>오늘 하루 식단을 입력해주세요</h3>
+          </li>
+          <li><img src="images/eat.jpg" alt="weight" class="eating"></li>
+        </ul>
+        <ul class="eat">
+          <li>
+            <h3>Breakfast</h3><img src="images/sun.png" alt="sun" class="sun"><br>
+            <div class="eat-btn">
+              <button>추가</button>
+              <button>제출</button>
+            </div>
+            <select>
+              <option value="">선택</option>
+              <option value="">바나나</option>
+              <option value="">요거트</option>
+              <option value="">고구마</option>
+            </select>
+            <input type="file">
+          </li>
+          <li>
+            <h3>Lanch</h3><img src="images/lunch.png" alt="lunch" class="lunch"><br>
+            <div class="eat-btn">
+              <button>추가</button>
+              <button>제출</button>
+            </div>
+            <select>
+              <option value="">선택</option>
+              <option value="">바나나</option>
+              <option value="">요거트</option>
+              <option value="">고구마</option>
+            </select>
+            <input type="file">
+          </li>
+          <li>
+            <h3>Dinner</h3><img src="images/dinner.png" alt="dinner" class="dinner"><br>
+            <div class="eat-btn">
+              <button>추가</button>
+              <button>제출</button>
+            </div>
+            <select>
+              <option value="">선택</option>
+              <option value="">바나나</option>
+              <option value="">요거트</option>
+              <option value="">고구마</option>
+            </select>
+            <input type="file">
+          </li>
+        </ul>
+      </li>
+      <ul class="right">
+        <h3>오늘 체중과 신장을 입력해주세요</h3>
+        <li class="right-content">
+          <ul class="weight">
+            <li><img src="images/weight.jpg" alt="weight" class="kg"></li>
+            <li><img src="images/tall.jpeg" alt="tall" class="cm"></li>
+          </ul>
+          <input type="text" placeholder="00kg" class="input-weight">
+          <input type="text" placeholder="000cm" class="input-tall"><button class="right-btn">제출</button>
+        </li>
+        <h3>오늘 음수량을 입력해주세요</h3>
+        <li class="right-content">
+          <div class="water">
+            <img class="water1" src="images/empty-water.png" alt="empty-water">
+            <img class="water2" src="images/empty-water.png" alt="empty-water">
+            <img class="water3" src="images/empty-water.png" alt="empty-water">
+            <img class="water4" src="images/empty-water.png" alt="empty-water">
+            <p>500ml당 물 한 방울이 채워져요!</p>
+            <input type="text" class="inputValue" placeholder="ml단위로 입력해주세요">&nbsp;<button>제출</button>
+          </div>
+        </li>
+        <h3>오늘 걸음수를 입력해주세요</h3>
+        <li class="right-content">
+          <div class="walk">
+            <img src="images/walking.gif" alt="walking">
+            <input type="text" placeholder="걸음수를 입력해주세요">&nbsp;<button>제출</button>
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </section>
+</body>
+<script>
+  //물 채우기
+  $('.inputValue').on('input', function () {
+    var inputValue = parseInt($(this).val(), 10);
+
+    $('.water img').attr('src', 'images/empty-water.png');
+
+    if (inputValue >= 500) {
+      $('.water1').attr('src', 'images/water.png');
+    }
+    if (inputValue >= 1000) {
+      $('.water2').attr('src', 'images/water.png');
+    }
+    if (inputValue >= 1500) {
+      $('.water3').attr('src', 'images/water.png');
+    }
+    if (inputValue >= 2000) {
+      $('.water4').attr('src', 'images/water.png');
+    }
+  });
+</script>
+
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <script src="/js/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="header-logo">
+        <img src="images/health-logo.png" alt="logo-name" class="logo-name">
+        <h1>Healthly Life</h1>
+        <nav class="word-menu">
+          <a href="javascript">로그아웃</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <div class="menu">
+    <ul class="show-menu">
+      <li class="first-menu"><a href="">식단</a>
+        <ul class="dropdown-menu">
+          <li><a href="">기록하기</a></li>
+          <li><a href="">체중 및 신장</a></li>
+          <li><a href="">식단</a></li>
+        </ul>
+      </li>
+      <li class="last-menu"><a href="">운동</a>
+        <ul class="dropdown-menu">
+          <li><a href="">걸음수</a></li>
+          <li><a href="">음수량</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <section class="chart">
+    <div class="inner">
+      <h1>2024-01-08</h1>
+      <!-- <input type='date' id='currentDate'> -->
+      <ul class="content">
+        <li class="explain">
+          <h3>나의 체질량지수(BMI)</h3>
+          <p>체질량지수는 자신의 몸무게(kg)를 키의 제곱(m)으로 나눈 값입니다.<br>
+            체질량지수는 근육량, 유전적 원인, 다른 개인적 차이를 반영하지 못하는 단점이 있음에도 불구하고<br>
+            조사자들이나 의료인들이 가장 많이 쓰는 방법 중 하나입니다.<br>
+          </p><br>
+          <h5>신장: 170cm 체중: 50kg</h5>
+          <p>비만도 결과: <span>저체중입니다.</span></p>
+          <p>BMI지수: <span>17.30</span></p>
+          <img src="images/bmi.png" alt="bmi">
+        </li>
+        <li class="week-chart">
+          <h3>일주일 간 체중의 변화</h3>
+          <canvas class="weekly" width="800" height="450"></canvas>
+        </li>
+        <li class="month-chart">
+          <h3>한 달 간 체중의 변화</h3>
+          <canvas class="monthly" width="800" height="450"></canvas>
+        </li>
+        <li class="year-chart">
+          <h3>일년 간 체중의 변화</h3>
+          <canvas class="yearly" width="800" height="450"></canvas>
+        </li>
+      </ul>
+    </div>
+  </section>
+</body>
+<script>
+  new Chart(document.getElementsByClassName("weekly"), {
+    type: 'line',
+    data: {
+      labels: ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
+      datasets: [{
+        data: [40, 41, 42, 55, 53, 50, 60],
+        borderColor: "#ff8b8bd9",
+        label: '나의 체중',
+        tension: 0,
+        fill: false
+      }]
+    }
+  });
+  new Chart(document.getElementsByClassName("monthly"), {
+    type: 'line',
+    data: {
+      labels: [
+        "01/01", "01/02", "01/03", "01/04", "01/05", "01/06", "01/07",
+        "01/08", "01/09", "01/10", "01/11", "01/12", "01/13", "01/14",
+        "01/15", "01/16", "01/17", "01/18", "01/19", "01/20", "01/21",
+        "01/22", "01/23", "01/24", "01/25", "01/26", "01/27", "01/28",
+        "01/29", "01/30", "01/31"
+      ],
+      datasets: [{
+        data: [40, 41, 42, 55, 53, 50, 60, 50, 50, 50, 50, 51, 53, 54, 48, 49, 54, 44, 43, 46, 60, 66, 45, 45, 45, 59, 66, 45, 40, 45, 43],
+        borderColor: "#ff8b8bd9",
+        label: '나의 체중',
+        tension: 0,
+        fill: false
+      }]
+    }
+  });
+  new Chart(document.getElementsByClassName("yearly"), {
+    type: 'line',
+    data: {
+      labels: [
+        "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06",
+        "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"
+      ],
+      datasets: [{
+        data: [40, 41, 42, 55, 53, 50, 60, 40, 41, 42, 55, 53, 50],
+        borderColor: "#ff8b8bd9",
+        label: '나의 체중',
+        tension: 0,
+        fill: false
+      }]
+    }
+  });
+  // document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
+</script>
+
+</html>
