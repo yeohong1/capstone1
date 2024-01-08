@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-  <title>Document</title>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
@@ -52,30 +51,37 @@
         </ul>
         <ul class="eat">
           <li>
-            <h3>Breakfast</h3><img src="../images/sun.png" alt="sun" class="sun"><br>
-            <form action="/mypage/getCalories" method="POST">
-              <textarea rows="1.5" cols="20" placeholder="식단을 입력해주세요" id="foodName" name="foodName" required></textarea><br>
-              <input type="file">
-              <button type="submit" class="btn">제출</button><br>
-             
-            </form>
-           
-            
-              
-              
-          </li>
-
-          <li>
-            <h3>Lunch</h3><img src="../images/lunch.png" alt="lunch" class="lunch"><br>
-            <textarea rows="1.5" cols="20" placeholder="식단을 입력해주세요"></textarea><br>
-            <input type="file">
+            <h3>Breakfast</h3><img src="images/sun.png" alt="sun" class="sun"><br>
+            <select>
+              <option value="">선택</option>
+              <option value="">바나나</option>
+              <option value="">요거트</option>
+              <option value="">고구마</option>
+            </select>&nbsp;
             <button>제출</button><br>
+            <input type="file">
           </li>
           <li>
-            <h3>Dinner</h3><img src="../images/dinner.png" alt="dinner" class="dinner"><br>
-            <textarea rows="1.5" cols="20" placeholder="식단을 입력해주세요"></textarea><br>
+            <h3>Lanch</h3><img src="images/lunch.png" alt="lunch" class="lunch"><br>
+            <select>
+              <option value="">선택</option>
+              <option value="">바나나</option>
+              <option value="">요거트</option>
+              <option value="">고구마</option>
+            </select>&nbsp;
+            <button>제출</button><br>
             <input type="file">
-            <button>제출</button>
+          </li>
+          <li>
+            <h3>Dinner</h3><img src="images/dinner.png" alt="dinner" class="dinner"><br>
+            <select>
+              <option value="">선택</option>
+              <option value="">바나나</option>
+              <option value="">요거트</option>
+              <option value="">고구마</option>
+            </select>&nbsp;
+            <button>제출</button><br>
+            <input type="file">
           </li>
         </ul>
       </li>

@@ -719,7 +719,7 @@ section .inner h3 {
     z-index: 1;
     background-color: #faafaffb;
     width: 100%;
-    height: 100px;
+    height: 105px;
     padding-top: 64px;
 }
 
@@ -734,13 +734,13 @@ section .inner h3 {
 
 .menu .show-menu .dropdown-menu{
     position: absolute;
-    top: 36px;
+    top: 41px;
     display: none;
-    background-color: #ff8b8b7f;
+    background-color: #faafaffb;
 }
 
 .menu .show-menu .dropdown-menu li{
-    padding: 8px;
+    padding: 7px;
 }
 
 .menu .first-menu, .menu .last-menu,
@@ -817,8 +817,8 @@ section .inner h3 {
 .recorder .walk button{
     background-color: #ff8b8bd9;
     border: 1px solid plum;
-    padding: 3px;
-    border-radius: 10px;
+    padding: 3px 7px;
+    border-radius: 9px;
 }
 .recorder .left-content button:hover,
 .recorder .water button:hover,
@@ -835,11 +835,22 @@ section .inner h3 {
     border-top: 2px dotted #ff8b8bd9;
 }
 .recorder .eat li{
+    position: relative;
     height: 366px;
     padding: 10px;
 }
 .recorder .eat li img{
     margin-left: 7px;
+}
+.recorder .eat select{
+    width: 250px;
+    height: 25px;
+    border: 1px solid #ff8b8bd9;
+    font-size: 14px;
+}
+.recorder .eat li input{
+    position: absolute;
+    bottom: 5px;
 }
 .recorder .eat .sun,
 .recorder .eat .dinner{
