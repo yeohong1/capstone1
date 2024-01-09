@@ -64,12 +64,13 @@ router.post('/record', async (req, res) => {
          const resultArray = response.data.I2790.row.slice(0, 5);
 
          // 각 결과를 출력
-         let resultString = '';
-         resultArray.forEach((result, index) => {
-             var calories = result.NUTR_CONT1;
-             var foodname = result.DESC_KOR;
-            resultString += `${foodname}: ${calories}칼로리\n`;
-             //console.log(resultString);
+         let resultString = [];
+        resultArray.forEach((result, index) => {
+            var calories = result.NUTR_CONT1;
+            var foodname = result.DESC_KOR;
+            
+            // 각 음식 항목을 객체로 만들어 배열에 추가
+            resultObject.resultString.push({ [foodname]: calories });
         });
 
          // 결과 저장
