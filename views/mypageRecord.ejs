@@ -57,9 +57,9 @@
                 <button>추가</button>
                 <button>제출</button>
               </div>
-              <select>
+              <select action="/mypage/record" method="POST">
                 <option value="">선택</option>
-                <option value="">바나나</option>
+                <option value="" id="foodName" name="foodName" required><%= resultString%> <%= resultString%></option>
                 <option value="">요거트</option>
                 <option value="">고구마</option>
               </select>
@@ -69,12 +69,8 @@
                 <button>추가</button>
                 <button type="submit" class="btn">제출</button>
               </div>
-              <form action="/mypage/record" method="POST">
-                <input type="text" class="eat-menu" placeholder="보기에 없는 메뉴를 입력해주세요"  id="foodName" name="foodName" required>
-              </form>
-              <!-- <input type="text" class="eat-menu" placeholder="입력한 메뉴의 칼로리를 작성해주세요"> -->
-              <p>음식 이름: <%= %></p>
-              <p>칼로리: <%= %></p>
+              <input type="text" class="eat-menu" placeholder="보기에 없는 메뉴를 입력해주세요">
+              <input type="text" class="eat-menu" placeholder="입력한 메뉴의 칼로리를 작성해주세요">
             </div>
             <input type="file" class="fileupload">
           </li>
