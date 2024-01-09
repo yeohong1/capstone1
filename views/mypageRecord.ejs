@@ -47,11 +47,11 @@
           <li>
             <h3>오늘 하루 식단을 입력해주세요</h3>
           </li>
-          <li><img src="images/eat.jpg" alt="weight" class="eating"></li>
+          <li><img src="../images/eat.jpg" alt="weight" class="eating"></li>
         </ul>
         <ul class="eat">
           <li>
-            <h3>Breakfast</h3><img src="images/sun.png" alt="sun" class="sun"><br>
+            <h3>Breakfast</h3><img src="../images/sun.png" alt="sun" class="sun"><br>
             <form action="/mypage/record" method="POST">
               <textarea rows="1.5" cols="20" placeholder="식단을 입력해주세요" id="foodName" name="foodName" required></textarea><br>
               <input type="file">
@@ -64,7 +64,7 @@
            
           </li>
           <li>
-            <h3>Lanch</h3><img src="images/lunch.png" alt="lunch" class="lunch"><br>
+            <h3>Lanch</h3><img src="../images/lunch.png" alt="lunch" class="lunch"><br>
             <div class="eat-btn">
               <button>추가</button>
               <button>제출</button>
@@ -78,7 +78,7 @@
             <input type="file">
           </li>
           <li>
-            <h3>Dinner</h3><img src="images/dinner.png" alt="dinner" class="dinner"><br>
+            <h3>Dinner</h3><img src="../images/dinner.png" alt="dinner" class="dinner"><br>
             <div class="eat-btn">
               <button>추가</button>
               <button>제출</button>
@@ -97,8 +97,8 @@
         <h3>오늘 체중과 신장을 입력해주세요</h3>
         <li class="right-content">
           <ul class="weight">
-            <li><img src="images/weight.jpg" alt="weight" class="kg"></li>
-            <li><img src="images/tall.jpeg" alt="tall" class="cm"></li>
+            <li><img src="../images/weight.jpg" alt="weight" class="kg"></li>
+            <li><img src="../images/tall.jpeg" alt="tall" class="cm"></li>
           </ul>
         <form  action="/mypage/record/placeholder" method="POST">
           <input type="text" id="Weight" placeholder="00kg" class="input-weight">
@@ -108,10 +108,10 @@
         <h3>오늘 음수량을 입력해주세요</h3>
         <li class="right-content">
           <div class="water">
-            <img class="water1" src="images/empty-water.png" alt="empty-water">
-            <img class="water2" src="images/empty-water.png" alt="empty-water">
-            <img class="water3" src="images/empty-water.png" alt="empty-water">
-            <img class="water4" src="images/empty-water.png" alt="empty-water">
+            <img class="water1" src="../images/empty-water.png" alt="empty-water">
+            <img class="water2" src="../images/empty-water.png" alt="empty-water">
+            <img class="water3" src="../images/empty-water.png" alt="empty-water">
+            <img class="water4" src="../images/empty-water.png" alt="empty-water">
             <p>500ml당 물 한 방울이 채워져요!</p>
             <input type="text" class="inputValue" placeholder="ml단위로 입력해주세요">&nbsp;<button>제출</button>
           </div>
@@ -119,7 +119,7 @@
         <h3>오늘 걸음수를 입력해주세요</h3>
         <li class="right-content">
           <div class="walk">
-            <img src="images/walking.gif" alt="walking">
+            <img src="../images/walking.gif" alt="walking">
             <input type="text" placeholder="걸음수를 입력해주세요">&nbsp;<button>제출</button>
           </div>
         </li>
@@ -132,19 +132,19 @@
   $('.inputValue').on('input', function () {
     var inputValue = parseInt($(this).val(), 10);
 
-    $('.water img').attr('src', 'images/empty-water.png');
+    $('.water img').attr('src', '../images/empty-water.png');
 
     if (inputValue >= 500) {
-      $('.water1').attr('src', 'images/water.png');
+      $('.water1').attr('src', '../images/water.png');
     }
     if (inputValue >= 1000) {
-      $('.water2').attr('src', 'images/water.png');
+      $('.water2').attr('src', '../images/water.png');
     }
     if (inputValue >= 1500) {
-      $('.water3').attr('src', 'images/water.png');
+      $('.water3').attr('src', '../images/water.png');
     }
     if (inputValue >= 2000) {
-      $('.water4').attr('src', 'images/water.png');
+      $('.water4').attr('src', '../images/water.png');
     }
   });
 </script>
