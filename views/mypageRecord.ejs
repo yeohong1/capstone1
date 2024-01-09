@@ -58,17 +58,25 @@
                 <button>제출</button>
               </div>
               <form action="/mypage/record" method="POST">
-                <textarea rows="1.5" cols="20" placeholder="식단을 입력해주세요" id="foodName" name="foodName" required><%= resultString %> <%= %></textarea>
+                <textarea rows="1.5" cols="20" placeholder="식단을 입력해주세요" id="foodName" name="foodName" required></textarea>
+              
+              
+              <select name="selectedResult">
+                  <% if (resultString) { %>
+                      <option value=""><%= resultString %></option>
+                  <% } %>
+                  <option value=""></option>
+                 
+              </select>
                 <input type="file">
                 <button type="submit" class="btn">제출1</button><br>
-               
+              
               </form>
              
              
-                <option value="">요거트</option>
-                <option value="">고구마</option>
-              </select>
-            </form>
+                
+             
+            
             </div>
             <div class="input">
               <div class="eat-btn">

@@ -7,7 +7,7 @@ app.use('/static',express.static('static'));
 
  //mypage/record
  router.get('/record', function (req, res) {
-    res.render('mypageRecord.ejs');
+    res.render('mypageRecord.ejs',{ resultString: 'resultString' });
 
 });
 
@@ -32,6 +32,7 @@ router.post('/placeholder',function(req,res){
     const tall = req.body.Tall;
     req.on('data',function(chunk){
         body +=chunk;
+        console.log(body);
     });
     req.on('end', function(){
         var data =querystring.parse(body);
