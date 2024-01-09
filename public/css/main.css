@@ -771,7 +771,7 @@ section .inner h3 {
     padding-top: 105px;
 }
 .recorder .inner{
-    padding-top: 60px;
+    padding: 60px 0px;
     display: flex;
     justify-content: space-between;
 }
@@ -877,6 +877,13 @@ section .inner h3 {
     position: absolute;
     right: 25px;
     gap: 10px;
+    bottom: 0;
+}
+
+.recorder .eat .dropdown,
+.recorder .eat .input {
+    position: relative;
+    padding-top: 8px;
 }
 
 .recorder h3{
