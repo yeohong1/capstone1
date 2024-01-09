@@ -58,7 +58,9 @@
                 <button>제출</button>
               </div>
               <h5>종류를 입력한 뒤 옆에서 선택해주세요.</h5>
-              <input type="text" class="eat-menu" placeholder="메뉴의 종류를 입력해주세요">
+              <form action="/mypage/record" method="POST">
+                <input type="text" class="eat-menu" placeholder="메뉴의 종류를 입력해주세요"  id="foodName" name="foodName" required>
+              </form>
               <select action="/mypage/record" method="POST">
                 <option value="">선택</option>
                 <option value="" id="foodName" name="foodName" required><%= resultString%> <%= resultString%></option>
