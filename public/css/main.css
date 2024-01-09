@@ -847,13 +847,17 @@ section .inner h3 {
 .recorder .eat li img{
     margin-left: 7px;
 }
-.recorder .eat select{
+.recorder .eat select,
+.recorder .eat .eat-menu{
     width: 250px;
     height: 25px;
     border: 1px solid #ff8b8bd9;
     font-size: 14px;
 }
-.recorder .eat li input{
+.recorder .eat .input{
+    padding-top: 6px;
+}
+.recorder .eat li .fileupload{
     position: absolute;
     bottom: 20px;
     left: 20px;
