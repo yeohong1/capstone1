@@ -57,12 +57,18 @@
                 <button>추가</button>
                 <button>제출</button>
               </div>
-              <select action="/mypage/record" method="POST">
-                <option value="">선택</option>
-                <option value="" id="foodName" name="foodName" required><%= resultString%> <%= resultString%></option>
+              <form action="/mypage/record" method="POST">
+                <textarea rows="1.5" cols="20" placeholder="식단을 입력해주세요" id="foodName" name="foodName" required><%= %> <%= %></textarea>
+                <input type="file">
+                <button type="submit" class="btn">제출1</button><br>
+               
+              </form>
+             
+             
                 <option value="">요거트</option>
                 <option value="">고구마</option>
               </select>
+            </form>
             </div>
             <div class="input">
               <div class="eat-btn">
@@ -132,8 +138,8 @@
             <li><img src="../images/tall.jpeg" alt="tall" class="cm"></li>
           </ul>
         <form  action="/mypage/record/placeholder" method="POST">
-          <input type="text" id="Weight" placeholder="00kg" class="input-weight">
-          <input type="text" id="Tall" placeholder="000cm" class="input-tall"><button class="right-btn">제출</button>
+          <input type="text" name="Weight" placeholder="00kg" class="input-weight">
+          <input type="text" name="Tall" placeholder="000cm" class="input-tall"><button class="right-btn">제출</button>
         </form>
         </li>
         <h3>오늘 음수량을 입력해주세요</h3>

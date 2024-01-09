@@ -5,20 +5,19 @@ const axios = require('axios');
 const app = express()
 app.use('/static',express.static('static'));
 
- //mypage
+ //mypage/record
  router.get('/record', function (req, res) {
     res.render('mypageRecord.ejs');
-   
+
 });
 
-//mypage
+//mypage/weight
 router.get('/weight', function (req, res) {
  const date = new Date();
 
 const year = date.getFullYear();
 const month = date.getMonth() + 1;
 const day = date.getDate();
-
 
 res.render('mypageWeight.ejs');
 console.log('date: ' + date.toLocaleDateString('ko-kr'));
@@ -28,11 +27,22 @@ console.log('day: ' + day);
 });
 
 router.post('/placeholder',function(req,res){
-   
+   var body ='';
     const weight = req.body.Weight;
     const tall = req.body.Tall;
-    console.log(weight);
-    console.log(tall);
+    req.on('data',function(chunk){
+        body +=chunk;
+    });
+    req.on('end', function(){
+        var data =querystring.parse(body);
+        var weight  = data.Weight;
+        var tall = data.Tall;
+
+        console.log(weight);
+        console.log(tall);
+    });
+
+   
     res.send('Received data successfully.'); 
 });
 
@@ -74,16 +84,13 @@ router.post('/record', async (req, res) => {
 
          // 결과 저장
          res.locals.resultString = { foodName, resultString };
-        
+        console.log(resultString);
         res.render('mypageRecord.ejs',{ resultString: foodName, resultString })
-        console.log( res.locals.resultString);
+        console.log(resultString);
     } catch (error) {
             console.error('Error:', error);
             res.status(500).send('Internal Server Error');
         }
     });
-
-   
-
 
 module.exports = router;
