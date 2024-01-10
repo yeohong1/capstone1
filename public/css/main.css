@@ -764,7 +764,9 @@ section .inner h3 {
     font-weight: 800;
 }
 
-.menu .dropdown-menu a:hover{
+.menu .dropdown-menu a:hover,
+.menu .first-menu a:hover,
+.menu li .active{
     color: #fff;
 }
 
