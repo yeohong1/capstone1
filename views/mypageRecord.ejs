@@ -57,26 +57,34 @@
                 <button>추가</button>
                 <button>제출</button>
               </div>
-              <h5>종류를 입력한 뒤 옆에서 선택해주세요.</h5>
               <form action="/mypage/record" method="POST">
-                <input type="text" class="eat-menu" placeholder="메뉴의 종류를 입력해주세요"  id="foodName" name="foodName" required>
-              </form>
-              <select action="/mypage/record" method="POST">
-                <option value="">선택</option>
-                <option value="" id="foodName" name="foodName" required><%= resultString%> <%= resultString%></option>
-                <option value="">요거트</option>
-                <option value="">고구마</option>
+                <textarea rows="1.5" cols="20" placeholder="식단을 입력해주세요" id="foodName" name="foodName" required></textarea>
+              
+              <select name="selectedResult">
+                  <% if (resultString) { %>
+                      <option value=""><%= resultString %></option>
+                  <% } %>
+                  <option value=""></option>
+                 
               </select>
+                <input type="file">
+                <button type="submit" class="btn">제출1</button><br>
+              
+              </form>
+             
+             
             </div>
             <div class="input">
               <div class="eat-btn">
                 <button>추가</button>
+                <form action="/mypage/input" method="POST">
                 <button type="submit" class="btn">제출</button>
               </div>
-              <h5>찾는 음식이 없을 시 직접 메뉴의 이름과 칼로리를 입력해주세요.</h5>
-              <input type="text" class="eat-menu" placeholder="보기에 없는 메뉴를 입력해주세요">
-              <input type="text" class="eat-menu" placeholder="입력한 메뉴의 칼로리를 작성해주세요">
+              <input type="text" class="eat-menu" name="foodNm" placeholder="보기에 없는 메뉴를 입력해주세요">
+              <input type="text" class="eat-menu" name="kcal" placeholder="입력한 메뉴의 칼로리를 작성해주세요">
+            </form>
             </div>
+                </form>
             <input type="file" class="fileupload">
           </li>
           <li>
@@ -86,8 +94,6 @@
                 <button>추가</button>
                 <button>제출</button>
               </div>
-              <h5>종류를 입력한 뒤 옆에서 선택해주세요.</h5>
-              <input type="text" class="eat-menu" placeholder="메뉴의 종류를 입력해주세요">
               <select>
                 <option value="">선택</option>
                 <option value="">바나나</option>
@@ -100,7 +106,6 @@
                 <button>추가</button>
                 <button>제출</button>
               </div>
-              <h5>찾는 음식이 없을 시 직접 메뉴의 이름과 칼로리를 입력해주세요.</h5>
               <input type="text" class="eat-menu" placeholder="보기에 없는 메뉴를 입력해주세요">
               <input type="text" class="eat-menu" placeholder="입력한 메뉴의 칼로리를 작성해주세요">
             </div>
@@ -113,8 +118,6 @@
                 <button>추가</button>
                 <button>제출</button>
               </div>
-              <h5>종류를 입력한 뒤 옆에서 선택해주세요.</h5>
-              <input type="text" class="eat-menu" placeholder="메뉴의 종류를 입력해주세요">
               <select>
                 <option value="">선택</option>
                 <option value="">바나나</option>
@@ -127,7 +130,6 @@
                 <button>추가</button>
                 <button>제출</button>
               </div>
-              <h5>찾는 음식이 없을 시 직접 메뉴의 이름과 칼로리를 입력해주세요.</h5>
               <input type="text" class="eat-menu" placeholder="보기에 없는 메뉴를 입력해주세요">
               <input type="text" class="eat-menu" placeholder="입력한 메뉴의 칼로리를 작성해주세요">
             </div>
@@ -142,9 +144,9 @@
             <li><img src="../images/weight.jpg" alt="weight" class="kg"></li>
             <li><img src="../images/tall.jpeg" alt="tall" class="cm"></li>
           </ul>
-        <form  action="/mypage/record/placeholder" method="POST">
-          <input type="text" id="Weight" placeholder="00kg" class="input-weight">
-          <input type="text" id="Tall" placeholder="000cm" class="input-tall"><button class="right-btn">제출</button>
+        <form  action="/mypage/input" method="POST">
+          <input type="text" name="Weight" placeholder="00kg" class="input-weight">
+          <input type="text" name="Tall" placeholder="000cm" class="input-tall"><button class="right-btn">제출</button>
         </form>
         </li>
         <h3>오늘 음수량을 입력해주세요</h3>
@@ -155,14 +157,16 @@
             <img class="water3" src="../images/empty-water.png" alt="empty-water">
             <img class="water4" src="../images/empty-water.png" alt="empty-water">
             <p>500ml당 물 한 방울이 채워져요!</p>
-            <input type="text" class="inputValue" placeholder="ml단위로 입력해주세요">&nbsp;<button>제출</button>
+            <form action="/mypage/input" method="POST">
+            <input type="text" class="inputValue" name="drnkAmnt"  placeholder="ml단위로 입력해주세요">&nbsp;<button>제출</button></form>
           </div>
         </li>
         <h3>오늘 걸음수를 입력해주세요</h3>
         <li class="right-content">
           <div class="walk">
             <img src="../images/walking.gif" alt="walking">
-            <input type="text" placeholder="걸음수를 입력해주세요">&nbsp;<button>제출</button>
+            <form action="/mypage/input" method="POST">
+            <input type="text" name="stepCnt" placeholder="걸음수를 입력해주세요">&nbsp;<button>제출</button></form>
           </div>
         </li>
       </ul>
