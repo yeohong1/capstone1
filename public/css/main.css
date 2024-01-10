@@ -82,6 +82,7 @@ header .container .header-logo {
     display: flex;
     align-items: center;
     padding-right: 10px;
+    cursor: pointer;
 }
 
 header .container .header-logo .logo-name {
@@ -1015,6 +1016,7 @@ section .inner h3 {
 .login-section .btnset input{
     width: 130px;
     margin-left: 45px;
+    cursor: pointer;
 }
 .login-section .btnset .btn,
 .login-section .btnset input{
