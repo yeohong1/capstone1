@@ -43,7 +43,7 @@ button{
 
 section .inner {
     max-width: 1480px;
-    padding: 0 20px;
+    padding: 60px 20px;
     margin: 0 auto;
 }
 
@@ -771,7 +771,6 @@ section .inner h3 {
     padding-top: 105px;
 }
 .recorder .inner{
-    padding: 60px 0px;
     display: flex;
     justify-content: space-between;
 }
@@ -949,9 +948,6 @@ section .inner h3 {
 .chart{
     padding-top: 105px;
 }
-.chart .inner{
-    padding: 60px 0px;
-}
 .chart h1{
     display: flex;
     justify-content: center;
@@ -975,4 +971,65 @@ section .inner h3 {
 }
 .chart canvas{
     padding-top: 30px;
+}
+/* login.html */
+.login-section{
+    padding-top: 64px;
+    background-color: #ffa6a6;
+    height: 100vh;
+}
+.login-section .inner{
+    padding: 150px 20px;
+}
+.login-section .container{
+    background-color: #fff;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 60px 60px 70px 60px;
+    background: #fff;
+    border-radius: 20px;
+}
+.login-section h1{
+    text-align: center;
+    font-size: 45px;
+}
+.login-section form{
+    padding-top: 30px;
+    font-size: 20px;
+}
+.login-section .mb-3{
+    padding-top: 30px;
+}
+.login-section .mb-3 input{
+    height: 40px;
+    width: 401px;
+}
+.login-section .btnset{
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+.login-section .btnset .btn{
+    width: 315px;
+}
+.login-section .btnset input{
+    width: 130px;
+    margin-left: 45px;
+}
+.login-section .btnset .btn,
+.login-section .btnset input{
+    background-color: #ffa6a6;
+    height: 50px;
+    border-radius: 10px;
+    border: 2px solid plum;
+    font-size: 20px;
+    font-style: bold;
+}
+.login-section .btnset .btn:hover,
+.login-section .btnset input:hover{
+    background-color: plum;
+}
+footer{
+    background-color: #fff;
+    height: 200px;
 }
