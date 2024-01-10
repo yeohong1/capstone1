@@ -22,17 +22,22 @@
           <form action="/auth/login_process" method="POST">
             <div class="mb-3">
               <label for="name-lgn" class="form-label">아이디&nbsp;&nbsp;&nbsp;&nbsp;</label>
-              <input type="text" class="login" name="username">
+              <input type="text" class="login" name="userId">
+            </div>
+
+            <div class="mb-3">
+              <label for="name-lgn" class="form-label">이름&nbsp;&nbsp;&nbsp;&nbsp;</label>
+              <input type="text" class="login" name="userNm">
             </div>
     
             <div class="mb-3">
               <label for="password-lgn" class="form-label">비밀번호</label>
-              <input type="password" class="login" name="pwd">
+              <input type="password" class="login" name="password">
             </div>
     
             <div class="btnset">
               <button type="submit" class="btn">로그인</button>
-              <input type="button" value="회원가입" onclick="javascript:location.href='/'">
+              <input type="button" value="회원가입" onclick="javascript:location.href='/auth/register'">
             </div>
           </form>
         </div>

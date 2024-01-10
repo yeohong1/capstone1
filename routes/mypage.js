@@ -1,8 +1,9 @@
+
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const db = require('../db');
-
+const moment = require('moment');//현재시간
 const app = express()
 app.use('/static',express.static('static'));
 
@@ -16,8 +17,20 @@ app.use('/static',express.static('static'));
 router.post('/input', async (req, res) => {
     
     try {
-        const doDttm = new Date();//년월일
-        //const userID = req.body.userID;//null
+        // const date = new Date(); // 날짜 생성
+        // console.log(date.toLocaleDateString('ko-kr'));
+
+        // const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        // const doDttm = date.toLocaleDateString('ko-KR', options).replace(/\./g, '');
+        // console.log(doDttm); // 예: 20240111
+        const date = new Date();
+        const doDttm = moment(date).format('YYYYMMDD');
+        
+        console.log(doDttm);
+        //const foodCd = 
+       
+        //const userId =req.body.userId;
+        const userId = 'jieun';//test
 
         const foodNm = req.body.foodNm;
         const kcal = req.body.kcal;
@@ -41,24 +54,27 @@ router.post('/input', async (req, res) => {
         // db.js의 함수를 호출하여 데이터베이스에 삽입
 
         if (kcal) {
-            db.insertTable('hethMeal', { foodNm, kcal,doDttm });
+            db.insertTable('commMeal', { foodNm, kcal,inputDttm });
         }
 
-        if (weight) {
-            db.insertTable('commUser', { weight, height, doDttm });
-        }
+        // if (height) {
+        //     db.insertTable('commUser', { userId, height });
+        //     console.log(height);
+        // }
         if (drnkAmnt) {
-            db.insertTable('hethDrnk', { drnkAmnt });
+            db.insertTable('hethDrnk', {userId, drnkAmnt,doDttm });
+        }
+        if (weight) {
+            db.insertTable('hethWegt', { userId, weight,doDttm });
         }
         if (stepCnt) {
-            db.insertTable('hethExer', { stepCnt });
+            db.insertTable('hethExer', { userId, stepCnt,doDttm });
         }
-
         console.log("Data inserted successfully.");
         
-        // 나머지 처리 또는 응답
-        res.status(200).send('Menu and kcal inserted successfully.');
-        //res.render('mypageRecord.ejs');
+    
+        
+        res.redirect('/mypage/record');
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
@@ -69,39 +85,20 @@ router.post('/input', async (req, res) => {
 //mypage/weight
 router.get('/weight', function (req, res) {
  const date = new Date();
-
+ 
 const year = date.getFullYear();
 const month = date.getMonth() + 1;
 const day = date.getDate();
 
-res.render('mypageWeight.ejs');
-console.log('date: ' + date.toLocaleDateString('ko-kr'));
+const doDttm=date.toLocaleDateString('ko-kr');
+
+res.render('mypageWeight.ejs',{ doDttm: 'doDttm' });
+//res.render('mypageWeight.ejs');
+console.log(date.toLocaleDateString('ko-kr'));
 console.log('year: ' + year);
 console.log('month: ' + month);
 console.log('day: ' + day);
 });
-
-// router.post('',function(req,res){
-//    var body ='';
-//     const weight = req.body.Weight;
-//     const tall = req.body.Tall;
-//     req.on('data',function(chunk){
-//         body +=chunk;
-//         console.log(body);
-//     });
-//     req.on('end', function(){
-//         var data =querystring.parse(body);
-//         var weight  = data.Weight;
-//         var tall = data.Tall;
-
-//         console.log(weight);
-//         console.log(tall);
-//     });
-
-//     console.log(weight);
-//         console.log(tall);
-// });
-
 
 
 // HTTP 요청 보내기
@@ -132,20 +129,20 @@ router.post('/record', async (req, res) => {
          const resultArray = response.data.I2790.row.slice(0, 5);
 
          // 각 결과를 출력
-         let resultString = [];
-        resultArray.forEach((result, index) => {
-            var calories = result.NUTR_CONT1;
-            var foodname = result.DESC_KOR;
-            
-            // 각 음식 항목을 객체로 만들어 배열에 추가
-            resultObject.resultString.push({ [foodname]: calories });
+         let resultString = '';
+         resultArray.forEach((result, index) => {
+             var calories = result.NUTR_CONT1;
+             var foodname = result.DESC_KOR;
+             var foodCd= result.FOOD_CD;
+            resultString += `${foodCd}${foodname}: ${calories}칼로리\n`;
+             //console.log(resultString);
         });
 
          // 결과 저장
          res.locals.resultString = { foodName, resultString };
         console.log(resultString);
         res.render('mypageRecord.ejs',{ resultString: foodName, resultString })
-        console.log(resultString);
+        console.log(resultString.foodCd);
     } catch (error) {
             console.error('Error:', error);
             res.status(500).send('Internal Server Error');
@@ -153,3 +150,4 @@ router.post('/record', async (req, res) => {
     });
 
 module.exports = router;
+

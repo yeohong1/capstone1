@@ -13,7 +13,7 @@ const knexConfiguration = {
 const knex = require('knex')(knexConfiguration)
 
 
-Select('commmeal')
+
 function Insert(table,data) {//data는 {column:value} 형식
 //테이블을 가지고 있는 상태에서 받아온 data가 구조에 맞는지 확인 후 실행할것.
   knex(table)
@@ -63,26 +63,49 @@ function Select(table) {
     })
 }
 
+
 function GetTableColumns(table) {
   return new knex('INFORMATION_SCHEMA.COLUMNS').where({
     'TABLE_NAME': table,
   }).select('COLUMN_NAME')
 }
 
+async function login(table, data) {
+  return new Promise((resolve, reject) => {
+    knex
+      .select()
+      .from(table)
+      .where(data)
+      .then(results => {
+        if (results && results.length > 0) {
+          
+          resolve(results);
+        } else {
+          
+          reject(new Error('No matching record found.'));
+        }
+      })
+      .catch(error => reject(error));
+  });
+}
+
 module.exports = {
-  getTableColumns: function(table){
-    return GetTableColumns(table)
+  getTableColumns: function (table) {
+    return GetTableColumns(table);
   },
-  selectTable: function(table){
-    Select(table)
+  selectTable: function (table) {
+    return Select(table);
   },
-  insertTable:function(table,data){
-    Insert(table,data)
+  login: function (table, data) {
+    return login(table, data);
   },
-  updateTable:function(table,target,data){
-    Update(table,target,data)
+  insertTable: function (table, data) {
+    Insert(table, data);
   },
-  deleteTable:function(table, targetColumn, targetData){
-    Delete(table, targetColumn, targetData)
+  updateTable: function (table, target, data) {
+    Update(table, target, data);
+  },
+  deleteTable: function (table, targetColumn, targetData) {
+    Delete(table, targetColumn, targetData);
   }
 }
