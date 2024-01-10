@@ -38,7 +38,7 @@ app.use('/mypage', mypageRouter);//인증라우터
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use('/static', express.static('static'));
+
 
 app.use(logger('dev'));
 app.use(cookieParser());
@@ -46,6 +46,7 @@ app.use(cookieParser());
 
 // 정적 파일 제공을 위한 미들웨어 설정
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/static', express.static('static'));
 
 // "/mypage" 경로로 접근하면 "mypage" 파일을 제공
 app.get('/record', (req, res) => {

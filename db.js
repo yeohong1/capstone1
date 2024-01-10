@@ -1,3 +1,5 @@
+
+
 const knexConfiguration = {
   client: 'mssql',
   connection: {
@@ -9,6 +11,7 @@ const knexConfiguration = {
   }
 }
 const knex = require('knex')(knexConfiguration)
+
 
 Select('commmeal')
 function Insert(table,data) {//data는 {column:value} 형식

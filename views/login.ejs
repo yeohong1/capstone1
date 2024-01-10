@@ -1,31 +1,45 @@
 <!DOCTYPE html>
 <html lang='utf-8'>
+  <head>
     <meta charset="utf-8">
-    <head>
-        <title>register</title>
-        <link rel='stylesheet' href='/stylesheets/style.css' />
-    </head>
-    <body>
-        <div class="container mt-4">
-            <div class="card" style="width: 18rem;">            
-                <div class="card-header">Login Form</div>    
-                <div class="card-body">
-                    <form action="/auth/login_process" method="POST">
-                        <div class="mb-3">
-                            <label for="name-lgn" class="form-label">ID</label>
-                            <input type="text" class="login" name="username">                        
-                        </div> 
-                                                            
-                        <div class="mb-3">
-                            <label for="password-lgn" class="form-label">Password</label>
-                            <input type="password" class="login" name="pwd">
-                        </div>
-                        
-                        <button type="submit" class="btn">Login</button>
-                        <input type="button" value="back" onclick="javascript:location.href='/'">
-                    </form>
-                </div>
-            </div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-logo">
+          <img src="../images/health-logo.png" alt="logo-name" class="logo-name">
+          <h1>Healthly Life</h1>
         </div>
-    </body>
-    </html>
+      </div>
+    </header>
+    <section class="login-section">
+      <div class="inner">
+        <div class="container">
+          <h1>로그인</h1>
+          <form action="/auth/login_process" method="POST">
+            <div class="mb-3">
+              <label for="name-lgn" class="form-label">아이디&nbsp;&nbsp;&nbsp;&nbsp;</label>
+              <input type="text" class="login" name="username">
+            </div>
+    
+            <div class="mb-3">
+              <label for="password-lgn" class="form-label">비밀번호</label>
+              <input type="password" class="login" name="pwd">
+            </div>
+    
+            <div class="btnset">
+              <button type="submit" class="btn">로그인</button>
+              <input type="button" value="회원가입" onclick="javascript:location.href='/'">
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <footer>
+      
+    </footer>
+  </body>
+</html>

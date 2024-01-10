@@ -43,7 +43,7 @@ button{
 
 section .inner {
     max-width: 1480px;
-    padding: 0 20px;
+    padding: 60px 20px;
     margin: 0 auto;
 }
 
@@ -82,6 +82,7 @@ header .container .header-logo {
     display: flex;
     align-items: center;
     padding-right: 10px;
+    cursor: pointer;
 }
 
 header .container .header-logo .logo-name {
@@ -763,7 +764,9 @@ section .inner h3 {
     font-weight: 800;
 }
 
-.menu .dropdown-menu a:hover{
+.menu .dropdown-menu a:hover,
+.menu .first-menu a:hover,
+.menu li .active{
     color: #fff;
 }
 
@@ -771,7 +774,6 @@ section .inner h3 {
     padding-top: 105px;
 }
 .recorder .inner{
-    padding-top: 60px;
     display: flex;
     justify-content: space-between;
 }
@@ -877,6 +879,13 @@ section .inner h3 {
     position: absolute;
     right: 25px;
     gap: 10px;
+    bottom: 0;
+}
+
+.recorder .eat .dropdown,
+.recorder .eat .input {
+    position: relative;
+    padding-top: 8px;
 }
 
 .recorder h3{
@@ -942,9 +951,6 @@ section .inner h3 {
 .chart{
     padding-top: 105px;
 }
-.chart .inner{
-    padding: 60px 0px;
-}
 .chart h1{
     display: flex;
     justify-content: center;
@@ -968,4 +974,86 @@ section .inner h3 {
 }
 .chart canvas{
     padding-top: 30px;
+}
+/* login.html */
+.login-section{
+    padding-top: 64px;
+    background-color: #ffa6a6;
+    height: 100vh;
+}
+.login-section .inner{
+    padding: 150px 20px;
+}
+.login-section .container,
+.login-section .container-register{
+    background-color: #fff;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 60px 60px 70px 60px;
+    background: #fff;
+    border-radius: 20px;
+}
+.login-section h1{
+    text-align: center;
+    font-size: 45px;
+}
+.login-section form{
+    padding-top: 30px;
+    font-size: 20px;
+}
+.login-section .container .mb-3{
+    padding-top: 30px;
+}
+.login-section .container .mb-3 input{
+    height: 40px;
+    width: 401px;
+}
+.login-section .btnset{
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+.login-section .btnset .btn{
+    width: 315px;
+}
+.login-section .btnset input{
+    width: 130px;
+    margin-left: 45px;
+    cursor: pointer;
+}
+.login-section .btnset .btn,
+.login-section .btnset input,
+.login-section .container-register button{
+    background-color: #ffa6a6;
+    height: 50px;
+    border-radius: 10px;
+    border: 2px solid plum;
+    font-size: 20px;
+    font-style: bold;
+}
+.login-section .btnset .btn:hover,
+.login-section .btnset input:hover,
+.login-section .container-register button:hover{
+    background-color: plum;
+}
+.login-section .container-register table{
+    width: 100%;
+}
+.login-section .container-register tr{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+}
+.login-section .container-register input{
+    height: 40px;
+    width: 335px;
+}
+.login-section .container-register button{
+    margin-top: 50px;
+    width: 478px;
+}
+
+footer{
+    background-color: #fff;
+    height: 200px;
 }
