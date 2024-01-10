@@ -982,7 +982,8 @@ section .inner h3 {
 .login-section .inner{
     padding: 150px 20px;
 }
-.login-section .container{
+.login-section .container,
+.login-section .container-register{
     background-color: #fff;
     max-width: 600px;
     margin: 0 auto;
@@ -998,10 +999,10 @@ section .inner h3 {
     padding-top: 30px;
     font-size: 20px;
 }
-.login-section .mb-3{
+.login-section .container .mb-3{
     padding-top: 30px;
 }
-.login-section .mb-3 input{
+.login-section .container .mb-3 input{
     height: 40px;
     width: 401px;
 }
@@ -1019,7 +1020,8 @@ section .inner h3 {
     cursor: pointer;
 }
 .login-section .btnset .btn,
-.login-section .btnset input{
+.login-section .btnset input,
+.login-section .container-register button{
     background-color: #ffa6a6;
     height: 50px;
     border-radius: 10px;
@@ -1028,9 +1030,27 @@ section .inner h3 {
     font-style: bold;
 }
 .login-section .btnset .btn:hover,
-.login-section .btnset input:hover{
+.login-section .btnset input:hover,
+.login-section .container-register button:hover{
     background-color: plum;
 }
+.login-section .container-register table{
+    width: 100%;
+}
+.login-section .container-register tr{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+}
+.login-section .container-register input{
+    height: 40px;
+    width: 335px;
+}
+.login-section .container-register button{
+    margin-top: 50px;
+    width: 478px;
+}
+
 footer{
     background-color: #fff;
     height: 200px;
