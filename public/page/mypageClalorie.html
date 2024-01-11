@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <script src="/js/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="header-logo">
+        <img src="../images/health-logo.png" alt="logo-name" class="logo-name">
+        <h1>Healthly Life</h1>
+        <nav class="word-menu">
+          <a href="javascript">로그아웃</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <div class="menu">
+    <ul class="show-menu">
+      <li class="first-menu">
+        <a href="">기록하기</a>
+      </li>
+      <li class="last-menu"><a href="">통계</a>
+        <ul class="dropdown-menu">
+          <li><a href="">체중</a></li>
+          <li><a href="" class="active">칼로리</a></li>
+          <li><a href="">음수량</a></li>
+          <li><a href="">걸음수</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <section class="chart">
+    <div class="inner">
+      <h1>2024-01-08</h1>
+      <!-- <input type='date' id='currentDate'> -->
+      <ul class="content">
+        <li class="explain">
+          <h3>하루필요열량 알아보기</h3>
+          <p>하루에 섭취하여야 할 음식의 열량은 각자의 표준 체중과 활동 정도에 따라 다릅니다.<br>
+            예를 들면 운동선수나 심한 노동일을 하는 경우, 하루 종일 의자에 앉아 사무를 보는 경우보다 더 많은 열량을 섭취하여야 하는 것은 당연합니다. 하루 총필요열량을 계산하는 방법은 다음과
+            같습니다.<br>
+            <img src="../images/kcal.png" alt="kcal"><br>
+            예를 들어 표준체중이 60kg인 남자가 보통 활동을 한다면 하루 필요열량은 60 X 30 = 1800kcal입니다.<br>
+            한편 임신부나 수유부는 총열량요구량이 증가하므로 위에서 계산한 필요 열량에 300-500칼로리를 추가합니다.<br>
+            임신 전 체중이 표준체중의 범위에 속한 경우 임신기간 동안 약 10kg의 체중증가가 있도록 합니다.<br>
+            어린이나 청소년의 경우는 연령과 성장정도을 고려해 필요열량을 결정하여야 합니다.<br>
+            그러나 연령, 평소 식습관 및 실제 섭취량, 활동량에 따라 필요열량을 산정하는데 고려해야 할 사항들이 많으므로 정확한 필요열량을 알아보기 위해서는 임상영양사와 상담하시는 것을 권장합니다.<br>
+          </p><br>
+          <div class="calc">
+            <h5>나의 하루 필요 열량은?</h5>
+            <ul>
+              <li class="input">
+                <table border="1">
+                  <tr>
+                    <th>키</th>
+                    <td>180 cm</td>
+                  </tr>
+                  <tr>
+                    <th>체중</th>
+                    <td>50 kg</td>
+                  </tr>
+                  <tr>
+                    <th>성별</th>
+                    <td>
+                      <input type="radio">남자
+                      <input type="radio">여자
+                    </td>
+                  </tr>
+                </table>
+              </li>
+              <li class="calcBtn"><button>계산하기</button></li>
+              <!-- 계산하기 클릭시 style="display: flex"로 변경 -->
+              <li class="calcResult" style="display: none;">
+                <table border="1">
+                  <tr>
+                    <th>표준체중</th>
+                    <td><span>60.7</span> kg</td>
+                  </tr>
+                  <tr>
+                    <th>체질량지수</th>
+                    <td><span>20.8</span> kg/㎡</td>
+                  </tr>
+                  <tr>
+                    <th>하루 필요열량</th>
+                    <td><span>1821</span> kcal</td>
+                  </tr>
+                </table>
+                <p>
+                  표준체중은 <span>60.7kg</span>입니다.<br>
+                  현재체중은 <span>정상</span>입니다<br>
+                  [ <span>체중유지</span> ]를 위해 하루 <span>1821kcal</span>의 열량 섭취가 권장됩니다.<br>
+                  '보통의 활동을 하는 경우'에 해당되는 '하루 필요열량'입니다.<br>
+                </p>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="week-chart">
+          <h3>일주일 간 섭취한 칼로리의 변화</h3>
+          <canvas class="weekly" width="800" height="450"></canvas>
+        </li>
+        <li class="month-chart">
+          <h3>한 달 간 섭취한 칼로리의 변화</h3>
+          <canvas class="monthly" width="800" height="450"></canvas>
+        </li>
+        <li class="year-chart">
+          <h3>일년 간 섭취한 칼로리의 변화</h3>
+          <canvas class="yearly" width="800" height="450"></canvas>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <footer>
+
+  </footer>
+</body>
+<script>
+  new Chart(document.getElementsByClassName("weekly"), {
+    type: 'line',
+    data: {
+      labels: ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
+      datasets: [{
+        data: [1000, 1001, 1500, 1800, 1000, 2300, 5001],
+        borderColor: "#ff8b8bd9",
+        label: '나의 하루 칼로리',
+        tension: 0,
+        fill: false
+      }]
+    }
+  });
+  new Chart(document.getElementsByClassName("monthly"), {
+    type: 'line',
+    data: {
+      labels: [
+        "01/01", "01/02", "01/03", "01/04", "01/05", "01/06", "01/07",
+        "01/08", "01/09", "01/10", "01/11", "01/12", "01/13", "01/14",
+        "01/15", "01/16", "01/17", "01/18", "01/19", "01/20", "01/21",
+        "01/22", "01/23", "01/24", "01/25", "01/26", "01/27", "01/28",
+        "01/29", "01/30", "01/31"
+      ],
+      datasets: [{
+        data: [4000, 400, 4200, 5500, 5300, 5000, 6000, 5000, 5000, 5000, 5000, 5100, 5003, 5004,
+          4008, 4009, 5004, 4400, 4003, 4006, 6000, 6006, 4005, 4005, 4005, 5009, 6600, 4500, 4000, 4005, 4003],
+        borderColor: "#ff8b8bd9",
+        label: '나의 하루 칼로리',
+        tension: 0,
+        fill: false
+      }]
+    }
+  });
+  new Chart(document.getElementsByClassName("yearly"), {
+    type: 'line',
+    data: {
+      labels: [
+        "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06",
+        "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"
+      ],
+      datasets: [{
+        data: [4000, 4001, 4200, 5500, 5003, 5000, 6000, 4000, 4100, 4200, 5500, 5003, 5000],
+        borderColor: "#ff8b8bd9",
+        label: '나의 하루 칼로리',
+        tension: 0,
+        fill: false
+      }]
+    }
+  });
+</script>
+
+</html>

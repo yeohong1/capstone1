@@ -1055,6 +1055,63 @@ section .inner h3 {
     margin-top: 50px;
     width: 478px;
 }
+/* mypage3.html */
+.chart .calc{
+    background-color: #F9FAF8;
+    padding: 30px;
+}
+.chart .calc h5{
+    text-align: center;
+    padding-bottom: 30px;
+}
+.chart .calc ul{
+    display: flex;
+}
+.chart .calc table{
+    border-collapse: collapse;
+}
+.chart .calc table input[type='text']{
+    height: 30px;
+}
+.chart .calc table tr{
+    height: 50px;
+    width: 300px;
+}
+
+.chart .calc table th,
+.chart .calc table td{
+    padding: 0 70px;
+}
+.chart .calc table th{
+    padding: 0 40px;
+    background-color: #FAB0B0;
+    text-align: center;
+}
+.chart .calc .calcBtn{
+    padding-left: 50px;
+}
+.chart .calc button{
+    position: relative;
+    top: 40px;
+    border-radius: 50%;
+    height: 75px;
+    width: 75px;
+    background-color: #FAB0B0;
+    border: none;
+}
+.chart .calc .calcResult{
+    display: flex;
+    padding-left: 70px;
+}
+.chart .calc .calcResult p{
+    font-style: normal;
+    font-size: 15px;
+    padding-left: 20px;
+}
+.chart .calc .calcResult span{
+    color: #FF8B8B;
+    font-weight: 700;
+}
 
 footer{
     background-color: #fff;
