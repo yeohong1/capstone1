@@ -1,5 +1,3 @@
-
-
 const knexConfiguration = {
   client: 'mssql',
   connection: {
@@ -12,15 +10,24 @@ const knexConfiguration = {
 }
 const knex = require('knex')(knexConfiguration)
 
-// selectUserYn('hyjkim')
+//  selectUserYn('hyjkim')
 //회원 여부 조회
 function selectUserYn(userId) {
   knex.raw(
-    `
-    SELECT CASE WHEN MAX(userId) IS NULL THEN 'N' ELSE 'Y' END AS userYn
-      FROM commUser
-     WHERE userId = '${userId}'
-    `
+    `exec selectUserYn '${userId}'`
+    ).then((resp) => {
+  console.log(resp);
+  }
+).catch((err) => {
+    console.log(err);
+  });
+}
+
+//  selectBodyInfo('hyjkim', '02')
+//표준체중/bmi/하루필요열량 조회
+function selectBodyInfo(userId, gender) {
+  knex.raw(
+    `selectBodyInfo '${userId}', '${gender}'`
     ).then((resp) => {
   console.log(resp);
   }
@@ -35,30 +42,30 @@ function selectBodyInfo(userId, gender) {
   knex.raw(
     `
     SELECT ISNULL(A.stddWeight, 0) AS stddWeight
-    , ISNULL(A.bmi, 0) AS bmi
-    , ISNULL(A.dayNeedKcal, 0) AS dayNeedKcal
-    , CASE WHEN A.bmi >= 0 AND A.bmi < 18.5 THEN '저체중'
-           WHEN A.bmi >= 18.5 AND A.bmi < 23 THEN '정상'
-           WHEN A.bmi >= 23 AND A.bmi < 25 THEN '비만'
-           WHEN A.bmi >= 25 AND A.bmi < 30 THEN '경도비만'
-           WHEN A.bmi >= 30 AND A.bmi < 35 THEN '중정도비만'
-           WHEN A.bmi >= 35 THEN '고도비만'
-       END AS bmiNm 
- FROM (SELECT ROUND(POWER(ROUND(A.height/100, 3),2) * genderCalNum, 2) AS stddWeight -- 표준체중 : 키(M)^2 * 남자는22 여자는21
-            , ROUND(A.weight / ROUND(POWER(ROUND(A.height/100, 3),2), 3), 1) AS bmi -- BMI : 체중 / 키(M)^2 -- https://ourcalc.com/%eb%b9%84%eb%a7%8c%eb%8f%84-%ea%b3%84%ec%82%b0%ea%b8%b0/
-            , ROUND(POWER(ROUND(A.height/100, 3),2) * genderCalNum, 0) * 30 AS dayNeedKcal -- 하루필요열량 : 표준체중 * 30
-         FROM (SELECT A.height, B.weight
-                    , '${gender}' AS gender
-                    , CASE WHEN '${gender}' = '01' THEN 22
-                           WHEN '${gender}' = '02' THEN 21
-                       END AS genderCalNum
-                 FROM commUser A
-                 LEFT JOIN hethWegt B
-                   ON A.userId = B.userId
-                  AND LEFT(B.doDttm, 8) = CONVERT(VARCHAR, GETDATE(), 112) -- YYYYMMDD
-                 WHERE A.userId = '${userId}'
-              ) A
-      ) A
+         , ISNULL(CAST(A.bmi AS DECIMAL(10,6)),0) AS bmi
+         , ISNULL(A.dayNeedKcal, 0) AS dayNeedKcal
+         , CASE WHEN A.bmi >= 0 AND A.bmi < 18.5 THEN '저체중'
+                WHEN A.bmi >= 18.5 AND A.bmi < 23 THEN '정상'
+                WHEN A.bmi >= 23 AND A.bmi < 25 THEN '비만'
+                WHEN A.bmi >= 25 AND A.bmi < 30 THEN '경도비만'
+                WHEN A.bmi >= 30 AND A.bmi < 35 THEN '중정도비만'
+                WHEN A.bmi >= 35 THEN '고도비만'
+            END AS bmiNm 
+      FROM (SELECT ROUND(POWER(ROUND(A.height/100, 3),2) * genderCalNum, 2) AS stddWeight
+                 , ROUND(A.weight / ROUND(POWER(ROUND(A.height/100, 3),2), 3), 1) AS bmi
+                 , ROUND(POWER(ROUND(A.height/100, 3),2) * genderCalNum, 0) * 30 AS dayNeedKcal
+              FROM (SELECT A.height, B.weight
+                         , '${gender}' AS gender
+                         , CASE WHEN '${gender}' = '01' THEN 22
+                                WHEN '${gender}' = '02' THEN 21
+                            END AS genderCalNum
+                      FROM commUser A
+                      LEFT JOIN hethWegt B
+                        ON A.userId = B.userId
+                       AND LEFT(B.doDttm, 8) = CONVERT(VARCHAR, GETDATE(), 112) -- YYYYMMDD
+                      WHERE A.userId = '${userId}'
+                   ) A
+           ) A
     `
     ).then((resp) => {
   console.log(resp);

@@ -31,7 +31,7 @@
       <li class="last-menu"><a href="">통계</a>
         <ul class="dropdown-menu">
           <li><a href="/mypage/weight" method="GET">체중</a></li>
-          <li><a href="">칼로리</a></li>
+          <li><a href="/mypage/clalorie">칼로리</a></li>
           <li><a href="">음수량</a></li>
           <li><a href="">걸음수</a></li>
         </ul>
@@ -53,16 +53,36 @@
             <div class="dropdown">
               <h5>종류를 입력한 뒤 옆에서 선택해주세요.</h5>
               <form action="/mypage/record" method="POST">
-                <input type="text" class="eat-menu" placeholder="메뉴의 종류를 입력해주세요" id="foodName" name="foodName" required>
+                <input type="text" class="eat-menu" placeholder="메뉴의 종류를 입력해주세요" id="foodName" name="foodName">
                 <button type="submit" class="btn">검색</button>
-                <select name="selectedResult">
+              </form>
+              <form action="/mypage/input" method="POST">
+                <select name="selectedResult1">
                   <option value="">선택</option>
                   <% if (resultString) { %>
-                    <option value=""><%= resultString %></option>
+                    <% var keyword = '칼로리'; %>
+                    <% var index = resultString.indexOf(keyword); %>
+                    <% while (index !== -1) { %>
+                      <% var beforeKeyword = resultString.substring(0, index).trim(); %>
+                      <% if (beforeKeyword) { %>
+                        <option value="<%= beforeKeyword %>"><%= beforeKeyword %></option>
+                      <% } %>
+                      <% var afterKeyword = resultString.substring(index + keyword.length).trim(); %>
+                      <% var nextIndex = afterKeyword.indexOf(keyword); %>
+                      <% var valueToAdd = (nextIndex !== -1) ? afterKeyword.substring(0, nextIndex).trim() : afterKeyword.trim(); %>
+                      <% if (valueToAdd) { %>
+                        <option value="<%= valueToAdd %>"><%= valueToAdd %></option>
+                      <% } %>
+                      <% resultString = (nextIndex !== -1) ? afterKeyword.substring(nextIndex + keyword.length).trim() : ''; %>
+                      <% index = resultString.indexOf(keyword); %>
+                    <% } %>
+                    <% if (resultString) { %>
+                      <option value="<%= resultString  %>"><%= resultString %></option>
+                    <% } %>
                   <% } %>
                 </select>
                 <div class="eat-btn">
-                  <button>추가</button>
+                  <button type="button">추가</button>
                   <button type="submit" class="btn">제출</button>
                 </div>
               </form>
@@ -80,68 +100,115 @@
             </div>
             <input type="file" class="fileupload">
           </li>
+
           <li>
             <h3>Lanch</h3><img src="../images/lunch.png" alt="lunch" class="lunch"><br>
             <div class="dropdown">
               <h5>종류를 입력한 뒤 옆에서 선택해주세요.</h5>
-              <form action="">
-                <input type="text" class="eat-menu" placeholder="메뉴의 종류를 입력해주세요">
+              <form action="/mypage/record" method="POST">
+                <input type="text" class="eat-menu" placeholder="메뉴의 종류를 입력해주세요" id="foodName" name="foodName">
                 <button type="submit" class="btn">검색</button>
-                <select>
+              </form>
+              <form action="/mypage/input" method="POST">
+                <select name="selectedResult2">
                   <option value="">선택</option>
-                  <option value="">바나나</option>
-                  <option value="">요거트</option>
-                  <option value="">고구마</option>
+                  <% if (resultString) { %>
+                    <% var keyword = '칼로리'; %>
+                    <% var index = resultString.indexOf(keyword); %>
+                    <% while (index !== -1) { %>
+                      <% var beforeKeyword = resultString.substring(0, index).trim(); %>
+                      <% if (beforeKeyword) { %>
+                        <option value="<%= beforeKeyword %>"><%= beforeKeyword %></option>
+                      <% } %>
+                      <% var afterKeyword = resultString.substring(index + keyword.length).trim(); %>
+                      <% var nextIndex = afterKeyword.indexOf(keyword); %>
+                      <% var valueToAdd = (nextIndex !== -1) ? afterKeyword.substring(0, nextIndex).trim() : afterKeyword.trim(); %>
+                      <% if (valueToAdd) { %>
+                        <option value="<%= valueToAdd %>"><%= valueToAdd %></option>
+                      <% } %>
+                      <% resultString = (nextIndex !== -1) ? afterKeyword.substring(nextIndex + keyword.length).trim() : ''; %>
+                      <% index = resultString.indexOf(keyword); %>
+                    <% } %>
+                    <% if (resultString) { %>
+                      <option value="<%= resultString  %>"><%= resultString %></option>
+                    <% } %>
+                  <% } %>
                 </select>
                 <div class="eat-btn">
-                  <button>추가</button>
-                  <button>제출</button>
+                  <button type="button">추가</button>
+                  <button type="submit" class="btn">제출</button>
                 </div>
               </form>
             </div>
             <div class="input">
               <h5>찾는 음식이 없을 시 직접 메뉴의 이름과 칼로리를 입력해주세요.</h5>
-              <input type="text" class="eat-menu" placeholder="보기에 없는 메뉴를 입력해주세요">
-              <input type="text" class="eat-menu" placeholder="입력한 메뉴의 칼로리를 작성해주세요">
-              <div class="eat-btn">
-                <button>추가</button>
-                <button>제출</button>
-              </div>
+              <form action="/mypage/input" method="POST">
+                <input type="text" class="eat-menu" name="foodNm" placeholder="보기에 없는 메뉴를 입력해주세요">
+                <input type="text" class="eat-menu" name="kcal" placeholder="입력한 메뉴의 칼로리를 작성해주세요">
+                <div class="eat-btn">
+                  <button>추가</button>
+                  <button type="submit" class="btn">제출</button>
+                </div>
+              </form>
             </div>
             <input type="file" class="fileupload">
           </li>
+
           <li>
             <h3>Dinner</h3><img src="../images/dinner.png" alt="dinner" class="dinner"><br>
             <div class="dropdown">
               <h5>종류를 입력한 뒤 옆에서 선택해주세요.</h5>
-              <form action="">
-                <input type="text" class="eat-menu" placeholder="메뉴의 종류를 입력해주세요">
+             <form action="/mypage/record" method="POST">
+                <input type="text" class="eat-menu" placeholder="메뉴의 종류를 입력해주세요" id="foodName" name="foodName">
                 <button type="submit" class="btn">검색</button>
-                <select>
+              </form>
+              <form action="/mypage/input" method="POST">
+                <select name="selectedResult3">
                   <option value="">선택</option>
-                  <option value="">바나나</option>
-                  <option value="">요거트</option>
-                  <option value="">고구마</option>
+                  <% if (resultString) { %>
+                    <% var keyword = '칼로리'; %>
+                    <% var index = resultString.indexOf(keyword); %>
+                    <% while (index !== -1) { %>
+                      <% var beforeKeyword = resultString.substring(0, index).trim(); %>
+                      <% if (beforeKeyword) { %>
+                        <option value="<%= beforeKeyword %>"><%= beforeKeyword %></option>
+                      <% } %>
+                      <% var afterKeyword = resultString.substring(index + keyword.length).trim(); %>
+                      <% var nextIndex = afterKeyword.indexOf(keyword); %>
+                      <% var valueToAdd = (nextIndex !== -1) ? afterKeyword.substring(0, nextIndex).trim() : afterKeyword.trim(); %>
+                      <% if (valueToAdd) { %>
+                        <option value="<%= valueToAdd %>"><%= valueToAdd %></option>
+                      <% } %>
+                      <% resultString = (nextIndex !== -1) ? afterKeyword.substring(nextIndex + keyword.length).trim() : ''; %>
+                      <% index = resultString.indexOf(keyword); %>
+                    <% } %>
+                    <% if (resultString) { %>
+                      <option value="<%= resultString  %>"><%= resultString %></option>
+                    <% } %>
+                  <% } %>
                 </select>
                 <div class="eat-btn">
-                  <button>추가</button>
-                  <button>제출</button>
+                  <button type="button">추가</button>
+                  <button type="submit" class="btn">제출</button>
                 </div>
               </form>
             </div>
             <div class="input">
               <h5>찾는 음식이 없을 시 직접 메뉴의 이름과 칼로리를 입력해주세요.</h5>
-              <input type="text" class="eat-menu" placeholder="보기에 없는 메뉴를 입력해주세요">
-              <input type="text" class="eat-menu" placeholder="입력한 메뉴의 칼로리를 작성해주세요">
-              <div class="eat-btn">
-                <button>추가</button>
-                <button>제출</button>
-              </div>
+              <form action="/mypage/input" method="POST">
+                <input type="text" class="eat-menu" name="foodNm" placeholder="보기에 없는 메뉴를 입력해주세요">
+                <input type="text" class="eat-menu" name="kcal" placeholder="입력한 메뉴의 칼로리를 작성해주세요">
+                <div class="eat-btn">
+                  <button>추가</button>
+                  <button type="submit" class="btn">제출</button>
+                </div>
+              </form>
             </div>
             <input type="file" class="fileupload">
           </li>
         </ul>
       </li>
+
       <ul class="right">
         <h3>오늘 체중과 신장을 입력해주세요</h3>
         <li class="right-content">

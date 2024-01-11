@@ -23,57 +23,94 @@ router.post('/input', async (req, res) => {
         // const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
         // const doDttm = date.toLocaleDateString('ko-KR', options).replace(/\./g, '');
         // console.log(doDttm); // 예: 20240111
-        const date = new Date();
-        const doDttm = moment(date).format('YYYYMMDD');
         
-        console.log(doDttm);
-        //const foodCd = 
-       
         //const userId =req.body.userId;
         const userId = 'jieun';//test
-
-        const foodNm = req.body.foodNm;
-        const kcal = req.body.kcal;
-        //const mealCd = mealCd;//null 식사구분
-        //const seq = seq;//null 순번
-
-        const weight = req.body.Weight;
-        const height = req.body.Tall;
         
-        const drnkAmnt = req.body.drnkAmnt;
-        const stepCnt = req.body.stepCnt;
+        for (let i = 1; i <= 3; i++) {
+            
+
+            // let mealCd1tKey = `mealCd1${i}`;
+            // let mealCd1 = req.body[mealCd1tKey];
+            // mealCd1 += ` 0${i}`;
 
 
-        console.log(doDttm);
-        console.log(weight);
-        console.log(height);
-        console.log(drnkAmnt);
-        console.log(stepCnt);
-        console.log(foodNm);
-        console.log(kcal);
-        // db.js의 함수를 호출하여 데이터베이스에 삽입
+            let selectedResultKey = `selectedResult${i}`;
+            let selectedResult = req.body[selectedResultKey];
+            selectedResult += ` 0${i}`;
+      
+            if (selectedResult) {
+              // 선택된 값 분석
+              let parts = selectedResult.split(' ');
+      
+              // 첫 번째 부분은 foodCd
+              let foodCd = parts[0];
+      
+              // 두 번째 부분을 공백을 기준으로 다시 분리
+              let foodInfo = parts[1].split(':');
+      
+              // 두 번째 부분의 첫 번째 부분은 foodNm
+              let foodNm = foodInfo[0];
+      
+              // 두 번째 부분의 두 번째 부분은 kcal
+              let kcal = foodInfo[1];
+      
+              // 세 번째 부분은 meal
+              let mealCd = parts[2];
+      
+              console.log(foodCd);
+              console.log(foodNm);
+              console.log(kcal);
+              console.log(mealCd);
+       
+            
+      
+              const foodNm1 = req.body.foodNm;
+              const kcal1 = req.body.kcal;
 
-        if (kcal) {
-            db.insertTable('commMeal', { foodNm, kcal,inputDttm });
-        }
-
-        // if (height) {
-        //     db.insertTable('commUser', { userId, height });
-        //     console.log(height);
-        // }
-        if (drnkAmnt) {
-            db.insertTable('hethDrnk', {userId, drnkAmnt,doDttm });
-        }
-        if (weight) {
-            db.insertTable('hethWegt', { userId, weight,doDttm });
-        }
-        if (stepCnt) {
-            db.insertTable('hethExer', { userId, stepCnt,doDttm });
-        }
-        console.log("Data inserted successfully.");
+            
         
-    
+
+              const weight = req.body.Weight;
+              const height = req.body.Tall;
+            
+              const drnkAmnt = req.body.drnkAmnt;
+              const stepCnt = req.body.stepCnt;
+
+                console.log(foodNm1);
+                console.log(kcal1);
+                //console.log(mealCd1);
+                console.log(weight);
+                console.log(height);
+                console.log(drnkAmnt);
+                console.log(stepCnt);
+                console.log(foodNm);
+                console.log(kcal);
+                // db.js의 함수를 호출하여 데이터베이스에 삽입
+
+                if (kcal) {
+                    db.insertTable('hethMeal', { foodNm, foodNm1 ,kcal,kcal1,foodCd, userId });
+                }
+
+                // if (userNm) {
+                //     db.insertTable('commUser', { userId,  });
+                //   
+                // }
+                if (drnkAmnt) {
+                    db.insertTable('hethDrnk', {userId, drnkAmnt });
+                }
+                if (weight) {
+                    db.insertTable('hethWegt', { userId, weight});
+                    }
+                if (stepCnt) {
+                    db.insertTable('hethExer', { userId, stepCnt });
+                    
+                     }
+
+                    console.log("Data inserted successfully.");
         
+            }
+    }
         res.redirect('/mypage/record');
     } catch (error) {
         console.error('Error:', error);
@@ -100,6 +137,11 @@ console.log('month: ' + month);
 console.log('day: ' + day);
 });
 
+router.get('/clalorie', function (req, res) {
+    res.render('mypageClalorie.ejs');
+
+});
+
 
 // HTTP 요청 보내기
 router.post('/record', async (req, res) => {
@@ -114,7 +156,7 @@ router.post('/record', async (req, res) => {
         const serviceName = 'I2790';
         const requestFileType = 'json';
         const requestStartPoint = 0;
-        const requestEndPoint = 5;
+        const requestEndPoint = 1000;
         var calories;
         var foodname;
        
@@ -126,7 +168,7 @@ router.post('/record', async (req, res) => {
 
       
          // 응답에서 5개의 결과를 추출
-         const resultArray = response.data.I2790.row.slice(0, 5);
+         const resultArray = response.data.I2790.row.slice(0, 10);
 
          // 각 결과를 출력
          let resultString = '';
@@ -134,15 +176,16 @@ router.post('/record', async (req, res) => {
              var calories = result.NUTR_CONT1;
              var foodname = result.DESC_KOR;
              var foodCd= result.FOOD_CD;
-            resultString += `${foodCd}${foodname}: ${calories}칼로리\n`;
+            resultString += `${foodCd} ${foodname}:${calories}칼로리\n`;
              //console.log(resultString);
+             
         });
 
          // 결과 저장
-         res.locals.resultString = { foodName, resultString };
+         res.locals.resultString = { resultString };
         console.log(resultString);
-        res.render('mypageRecord.ejs',{ resultString: foodName, resultString })
-        console.log(resultString.foodCd);
+        res.render('mypageRecord.ejs',{ resultString:resultString })
+       // console.log(resultString.foodCd);
     } catch (error) {
             console.error('Error:', error);
             res.status(500).send('Internal Server Error');
@@ -150,4 +193,3 @@ router.post('/record', async (req, res) => {
     });
 
 module.exports = router;
-
