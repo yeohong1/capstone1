@@ -1045,7 +1045,7 @@ section .inner h3 {
 .login-section .container-register tr{
     display: flex;
     justify-content: space-between;
-    padding-top: 30px;
+    padding-top: 20px;
 }
 .login-section .container-register input{
     height: 40px;
