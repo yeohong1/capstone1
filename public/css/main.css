@@ -856,9 +856,6 @@ section .inner h3 {
     border: 1px solid #ff8b8bd9;
     font-size: 14px;
 }
-.recorder .eat .input{
-    padding-top: 6px;
-}
 .recorder .eat li .fileupload{
     position: absolute;
     bottom: 20px;
@@ -885,7 +882,13 @@ section .inner h3 {
 .recorder .eat .dropdown,
 .recorder .eat .input {
     position: relative;
-    padding-top: 8px;
+    padding-top: 10px;
+}
+.recorder .eat .dropdown .eat-menu{
+    width: 200px;
+}
+.recorder .eat .dropdown form>button{
+    margin-right: 10px;
 }
 
 .recorder h3{
