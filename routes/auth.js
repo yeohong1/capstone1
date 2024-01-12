@@ -25,7 +25,7 @@ router.post('/register_process', async (req, res, next) => {
                 res.send(`<script type="text/javascript">alert("이미 존재하는 회원아이디"); document.location.href="/auth/register";</script>`);
             } else if (password === password2) {
                 await db.insertTable('commUser', { userId, password, userNm });
-                res.send(`<script type="text/javascript">alert("회원가입이 완료되었습니다."); document.location.href="/mypage/record";</script>`);
+                res.send(`<script type="text/javascript">alert("회원가입이 완료되었습니다."); document.location.href="/auth/login";</script>`);
             } else {
                 // 입력된 비밀번호가 서로 다름
                 res.send(`<script type="text/javascript">alert("입력된 비밀번호가 서로 다릅니다."); document.location.href="/auth/register";</script>`);

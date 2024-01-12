@@ -17,45 +17,59 @@ app.use('/static',express.static('static'));
 router.post('/input', async (req, res) => {
     
     try {
-        // const date = new Date(); // 날짜 생성
-        // console.log(date.toLocaleDateString('ko-kr'));
+        const date = new Date(); // 날짜 생성
+       
+        // YYYY-MM-DD 형식으로 변환
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        const inputDttm = `${year}-${month}-${day}`;
+        const updDttm = `${year}-${month}-${day}`;
 
-        // const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        // const doDttm = date.toLocaleDateString('ko-KR', options).replace(/\./g, '');
-        // console.log(doDttm); // 예: 20240111
+        // "YYYYMMDD" 형식으로 변환
+        const doDate = date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\D/g, '');
+        console.log('Do Date:', doDate);
+
         
         //const userId =req.body.userId;
         const userId = 'jieun';//test
+        const foodNm1 = req.body.foodNm;
+       // const kcal1 = req.body.kcal;//없는메뉴
+
+        const weight = req.body.Weight;
+        const height = req.body.Tall;
+    
+        const drnkAmnt = req.body.drnkAmnt;
+        const stepCnt = req.body.stepCnt;
         
         for (let i = 1; i <= 3; i++) {
             
-
-            // let mealCd1tKey = `mealCd1${i}`;
-            // let mealCd1 = req.body[mealCd1tKey];
-            // mealCd1 += ` 0${i}`;
-
+            let mealCd1tKey = `kcal${i}`;
+            let mealCd1 = req.body[mealCd1tKey];//kcal1,2,3 input 받아옴
+            mealCd1 += ` 0${i}`;// input값 + 01
+            console.log(mealCd1);
 
             let selectedResultKey = `selectedResult${i}`;
             let selectedResult = req.body[selectedResultKey];
             selectedResult += ` 0${i}`;
       
-            if (selectedResult) {
+            if (selectedResult.endsWith('01')) {
               // 선택된 값 분석
               let parts = selectedResult.split(' ');
       
-              // 첫 번째 부분은 foodCd
+              // foodCd
               let foodCd = parts[0];
       
-              // 두 번째 부분을 공백을 기준으로 다시 분리
+             
               let foodInfo = parts[1].split(':');
       
-              // 두 번째 부분의 첫 번째 부분은 foodNm
+              // foodNm
               let foodNm = foodInfo[0];
       
-              // 두 번째 부분의 두 번째 부분은 kcal
+              //  kcal
               let kcal = foodInfo[1];
       
-              // 세 번째 부분은 meal
+              //  mealCd
               let mealCd = parts[2];
       
               console.log(foodCd);
@@ -64,58 +78,140 @@ router.post('/input', async (req, res) => {
               console.log(mealCd);
        
             
-      
-              const foodNm1 = req.body.foodNm;
-              const kcal1 = req.body.kcal;
-
             
-        
-
-              const weight = req.body.Weight;
-              const height = req.body.Tall;
-            
-              const drnkAmnt = req.body.drnkAmnt;
-              const stepCnt = req.body.stepCnt;
-
-                console.log(foodNm1);
-                console.log(kcal1);
-                //console.log(mealCd1);
-                console.log(weight);
-                console.log(height);
-                console.log(drnkAmnt);
-                console.log(stepCnt);
-                console.log(foodNm);
-                console.log(kcal);
                 // db.js의 함수를 호출하여 데이터베이스에 삽입
 
                 if (kcal) {
-                    db.insertTable('hethMeal', { foodNm, foodNm1 ,kcal,kcal1,foodCd, userId });
+                    db.insertTable('hethMeal', {foodNm ,kcal,foodCd, userId,mealCd,inputDttm,updDttm, doDate});
+                    console.log(foodNm ,kcal,foodCd, userId,mealCd,inputDttm,updDttm,doDate);
                 }
+            }
+            else if (selectedResult.endsWith('02')) {
+                // 선택된 값 분석
+                let parts = selectedResult.split(' ');
+        
+                // 첫 번째 부분은 foodCd
+                let foodCd = parts[0];
+        
+                // 두 번째 부분을 공백을 기준으로 다시 분리
+                let foodInfo = parts[1].split(':');
+        
+                // 두 번째 부분의 첫 번째 부분은 foodNm
+                let foodNm = foodInfo[0];
+        
+                // 두 번째 부분의 두 번째 부분은 kcal
+                let kcal = foodInfo[1];
+        
+                // 세 번째 부분은 meal
+                let mealCd = parts[2];
+        
+                console.log(foodCd);
+                console.log(foodNm);
+                console.log(kcal);
+                console.log(mealCd);
+         
+                  // db.js의 함수를 호출하여 데이터베이스에 삽입
+  
+                  if (kcal) {
+                    db.insertTable('hethMeal', {foodNm ,kcal,foodCd, userId,mealCd,inputDttm,updDttm, doDate});
+                    console.log(foodNm ,kcal,foodCd, userId,mealCd,inputDttm,updDttm,doDate);
+                }
+            }
 
-                // if (userNm) {
-                //     db.insertTable('commUser', { userId,  });
-                //   
-                // }
+            else if (selectedResult.endsWith('03')) {
+                // 선택된 값 분석
+                let parts = selectedResult.split(' ');
+        
+                // 첫 번째 부분은 foodCd
+                let foodCd = parts[0];
+        
+                // 두 번째 부분을 공백을 기준으로 다시 분리
+                let foodInfo = parts[1].split(':');
+        
+                // 두 번째 부분의 첫 번째 부분은 foodNm
+                let foodNm = foodInfo[0];
+        
+                // 두 번째 부분의 두 번째 부분은 kcal
+                let kcal = foodInfo[1];
+        
+                // 세 번째 부분은 meal
+                let mealCd = parts[2];
+        
+                console.log(foodCd);
+                console.log(foodNm);
+                console.log(kcal);
+                console.log(mealCd);
+         
+                  // db.js의 함수를 호출하여 데이터베이스에 삽입
+  
+                  if (kcal) {
+                    db.insertTable('hethMeal', {foodNm ,kcal,foodCd, userId,mealCd,inputDttm,updDttm, doDate});
+                    console.log(foodNm ,kcal,foodCd, userId,mealCd,inputDttm,updDttm,doDate);
+                }
+            }
+            //없는 메뉴
+             if (mealCd1.endsWith('01')) { 
+                let parts = mealCd1.split(' ');  
+                let kcal1 = parts[0]; 
+                let mealCd = parts[1];
+                    console.log("ok");   
+
+                if (kcal1) {
+                    db.insertTable('hethMeal', { foodNm1 ,kcal1, userId,mealCd,inputDttm,updDttm, doDate });
+                    console.log(foodNm1 ,kcal1, mealCd,userId,inputDttm,updDttm, doDate);
+                }
+            }
+              else if (mealCd1.endsWith('02')) {
+                let parts = mealCd1.split(' ');  
+                let kcal1 = parts[0]; 
+                let mealCd = parts[1];   
+                console.log("ok");   
+
+                if (kcal1) {
+                    db.insertTable('hethMeal', { foodNm1 ,kcal1, userId,mealCd,inputDttm,updDttm, doDate });
+                    console.log(foodNm1 ,kcal1, userId,mealCd,inputDttm,updDttm, doDate);
+                }
+             }
+             else if (mealCd1.endsWith('03')) { 
+                let parts = mealCd1.split(' ');  
+                let kcal1 = parts[0]; 
+                let mealCd = parts[1];  
+                console.log("ok");   
+
+                if (kcal1) {
+                    db.insertTable('hethMeal', { foodNm1 ,kcal1, userId,mealCd,inputDttm,updDttm, doDate });
+                    console.log(foodNm1 ,kcal1, userId,mealCd,inputDttm,updDttm, doDate);
+                }
+             }
+
+                if (height) {
+                    db.insertTable('commUser', {userId, height,inputDttm,updDttm });//수정하기
+                    console.log(userId, height,inputDttm,updDttm);
+                }
                 if (drnkAmnt) {
-                    db.insertTable('hethDrnk', {userId, drnkAmnt });
+                    db.insertTable('hethDrnk', {userId, drnkAmnt,doDate,inputDttm,updDttm });
+                    console.log(userId, drnkAmnt,doDate,inputDttm,updDttm);
                 }
                 if (weight) {
-                    db.insertTable('hethWegt', { userId, weight});
+                    db.insertTable('hethWegt', { userId, weight,doDate,inputDttm,updDttm});
+                    console.log(userId, weight,doDate,inputDttm,updDttm);
                     }
                 if (stepCnt) {
-                    db.insertTable('hethExer', { userId, stepCnt });
+                    db.insertTable('hethExer', { userId, stepCnt,doDate,inputDttm,updDttm });
+                    console.log(userId, stepCnt,doDate,inputDttm,updDttm);
                     
-                     }
+                     }   
 
-                    console.log("Data inserted successfully.");
+                    //console.log("Data inserted successfully.");
         
-            }
-    }
-        res.redirect('/mypage/record');
-    } catch (error) {
+        }
+        
+            res.redirect('/mypage/record');
+    } 
+        catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
-    }
+        }
     
 });
 
@@ -141,6 +237,10 @@ router.get('/clalorie', function (req, res) {
     res.render('mypageClalorie.ejs');
 
 });
+
+router.get('/water', function(req, res){
+    res.render('mypageWater.ejs');
+})
 
 
 // HTTP 요청 보내기
@@ -168,7 +268,7 @@ router.post('/record', async (req, res) => {
 
       
          // 응답에서 5개의 결과를 추출
-         const resultArray = response.data.I2790.row.slice(0, 10);
+         const resultArray = response.data.I2790.row.slice(0, 100);
 
          // 각 결과를 출력
          let resultString = '';
