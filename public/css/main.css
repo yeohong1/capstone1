@@ -887,6 +887,9 @@ section .inner h3 {
 .recorder .eat .dropdown .eat-menu{
     width: 200px;
 }
+.recorder .eat .dropdown form{
+    display: inline-block;
+}
 .recorder .eat .dropdown form>button{
     margin-right: 10px;
 }
