@@ -1059,8 +1059,9 @@ section .inner h3 {
     width: 478px;
 }
 /* mypage3.html */
-.chart .calc{
-    background-color: #F9FAF8;
+.chart .calc,
+.chart .explain .showcalc{
+    background-color: #F8F8F8;
     padding: 30px;
 }
 .chart .calc h5{
@@ -1114,6 +1115,32 @@ section .inner h3 {
 .chart .calc .calcResult span{
     color: #FF8B8B;
     font-weight: 700;
+}
+/* water.html */
+.chart .explain .showcalc h1{
+    border: none;
+}
+.chart .explain .showcalc h1 span{
+    color: #6ed5e9;
+}
+.chart .explain .showcalc .data{
+    background-color: #EEEEEE;
+    padding: 60px 20px;
+    width: 425px;
+    height: 240px;
+}
+.chart .explain .showcalc h4,
+.chart .explain .showcalc h5{
+    text-align: center;
+}
+.chart .explain .showcalc ul{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 150px 0px;
+}
+.chart .explain .showcalc img{
+    width: 425px;
+    height: 240px;
 }
 
 footer{

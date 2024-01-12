@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <script src="/js/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="header-logo">
+        <img src="../images/health-logo.png" alt="logo-name" class="logo-name">
+        <h1>Healthly Life</h1>
+        <nav class="word-menu">
+          <a href="javascript">로그아웃</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <div class="menu">
+    <ul class="show-menu">
+      <li class="first-menu">
+        <a href="">기록하기</a>
+      </li>
+      <li class="last-menu"><a href="">통계</a>
+        <ul class="dropdown-menu">
+          <li><a href="">체중</a></li>
+          <li><a href="">칼로리</a></li>
+          <li><a href="" class="active">음수량</a></li>
+          <li><a href="">걸음수</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <section class="chart">
+    <div class="inner">
+      <h1>2024-01-08</h1>
+      <ul class="content">
+        <li class="explain">
+          <h3>하루필요 음수량 알아보기</h3>
+          <p>
+            몸에서 일어나는 물의 작용을 구체적으로 나열해 봅니다.<br>
+            체온 조절, 혈압 유지, 노폐물 제거, 산소 운반, 영양소 운반, 면역물질 운반 및 분비, 세포간 정보 전달, 노화 방지, 피부 탄력 유지, 변비 예방 등등 인체의 거의 모든 작동에 수분이
+            역할을 합니다.<br>
+            세계보건기구(WHO)가 권장하는 하루 물 섭취량은 1.5~2L입니다. 200mL가 들어가는 일반적인 컵으로 약 8~10잔 정도입니다. <br>
+            또 전문가들은 키와 몸무게를 더하고, 100으로 나눈 값이 개인이 마셔야하는 적정한 물의 양이라고도 합니다. 물론 전문가들은 물을 많이 마신다고 무조건 좋은 것은 아니다고 합니다. <br>
+            너무 많이 마시면 부족한 것만큼이나 해롭다는 것이죠. 물을 너무 많이 마시면 저나트륨혈증에 빠질 수 있고, 종아리나 눈 아래, 손 등이 붓는 현상이 나타난다고 합니다.<br>
+          </p><br>
+          <div class="showcalc">
+            <h5>물도 하루 권장량이 있다는 사실을 알고계신가요?</h5>
+            <ul>
+              <li class="input">
+                <h4>세계보건기구(WHO)</h4>
+                <h5>하루 물 섭취 권장량</h5>
+                <img src="../images/who.png" alt="who">
+              </li>
+              <li class="result">
+                <h4>자신에게 맞는</h4>
+                <h5>하루 물 섭취 권장량</h5>
+                <div class="data">
+                  <h1>(160cm + 50kg) / 100</h1>
+                  <h1>=&nbsp;<span>2.1L</span></h1>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="week-chart">
+          <h3>일주일 간 섭취한 음수량의 변화</h3>
+          <canvas class="weekly" width="800" height="450"></canvas>
+        </li>
+        <li class="month-chart">
+          <h3>한 달 간 섭취한 음수량의 변화</h3>
+          <canvas class="monthly" width="800" height="450"></canvas>
+        </li>
+        <li class="year-chart">
+          <h3>일년 간 섭취한 음수량의 변화</h3>
+          <canvas class="yearly" width="800" height="450"></canvas>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <footer>
+
+  </footer>
+</body>
+<script>
+  new Chart(document.getElementsByClassName("weekly"), {
+    type: 'line',
+    data: {
+      labels: ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
+      datasets: [{
+        data: [1000, 1001, 1500, 1800, 1000, 2300, 5001],
+        borderColor: "#6ed5e9",
+        label: '나의 하루 음수량',
+        tension: 0,
+        fill: false
+      }]
+    }
+  });
+  new Chart(document.getElementsByClassName("monthly"), {
+    type: 'line',
+    data: {
+      labels: [
+        "01/01", "01/02", "01/03", "01/04", "01/05", "01/06", "01/07",
+        "01/08", "01/09", "01/10", "01/11", "01/12", "01/13", "01/14",
+        "01/15", "01/16", "01/17", "01/18", "01/19", "01/20", "01/21",
+        "01/22", "01/23", "01/24", "01/25", "01/26", "01/27", "01/28",
+        "01/29", "01/30", "01/31"
+      ],
+      datasets: [{
+        data: [1000, 1000, 1000, 1000, 5300, 5000, 6000, 5000, 5000, 5000, 5000, 5100, 5003, 5004,
+          4008, 4009, 5004, 4400, 4003, 4006, 6000, 1000, 4005, 4005, 4005, 5009, 6600, 4500, 4000, 4005, 4003],
+        borderColor: "#6ed5e9",
+        label: '나의 하루 음수량',
+        tension: 0,
+        fill: false
+      }]
+    }
+  });
+  new Chart(document.getElementsByClassName("yearly"), {
+    type: 'line',
+    data: {
+      labels: [
+        "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06",
+        "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"
+      ],
+      datasets: [{
+        data: [4000, 4001, 4200, 1000, 5003, 5000, 6000, 4000, 4100, 1000, 5500, 5003, 1000],
+        borderColor: "#6ed5e9",
+        label: '나의 하루 음수량',
+        tension: 0,
+        fill: false
+      }]
+    }
+  });
+</script>
+
+</html>
