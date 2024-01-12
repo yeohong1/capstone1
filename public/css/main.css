@@ -1143,7 +1143,45 @@ section .inner h3 {
     height: 240px;
 }
 
+/* footer.html */
 footer{
     background-color: #fff;
-    height: 200px;
+}
+footer .container{
+    max-width: 1540px;
+    padding: 30px 0px;
+    margin: 0 auto;
+    display: table;
+}
+footer .container .logo{
+    display: flex;
+    align-items: center;
+    padding-bottom: 5px;
+}
+footer .container .address{
+    padding-top: 5px;
+}
+footer .container .comment{
+    font-weight: 600;
+    color: #ff8b8bd9;
+}
+footer .container img{
+    width: 25px;
+    height: 25px;
+}
+footer .container ul{
+    display: flex;
+}
+footer .container ul li{
+    padding: 0px 5px;
+}
+footer .container ul li:first-child{
+    padding-left: 0;
+}
+footer .container ul li+li{
+    border-left: 1px solid #000;
+}
+footer .bar{
+    background-color: #faafaffb;
+    height: 30px;
 }
