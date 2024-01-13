@@ -23,6 +23,32 @@ function selectUserYn(userId) {
   });
 }
 
+// saveApiMeal('hyjkim', '02', 'D000288', '곰보빵', '277.34')
+//api 제출(저장) 버튼
+function saveApiMeal(userId, mealCd, foodCd, foodNm, kcal) {
+  knex.raw(
+    `exec saveApiMeal '${userId}', '${mealCd}', '${foodCd}', '${foodNm}', '${kcal}'`
+    ).then((resp) => {
+  console.log(resp);
+  }
+).catch((err) => {
+    console.log(err);
+  });
+}
+
+// saveDrtMeal('hyjkim', '03', 'hyjkim 사용자입력 음식명3', '700')
+//사용자 직접입력 inputbox 제출(저장) 버튼
+function saveDrtMeal(userId, mealCd, foodNm, kcal) {
+  knex.raw(
+    `exec saveDrtMeal '${userId}', '${mealCd}', '${foodNm}', '${kcal}'`
+    ).then((resp) => {
+  console.log(resp);
+  }
+).catch((err) => {
+    console.log(err);
+  });
+}
+
 //  selectBodyInfo('hyjkim', '02')
 //표준체중/bmi/하루필요열량 조회
 function selectBodyInfo(userId, gender) {
@@ -169,5 +195,7 @@ module.exports = {
   },
   deleteTable: function (table, targetColumn, targetData) {
     Delete(table, targetColumn, targetData);
-  }
-}
+  },
+  saveApiMeal,
+  saveDrtMeal,
+};
