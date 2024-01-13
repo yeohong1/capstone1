@@ -16,6 +16,11 @@ app.use('/static',express.static('static'));
 //db 다른음식,체중신장,음수,걸음수 입력받음
 router.post('/input', async (req, res) => {
     try {
+        // const selectedResult1 = req.body.selectedResult1;
+        // const selectedResult2 = req.body.selectedResult2;
+        // const selectedResult3 = req.body.selectedResult3;
+
+        //res.locals.selectedResults = { selectedResult1, selectedResult2, selectedResult3 };
 
         const date = new Date(); // 날짜 생성
        
@@ -43,36 +48,46 @@ router.post('/input', async (req, res) => {
             mealCd1 += ` 0${i}`;
 
         
-           console.log(foodNm, mealCd1);
+           //console.log(foodNm, mealCd1);
 
             let selectedResultKey = `selectedResult${i}`;
             let selectedResult = req.body[selectedResultKey];
             selectedResult += ` 0${i}`;
+            console.log("Iteration", i);
+            console.log("mealCd1:", mealCd1);
+            console.log("selectedResult:", selectedResult);
+            
 
-            if (selectedResult.endsWith('01') || selectedResult.endsWith('02') || selectedResult.endsWith('03')) {
+            if (selectedResult.indexOf('undefined') === -1 && (selectedResult.endsWith('01') || selectedResult.endsWith('02') || selectedResult.endsWith('03'))) {
                 // 선택된 값 분석
+                console.log(selectedResult);
                 let parts = selectedResult.split(' ');
                 let foodCd = parts[0];
                 let foodInfo = parts[1].split(':');
                 let foodNm = foodInfo[0];
-                let kcalString = foodInfo[1];
-                let kcal = parseFloat(kcalString);
+                let kcal = foodInfo[1];
                 let mealCd = parts[2];
 
-                console.log(typeof kcal);
+               
 
+                //console.log(typeof kcal);
+                console.log("Inside if block for selectedResult");
                 // db.js의 함수를 호출하여 데이터베이스에 삽입
                 if (kcal) {
-                    db.saveApiMeal('hethMeal', { foodNm, kcal, foodCd, userId, mealCd });
-                    console.log(foodNm, kcal, foodCd, userId, mealCd);
+                    console.log("db입력1");
+                    db.saveApiMeal(userId,mealCd,foodCd,foodNm, kcal);
+                    console.log( userId,mealCd,foodCd,foodNm, kcal);
                     console.log("ok");
                     
-
                 }
             } else {
+                console.log("Inside else block for selectedResult");
+                console.log("mealCd1", mealCd1);
+
+                
                 // kcal1에 대한 처리
-                if (mealCd1.endsWith('01') || mealCd1.endsWith('02') || mealCd1.endsWith('03')) {
-                    console.log("메뉴없는거1");
+                if (mealCd1.indexOf('undefined') === -1 && mealCd1.endsWith('01') || mealCd1.endsWith('02') || mealCd1.endsWith('03')) {
+                    console.log("3");
                     let parts = mealCd1.split(' ');
                     let kcal = parts[0];
                     let mealCd = parts[1];
@@ -81,9 +96,9 @@ router.post('/input', async (req, res) => {
                     console.log(kcal,mealCd);
 
                     // db.js의 함수를 호출하여 데이터베이스에 삽입
-                    if (kcal) {
-                        console.log("메뉴없는거2");
-                        db.saveDrtMeal('hethMeal', { foodNm, kcal, userId, mealCd });
+                    if (kcal.indexOf('undefined') === -1) {
+                        console.log("db입력2");
+                        db.saveDrtMeal(userId, mealCd,foodNm, kcal );
                         console.log(foodNm, kcal, userId, mealCd);
                       
                     }
