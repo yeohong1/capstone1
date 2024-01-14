@@ -61,14 +61,14 @@ router.post('/input', async (req, res) => {
 
             if (selectedResult.indexOf('undefined') === -1 && (selectedResult.endsWith('01') || selectedResult.endsWith('02') || selectedResult.endsWith('03'))) {
                 // 선택된 값 분석
-                const pattern = /\[([^\]]+)\]\s*([^:]+):(\d+)\s*(\d+)/;
+                const pattern = /\[([^\]]+)\]\s*([^:]+):([\d.]+)\s*(\d+)/;
                 const match = selectedResult.match(pattern);
 
                 const foodCd = match[1];
                 const foodNm = match[2];
-                const kcal = match[3];
+                const kcal = parseFloat(match[3]); // 소수점 포함된 값이어도 parseFloat로 숫자로 변환
                 const mealCd = match[4];
-                console.log( userId,mealCd,foodCd,foodNm, kcal);
+                console.log(userId,mealCd,foodCd,foodNm, kcal);
                 //console.log(selectedResult);
                 // let parts = selectedResult.split(' ');
                 // let foodCd = parts[0];
@@ -143,29 +143,42 @@ router.post('/input', async (req, res) => {
 
 //mypage/weight
 router.get('/weight', function (req, res) {
- const date = new Date();
- 
-const year = date.getFullYear();
-const month = date.getMonth() + 1;
-const day = date.getDate();
+    const date = new Date();
 
-const doDttm=date.toLocaleDateString('ko-kr');
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0
+    const day = String(date.getDate()).padStart(2, '0');
+    
+    const doDttm = `${year}-${month}-${day}`;
 
-res.render('mypageWeight.ejs',{ doDttm: 'doDttm' });
-//res.render('mypageWeight.ejs');
-console.log(date.toLocaleDateString('ko-kr'));
-console.log('year: ' + year);
-console.log('month: ' + month);
-console.log('day: ' + day);
+res.render('mypageWeight.ejs',{ doDttm});
+
 });
 
 router.get('/clalorie', function (req, res) {
-    res.render('mypageClalorie.ejs');
+    const date = new Date();
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0
+    const day = String(date.getDate()).padStart(2, '0');
+    
+    const doDttm = `${year}-${month}-${day}`;
+
+    res.render('mypageClalorie.ejs',{ doDttm});
 
 });
 
 router.get('/water', function(req, res){
-    res.render('mypageWater.ejs');
+    const date = new Date();
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0
+    const day = String(date.getDate()).padStart(2, '0');
+    
+    const doDttm = `${year}-${month}-${day}`;
+
+    
+    res.render('mypageWater.ejs',{ doDttm});
 })
 
 
@@ -206,11 +219,11 @@ router.post('/record', async (req, res) => {
              var foodCd= result.FOOD_CD;
            // 조건에 따라 각각의 resultString에 추가
            //if (resultString) {
-            resultString += `[${foodCd}] ${foodname}:${calories}칼로리\n`;
+            resultString +=`[${foodCd}] ${foodname}:${calories}칼로리\n`;
            
-            resultString2 += `[${foodCd}] ${foodname}:${calories}칼로리\n`;
+            resultString2 +=`[${foodCd}] ${foodname}:${calories}칼로리\n`;
          
-            resultString3 += `[${foodCd}] ${foodname}:${calories}칼로리\n`;
+            resultString3 +=`[${foodCd}] ${foodname}:${calories}칼로리\n`;
            // }
     });
 
