@@ -9,18 +9,19 @@ app.use('/static',express.static('static'));
 
  //mypage/record
  router.get('/record', function (req, res) {
-    res.render('mypageRecord.ejs',{ resultString: 'resultString' });
+    res.render('mypageRecord.ejs',{
+         resultString: 'resultString',
+         resultString2: 'resultString2',
+         resultString3: 'resultString3'
+        
+        });
 
 });
 
 //db 다른음식,체중신장,음수,걸음수 입력받음
 router.post('/input', async (req, res) => {
     try {
-        // const selectedResult1 = req.body.selectedResult1;
-        // const selectedResult2 = req.body.selectedResult2;
-        // const selectedResult3 = req.body.selectedResult3;
-
-        //res.locals.selectedResults = { selectedResult1, selectedResult2, selectedResult3 };
+       
 
         const date = new Date(); // 날짜 생성
        
@@ -35,7 +36,7 @@ router.post('/input', async (req, res) => {
         const doDate = date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\D/g, '');
         //console.log('Do Date:', doDate);
 
-        const userId = 'jieun'; // 테스트용 userId
+        const userId = 'test'; // 테스트용 userId
         const foodNm = req.body.foodNm;
         const weight = req.body.Weight;
         const height = req.body.Tall;
@@ -60,26 +61,34 @@ router.post('/input', async (req, res) => {
 
             if (selectedResult.indexOf('undefined') === -1 && (selectedResult.endsWith('01') || selectedResult.endsWith('02') || selectedResult.endsWith('03'))) {
                 // 선택된 값 분석
-                console.log(selectedResult);
-                let parts = selectedResult.split(' ');
-                let foodCd = parts[0];
-                let foodInfo = parts[1].split(':');
-                let foodNm = foodInfo[0];
-                let kcal = foodInfo[1];
-                let mealCd = parts[2];
+                const pattern = /\[([^\]]+)\]\s*([^:]+):(\d+)\s*(\d+)/;
+                const match = selectedResult.match(pattern);
+
+                const foodCd = match[1];
+                const foodNm = match[2];
+                const kcal = match[3];
+                const mealCd = match[4];
+                console.log( userId,mealCd,foodCd,foodNm, kcal);
+                //console.log(selectedResult);
+                // let parts = selectedResult.split(' ');
+                // let foodCd = parts[0];
+                // let foodInfo = parts[1].split(':');
+                // let foodNm = foodInfo[0];
+                // let kcal = foodInfo[1];
+                // let mealCd = parts[2];
 
                
 
                 //console.log(typeof kcal);
                 console.log("Inside if block for selectedResult");
                 // db.js의 함수를 호출하여 데이터베이스에 삽입
-                if (kcal) {
+               // if (kcal) {
                     console.log("db입력1");
                     db.saveApiMeal(userId,mealCd,foodCd,foodNm, kcal);
                     console.log( userId,mealCd,foodCd,foodNm, kcal);
                     console.log("ok");
                     
-                }
+               // }
             } else {
                 console.log("Inside else block for selectedResult");
                 console.log("mealCd1", mealCd1);
@@ -189,19 +198,24 @@ router.post('/record', async (req, res) => {
 
          // 각 결과를 출력
          let resultString = '';
+         let resultString2 = '';  
+         let resultString3 = ''; 
          resultArray.forEach((result, index) => {
              var calories = result.NUTR_CONT1;
              var foodname = result.DESC_KOR;
              var foodCd= result.FOOD_CD;
-            resultString += `${foodCd} ${foodname}:${calories}칼로리\n`;
-             //console.log(resultString);
-             
-        });
+           // 조건에 따라 각각의 resultString에 추가
+           //if (resultString) {
+            resultString += `[${foodCd}] ${foodname}:${calories}칼로리\n`;
+           
+            resultString2 += `[${foodCd}] ${foodname}:${calories}칼로리\n`;
+         
+            resultString3 += `[${foodCd}] ${foodname}:${calories}칼로리\n`;
+           // }
+    });
 
          // 결과 저장
-         res.locals.resultString = { resultString };
-        console.log(resultString);
-        res.render('mypageRecord.ejs',{ resultString:resultString })
+         res.render('mypageRecord.ejs', { resultString, resultString2, resultString3 });
        // console.log(resultString.foodCd);
     } catch (error) {
             console.error('Error:', error);

@@ -109,22 +109,22 @@
               <form action="/mypage/input" method="POST">
                 <select name="selectedResult2">
                   <option value="">선택</option>
-                  <% if (resultString) { %>
+                  <% if (resultString2) { %>
                     <% var keyword = '칼로리'; %>
-                    <% var index = resultString.indexOf(keyword); %>
+                    <% var index = resultString2.indexOf(keyword); %>
                     <% while (index !== -1) { %>
-                      <% var beforeKeyword = resultString.substring(0, index).trim(); %>
+                      <% var beforeKeyword = resultString2.substring(0, index).trim(); %>
                       <% if (beforeKeyword) { %>
                         <option value="<%= beforeKeyword %>"><%= beforeKeyword %></option>
                       <% } %>
-                      <% var afterKeyword = resultString.substring(index + keyword.length).trim(); %>
+                      <% var afterKeyword = resultString2.substring(index + keyword.length).trim(); %>
                       <% var nextIndex = afterKeyword.indexOf(keyword); %>
                       <% var valueToAdd = (nextIndex !== -1) ? afterKeyword.substring(0, nextIndex).trim() : afterKeyword.trim(); %>
                       <% if (valueToAdd) { %>
                         <option value="<%= valueToAdd %>"><%= valueToAdd %></option>
                       <% } %>
-                      <% resultString = (nextIndex !== -1) ? afterKeyword.substring(nextIndex + keyword.length).trim() : ''; %>
-                      <% index = resultString.indexOf(keyword); %>
+                      <% resultString2 = (nextIndex !== -1) ? afterKeyword.substring(nextIndex + keyword.length).trim() : ''; %>
+                      <% index = resultString2.indexOf(keyword); %>
                     <% } %>
                   <% } %>
                 </select>
@@ -159,22 +159,22 @@
               <form action="/mypage/input" method="POST">
                 <select name="selectedResult3">
                   <option value="">선택</option>
-                  <% if (resultString) { %>
+                  <% if (resultString3) { %>
                     <% var keyword = '칼로리'; %>
-                    <% var index = resultString.indexOf(keyword); %>
+                    <% var index = resultString3.indexOf(keyword); %>
                     <% while (index !== -1) { %>
-                      <% var beforeKeyword = resultString.substring(0, index).trim(); %>
+                      <% var beforeKeyword = resultString3.substring(0, index).trim(); %>
                       <% if (beforeKeyword) { %>
                         <option value="<%= beforeKeyword %>"><%= beforeKeyword %></option>
                       <% } %>
-                      <% var afterKeyword = resultString.substring(index + keyword.length).trim(); %>
+                      <% var afterKeyword = resultString3.substring(index + keyword.length).trim(); %>
                       <% var nextIndex = afterKeyword.indexOf(keyword); %>
                       <% var valueToAdd = (nextIndex !== -1) ? afterKeyword.substring(0, nextIndex).trim() : afterKeyword.trim(); %>
                       <% if (valueToAdd) { %>
                         <option value="<%= valueToAdd %>"><%= valueToAdd %></option>
                       <% } %>
-                      <% resultString = (nextIndex !== -1) ? afterKeyword.substring(nextIndex + keyword.length).trim() : ''; %>
-                      <% index = resultString.indexOf(keyword); %>
+                      <% resultString3 = (nextIndex !== -1) ? afterKeyword.substring(nextIndex + keyword.length).trim() : ''; %>
+                      <% index = resultString3.indexOf(keyword); %>
                     <% } %>
                   <% } %>
                 </select>
