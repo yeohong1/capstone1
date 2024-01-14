@@ -47,6 +47,7 @@ app.use(cookieParser());
 // 정적 파일 제공을 위한 미들웨어 설정
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/static', express.static('static'));
+app.use('/js', express.static(path.join(__dirname, 'js')));
 
 // "/mypage" 경로로 접근하면 "mypage" 파일을 제공
 app.get('/record', (req, res) => {

@@ -58,6 +58,7 @@
             그러나 연령, 평소 식습관 및 실제 섭취량, 활동량에 따라 필요열량을 산정하는데 고려해야 할 사항들이 많으므로 정확한 필요열량을 알아보기 위해서는 임상영양사와 상담하시는 것을 권장합니다.<br>
           </p><br>
           <div class="calc">
+            <form action="/mypage/clalorie" method="post" id="calorieForm">
             <h5>나의 하루 필요 열량은?</h5>
             <ul>
               <li class="input">
@@ -73,13 +74,13 @@
                   <tr>
                     <th>성별</th>
                     <td>
-                      <input type="radio">남자
-                      <input type="radio">여자
+                      <input type="radio" name="gender" value="male">남자
+                      <input type="radio" name="gender" value="female">여자
                     </td>
                   </tr>
                 </table>
               </li>
-              <li class="calcBtn"><button>계산하기</button></li>
+              <li class="calcBtn"><button id="calculateButton" type="submit">계산하기</button></li>
               <!-- 계산하기 클릭시 style="display: flex"로 변경 -->
               <li class="calcResult" style="display: none;">
                 <table border="1">
@@ -105,6 +106,19 @@
               </li>
             </ul>
           </div>
+        </form>
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("calorieForm");
+            const calculateButton = document.getElementById("calculateButton");
+            const calcResult = document.querySelector(".calcResult");
+        
+            form.addEventListener("submit", function (event) {
+            
+              calcResult.style.display = "flex";
+            });
+          });
+        </script>
         </li>
         <li class="week-chart">
           <h3>일주일 간 섭취한 칼로리의 변화</h3>

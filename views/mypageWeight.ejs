@@ -96,19 +96,31 @@
   </footer>
 </body>
 <script>
-  new Chart(document.getElementsByClassName("weekly"), {
-    type: 'line',
-    data: {
-      labels: ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
-      datasets: [{
-        data: [40, 41, 42, 55, 53, 50, 60],
-        borderColor: "#ff8b8bd9",
-        label: '나의 체중',
-        tension: 0,
-        fill: false
-      }]
-    }
-  });
+  document.addEventListener("DOMContentLoaded", function () {
+
+   // 차트에 사용할 데이터 생성
+   const labels = weightData.map(data => data.doDate);
+   const data = weightData.map(data => data.weight);
+ 
+   const chartData = {
+     labels: labels,
+     datasets: [{
+       data: data,
+       borderColor: "#ff8b8bd9",
+       label: '나의 체중',
+       tension: 0,
+       fill: false
+     }]
+   };
+ 
+   // 차트 생성
+   new Chart(document.getElementsByClassName("weekly"), {
+     type: 'line',
+     data: chartData
+   });
+ });
+
+  
   new Chart(document.getElementsByClassName("monthly"), {
     type: 'line',
     data: {

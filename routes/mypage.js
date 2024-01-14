@@ -34,7 +34,6 @@ router.post('/input', async (req, res) => {
 
         // "YYYYMMDD" 형식으로 변환
         const doDate = date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\D/g, '');
-        //console.log('Do Date:', doDate);
 
         const userId = 'test'; // 테스트용 userId
         const foodNm = req.body.foodNm;
@@ -47,9 +46,6 @@ router.post('/input', async (req, res) => {
             let mealCd1tKey = `kcal${i}`;
             let mealCd1 = req.body[mealCd1tKey];
             mealCd1 += ` 0${i}`;
-
-        
-           //console.log(foodNm, mealCd1);
 
             let selectedResultKey = `selectedResult${i}`;
             let selectedResult = req.body[selectedResultKey];
@@ -66,7 +62,7 @@ router.post('/input', async (req, res) => {
 
                 const foodCd = match[1];
                 const foodNm = match[2];
-                const kcal = parseFloat(match[3]); // 소수점 포함된 값이어도 parseFloat로 숫자로 변환
+                const kcal = parseFloat(match[3]); // 소수점 포함된 값이어도 parseFloat로 숫자로 변환 수정하기
                 const mealCd = match[4];
                 console.log(userId,mealCd,foodCd,foodNm, kcal);
                 //console.log(selectedResult);
@@ -77,18 +73,16 @@ router.post('/input', async (req, res) => {
                 // let kcal = foodInfo[1];
                 // let mealCd = parts[2];
 
-               
-
                 //console.log(typeof kcal);
                 console.log("Inside if block for selectedResult");
                 // db.js의 함수를 호출하여 데이터베이스에 삽입
-               // if (kcal) {
+              
                     console.log("db입력1");
                     db.saveApiMeal(userId,mealCd,foodCd,foodNm, kcal);
                     console.log( userId,mealCd,foodCd,foodNm, kcal);
                     console.log("ok");
                     
-               // }
+             
             } else {
                 console.log("Inside else block for selectedResult");
                 console.log("mealCd1", mealCd1);
@@ -114,7 +108,7 @@ router.post('/input', async (req, res) => {
                 }
             }
         }
-        // 다른 입력값에 대한 처리 (키에 따라 필요한 로직 추가)
+        // 다른 입력값에 대한 처리
         if (height) {
             db.insertTable('commUser', { userId, height, inputDttm, updDttm });
             console.log(userId, height, inputDttm, updDttm);
@@ -133,7 +127,7 @@ router.post('/input', async (req, res) => {
         }
 
         res.redirect('/mypage/record');
-        //res.render('mypageRecord.ejs');
+        
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
@@ -141,20 +135,31 @@ router.post('/input', async (req, res) => {
 });
 
 
-//mypage/weight
+//체중
 router.get('/weight', function (req, res) {
     const date = new Date();
-
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0
+    const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
-    
     const doDttm = `${year}-${month}-${day}`;
+    
+    const userId = 'hyjkim'//test
+    //const weightData = db.selectWeightWeek(userId);//주석제거하기
 
-res.render('mypageWeight.ejs',{ doDttm});
-
+    const weightData = [
+        { doDate: '2024-01-08', weight: 100 },
+        { doDate: '2024-01-09', weight: 30 },
+        { doDate: '2024-01-10', weight: 70 },
+        { doDate: '2024-01-11', weight: 80 },
+        { doDate: '2024-01-12', weight: 20 },
+        { doDate: '2024-01-13', weight: 40 },
+        { doDate: '2024-01-14', weight: 0 }
+      ];
+    
+    console.log(weightData);
+    res.render('mypageWeight.ejs', { doDttm, weightData: weightData });
 });
-
+//칼로리 get
 router.get('/clalorie', function (req, res) {
     const date = new Date();
 
@@ -167,7 +172,25 @@ router.get('/clalorie', function (req, res) {
     res.render('mypageClalorie.ejs',{ doDttm});
 
 });
+//칼로리 post
+router.post('/clalorie', function (req, res) {
+    const userId = 'hyjkim'; // test
+    let gender;
 
+    if (req.body.gender === 'male') {
+        gender = '01';
+    } else {
+        gender = '02';
+    }
+
+    const bmi = db.selectBodyInfo(userId, gender);
+
+    console.log(gender);
+    console.log(bmi);
+//응답처리하기
+});
+
+//음수량
 router.get('/water', function(req, res){
     const date = new Date();
 
