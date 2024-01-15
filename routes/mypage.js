@@ -136,29 +136,50 @@ router.post('/input', async (req, res) => {
 
 
 //체중
-router.get('/weight', function (req, res) {
+router.get('/weight', async function (req, res) {
     const date = new Date();
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     const doDttm = `${year}-${month}-${day}`;
     
-    const userId = 'hyjkim'//test
-    //const weightData = db.selectWeightWeek(userId);//주석제거하기
+    const userId = 'hyjkim'; // 테스트
+  
+    try {
+        
+      const weightData = await db.selectWeightWeek(userId);
+     // const weightData2 = await db.selectWeightMonth(userId);
+     // const weightData3 = await db.selectWeightYear(userId);
 
-    const weightData = [
-        { doDate: '2024-01-08', weight: 100 },
-        { doDate: '2024-01-09', weight: 30 },
-        { doDate: '2024-01-10', weight: 70 },
-        { doDate: '2024-01-11', weight: 80 },
-        { doDate: '2024-01-12', weight: 20 },
-        { doDate: '2024-01-13', weight: 40 },
-        { doDate: '2024-01-14', weight: 0 }
-      ];
-    
-    console.log(weightData);
-    res.render('mypageWeight.ejs', { doDttm, weightData: weightData });
-});
+      const weight = weightData.map(data => data.weight);
+      const doDate = weightData.map(data => data.doDate);
+    //   const weight2 = weightData2.map(data => data.weight);
+    //   const doDate2 = weightData2.map(data => data.doDate);
+    //   const weight3 = weightData3.map(data => data.weight);
+    //   const doDate3 = weightData3.map(data => data.doDate);
+      //console.log(weightValues);
+      //console.log(weight,doDate );
+    //   console.log("2", weight2,doDate2);
+    //   console.log("3", weight3,doDate3);
+
+      // weightData가 null이 아니라면 데이터를 렌더링합니다.
+      if (weightData !== null) {
+        res.render('mypageWeight', { doDttm: doDttm, weight: weight, doDate: doDate });
+        console.log("1", weight,doDate);
+      
+      } else {
+        // 데이터가 없으면 적절한 응답을 보냅니다.
+        console.error('데이터가 없음');
+        res.status(404).send('데이터가 없습니다.');
+      }
+    } catch (error) {
+      // 에러 처리
+      console.error('에러 발생:', error);
+      res.status(500).send('내부 서버 오류');
+    }
+  });
+  
+
 //칼로리 get
 router.get('/clalorie', function (req, res) {
     const date = new Date();

@@ -64,28 +64,44 @@ function selectBodyInfo(userId, gender) {
 
 // selectWeightWeek('hyjkim')
 //지난 일주일 간의 체중 조회
-function selectWeightWeek(userId) {
-  knex.raw(
-    `exec selectWeightWeek '${userId}'`
-    ).then((resp) => {
-  console.log(resp);
+async function selectWeightWeek(userId) {
+  try {
+    const resp = await knex.raw(`exec selectWeightWeek '${userId}'`);
+    console.log(resp);
+
+    // 반환값이 있을 경우 resp에서 데이터 추출
+    if (resp ) {
+      const weightData = resp;
+      return weightData;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // 에러를 호출한 곳으로 던집니다.
   }
-).catch((err) => {
-    console.log(err);
-  });
 }
 
 // selectWeightMonth('hyjkim')
 //지난 한달 간의 체중 조회
-function selectWeightMonth(userId) {
-  knex.raw(
-    `exec selectWeightMonth '${userId}'`
-    ).then((resp) => {
-  console.log(resp);
+async function selectWeightMonth(userId) {
+  try {
+    const resp = await knex.raw(`exec selectWeightMonth '${userId}'`);
+    console.log(resp);
+
+    // 반환값이 있을 경우 resp에서 데이터 추출
+    if (resp) {
+      const weightData = resp;
+      return weightData;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // 에러를 호출한 곳으로 던집니다.
   }
-).catch((err) => {
-    console.log(err);
-  });
 }
 
 // selectWeightYear('hyjkim')
