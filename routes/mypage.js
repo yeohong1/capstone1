@@ -135,7 +135,7 @@ router.post('/input', async (req, res) => {
 });
 
 
-//체중
+//체중 get
 router.get('/weight', async function (req, res) {
     const date = new Date();
     const year = date.getFullYear();
@@ -148,24 +148,24 @@ router.get('/weight', async function (req, res) {
     try {
         
       const weightData = await db.selectWeightWeek(userId);
-     // const weightData2 = await db.selectWeightMonth(userId);
-     // const weightData3 = await db.selectWeightYear(userId);
+     const weightData2 = await db.selectWeightMonth(userId);
+     const weightData3 = await db.selectWeightYear(userId);
 
       const weight = weightData.map(data => data.weight);
       const doDate = weightData.map(data => data.doDate);
-    //   const weight2 = weightData2.map(data => data.weight);
-    //   const doDate2 = weightData2.map(data => data.doDate);
-    //   const weight3 = weightData3.map(data => data.weight);
-    //   const doDate3 = weightData3.map(data => data.doDate);
-      //console.log(weightValues);
-      //console.log(weight,doDate );
-    //   console.log("2", weight2,doDate2);
-    //   console.log("3", weight3,doDate3);
+      const weight2 = weightData2.map(data => data.weight);
+      const doDate2 = weightData2.map(data => data.doDate);
+      const weight3 = weightData3.map(data => data.weight);
+      const doDate3 = weightData3.map(data => data.doMonth);
+     
+      console.log(weight,doDate );
+      console.log("2", weight2,doDate2);
+      console.log("3", weight3,doDate3);
 
       // weightData가 null이 아니라면 데이터를 렌더링합니다.
       if (weightData !== null) {
         res.render('mypageWeight', { doDttm: doDttm, weight: weight, doDate: doDate });
-        console.log("1", weight,doDate);
+       
       
       } else {
         // 데이터가 없으면 적절한 응답을 보냅니다.
@@ -194,7 +194,7 @@ router.get('/clalorie', function (req, res) {
 
 });
 //칼로리 post
-router.post('/clalorie', function (req, res) {
+router.post('/clalorie',async function (req, res) {
     const userId = 'hyjkim'; // test
     let gender;
 
@@ -203,11 +203,21 @@ router.post('/clalorie', function (req, res) {
     } else {
         gender = '02';
     }
+    
+    const selectBodyInfo = await db.selectBodyInfo(userId, gender);
 
-    const bmi = db.selectBodyInfo(userId, gender);
+    const stddWeight = selectBodyInfo.map(data => data.stddWeight);
+    const bmi = selectBodyInfo.map(data => data.bmi);
+    const dayNeedKcal = selectBodyInfo.map(data => data.dayNeedKcal);
+    const bmiNm = selectBodyInfo.map(data => data.bmiNm);
+    const msg = selectBodyInfo.map(data => data.msg);
+    const height = selectBodyInfo.map(data => data.height);
+   
 
-    console.log(gender);
-    console.log(bmi);
+
+    console.log(gender,stddWeight,bmi,dayNeedKcal, bmiNm,msg,height);
+    res.render('mypageClalorie.ejs');
+    
 //응답처리하기
 });
 

@@ -51,16 +51,25 @@ function saveDrtMeal(userId, mealCd, foodNm, kcal) {
 
 //  selectBodyInfo('hyjkim', '02')
 //표준체중/bmi/하루필요열량 조회
-function selectBodyInfo(userId, gender) {
-  knex.raw(
-    `selectBodyInfo '${userId}', '${gender}'`
-    ).then((resp) => {
-  console.log(resp);
+async function selectBodyInfo(userId, gender) {
+  try {
+    const resp = await knex.raw(`selectBodyInfo '${userId}', '${gender}'`);
+    console.log(resp);
+
+    // 반환값이 있을 경우 resp에서 데이터 추출
+    if (resp) {
+      const bodyInfo = resp;
+      return bodyInfo;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // 에러를 호출한 곳으로 던집니다.
   }
-).catch((err) => {
-    console.log(err);
-  });
 }
+
 
 // selectWeightWeek('hyjkim')
 //지난 일주일 간의 체중 조회
@@ -106,15 +115,23 @@ async function selectWeightMonth(userId) {
 
 // selectWeightYear('hyjkim')
 //지난 1년 간의 월별평균 체중 조회
-function selectWeightYear(userId) {
-  knex.raw(
-    `exec selectWeightYear '${userId}'`
-    ).then((resp) => {
-  console.log(resp);
+async function selectWeightYear(userId) {
+  try {
+    const resp = await knex.raw(`exec selectWeightYear '${userId}'`);
+    console.log(resp);
+
+    // 반환값이 있을 경우 resp에서 데이터 추출
+    if (resp) {
+      const weightData = resp;
+      return weightData;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // 에러를 호출한 곳으로 던집니다.
   }
-).catch((err) => {
-    console.log(err);
-  });
 }
 
 // selectDrinkWeek('hyjkim')
@@ -200,6 +217,33 @@ function selectStepMonth(userId) {
 function selectStepYear(userId) {
   knex.raw(
     `exec selectStepYear '${userId}'`
+    ).then((resp) => {
+  console.log(resp);
+  }
+).catch((err) => {
+    console.log(err);
+  });
+}
+
+// selectStepDay('hyjkim')
+//오늘의 걸음수(, 사용자명, 걸음당소모칼로리) 조회
+function selectStepDay(userId) {
+  knex.raw(
+    `exec selectStepDay '${userId}'`
+    ).then((resp) => {
+  console.log(resp);
+  }
+).catch((err) => {
+    console.log(err);
+  });
+}
+
+
+// selectDrinkDay('hyjkim')
+//오늘의 음수량 조회
+function selectDrinkDay(userId) {
+  knex.raw(
+    `exec selectDrinkDay '${userId}'`
     ).then((resp) => {
   console.log(resp);
   }
@@ -319,5 +363,9 @@ module.exports = {
   //걸음수 
   selectStepWeek, 
   selectStepMonth, 
-  selectStepYear
+  selectStepYear,
+//오늘의 걸음수
+  selectStepDay,
+  //오늘의 음수량
+  selectDrinkDay
 };
