@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <script src="/js/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="header-logo">
+        <img src="../images/health-logo.png" alt="logo-name" class="logo-name">
+        <h1>Healthy Life</h1>
+        <nav class="word-menu">
+          <a href="javascript">로그아웃</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <div class="menu">
+    <ul class="show-menu">
+      <li class="first-menu">
+        <a href="">기록하기</a>
+      </li>
+      <li class="last-menu"><a href="">통계</a>
+        <ul class="dropdown-menu">
+          <li><a href="">체중</a></li>
+          <li><a href="">칼로리</a></li>
+          <li><a href="">음수량</a></li>
+          <li><a href="" class="active">걸음수</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <section class="chart">
+    <div class="inner">
+      <h1>2024-01-08</h1>
+      <ul class="content">
+        <li class="explain">
+          <h3>걸음수</h3>
+          <p>
+            결과 걸음 수가 많을수록 비만(체질량지수 30 이상)과 수면 무호흡증, 위식도 역류 질환(GERD), 주요우울장애(MDD), 고혈압, 제2형 당뇨 등의 만성 질병 위험이 낮아지는 것으로
+            나타났다.<br>
+            예컨대 하루 걸음수를 1만보로 늘리면 비만 위험이 31% 감소했다. 걷기운동은 신진대사를 활발하게 하고 심장을 튼튼히 하며 혈관을 젊게한다.<br>
+            또 위장을 튼튼히 하고 변비를 없애주며 비만증이나 당뇨병을 호전시킨다. 스트레스를 해소시켜주고 고혈압도 완화시켜준다.<br>
+            많이 걷자면 꼭 끼는 신발보다는 여유가있어서 다섯발가락을 마음대로 움직일 수 있고 편안하고 통풍이 잘되는 신발을 신도록 해야한다. <br>
+            또한 약간 빨리 걸어서 땀이 이마에 맺힐정도로 걸을 것을전문가들은 권고한다.<br>
+          </p><br>
+          <div class="walk">
+            <h5>오늘 하루 몇 보나 걸으셨나요?</h5>
+            <h3>사용자님의 오늘 하루 걸음수는 <span>5000</span>보 입니다. 소비된 칼로리는 <span>350kcal</span>입니다.</h3>
+            <!-- 기본이미지 또는 1000보 미만 -->
+            <!-- <img src="../images/root0.png" alt="root"> -->
+            <!-- 1000보 이상 5000보 미만 -->
+            <!-- <img src="../images/root1.png" alt="root1"> -->
+            <!-- 5000보 이상 10000보 미만 -->
+            <img src="../images/root2.png" alt="root2">
+            <!-- 10000보 이상 -->
+            <!-- <img src="../images/root3.png" alt="root3"> -->
+          </div>
+        </li>
+        <li class="week-chart">
+          <h3>일주일 간 걸음수의 변화</h3>
+          <canvas class="weekly" width="800" height="450"></canvas>
+        </li>
+        <li class="month-chart">
+          <h3>한 달 간 걸음수의 변화</h3>
+          <canvas class="monthly" width="800" height="450"></canvas>
+        </li>
+        <li class="year-chart">
+          <h3>일년 간 걸음수의 변화</h3>
+          <canvas class="yearly" width="800" height="450"></canvas>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <footer>
+    <div class="bar"></div>
+    <div class="container">
+      <h4 class="logo">
+        Healthy Life
+        <img src="../images/health-logo.png" alt="logo-name" class="logo-name">
+      </h4>
+      <ul>개발자:&nbsp;
+        <li>임채영</li>
+        <li>김하예진</li>
+        <li>박지은</li>
+        <li>이상은</li>
+      </ul>
+      <ul>
+        <li>chae0_0102@naver.com</li>
+        <li>bhyj8903@naver.com</li>
+        <li>bagj1975@gmail.com</li>
+        <li>0204tkddms@naver.com</li>
+      </ul>
+      <h4 class="address">주소: 부산광역시 부산진구 엄광로 176</h4>
+      <h4 class="comment">당신의 건강한 생활을 Healthy Life가 응원합니다</h4>
+    </div>
+  </footer>
+</body>
+<script>
+  new Chart(document.getElementsByClassName("weekly"), {
+    type: 'line',
+    data: {
+      labels: ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
+      datasets: [{
+        data: [1000, 1001, 1500, 1800, 1000, 2300, 5001],
+        borderColor: "#ff8b8bd9",
+        label: '나의 하루 걸음수',
+        tension: 0,
+        fill: false
+      }]
+    }
+  });
+  new Chart(document.getElementsByClassName("monthly"), {
+    type: 'line',
+    data: {
+      labels: [
+        "01/01", "01/02", "01/03", "01/04", "01/05", "01/06", "01/07",
+        "01/08", "01/09", "01/10", "01/11", "01/12", "01/13", "01/14",
+        "01/15", "01/16", "01/17", "01/18", "01/19", "01/20", "01/21",
+        "01/22", "01/23", "01/24", "01/25", "01/26", "01/27", "01/28",
+        "01/29", "01/30", "01/31"
+      ],
+      datasets: [{
+        data: [1000, 1000, 1000, 1000, 5300, 5000, 6000, 5000, 5000, 5000, 5000, 5100, 5003, 5004,
+          4008, 4009, 5004, 4400, 4003, 4006, 6000, 1000, 4005, 4005, 4005, 5009, 6600, 4500, 4000, 4005, 4003],
+        borderColor: "#ff8b8bd9",
+        label: '나의 하루 걸음수',
+        tension: 0,
+        fill: false
+      }]
+    }
+  });
+  new Chart(document.getElementsByClassName("yearly"), {
+    type: 'line',
+    data: {
+      labels: [
+        "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06",
+        "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"
+      ],
+      datasets: [{
+        data: [4000, 4001, 4200, 1000, 5003, 5000, 6000, 4000, 4100, 1000, 5500, 5003, 1000],
+        borderColor: "#ff8b8bd9",
+        label: '나의 하루 걸음수',
+        tension: 0,
+        fill: false
+      }]
+    }
+  });
+</script>
+
+</html>
