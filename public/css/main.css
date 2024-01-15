@@ -1142,6 +1142,23 @@ section .inner h3 {
     width: 425px;
     height: 240px;
 }
+/* mypage5.html */
+.chart .explain .walk{
+    background-color: #F8F8F8;
+    padding: 30px;
+}
+.chart .explain .walk h3{
+    text-align: center;
+    font-weight: 500;
+    padding: 20px 0px;
+}
+.chart .explain .walk h3 span{
+    font-weight: 700;
+    color: #FF8B8B;
+}
+.chart .explain .walk img{
+    padding: 0px 225px;
+}
 
 /* footer.html */
 footer{
@@ -1174,7 +1191,7 @@ footer .container ul{
 }
 footer .container ul li{
     padding: 0px 5px;
-}
+};
 footer .container ul li:first-child{
     padding-left: 0;
 }
