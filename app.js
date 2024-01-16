@@ -7,6 +7,7 @@ const session = require('express-session')//추가
 const FileStore = require('session-file-store')(session)//추가
 var authRouter = require('./routes/auth');//추가//수정
 var mypageRouter = require('./routes/mypage');
+var mainRouter = require('./routes/main');
 var http = require('http');
 const bodyParser = require('body-parser');//추가
 
@@ -34,6 +35,7 @@ app.use(bodyParser.json());
 
 app.use('/auth', authRouter);//인증라우터 //추가
 app.use('/mypage', mypageRouter);//인증라우터
+app.use('/main', mainRouter);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -47,7 +49,7 @@ app.use(cookieParser());
 // 정적 파일 제공을 위한 미들웨어 설정
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/static', express.static('static'));
-app.use('/js', express.static(path.join(__dirname, 'js')));
+//app.use('/js', express.static(path.join(__dirname, 'js')));
 
 // "/mypage" 경로로 접근하면 "mypage" 파일을 제공
 app.get('/record', (req, res) => {
