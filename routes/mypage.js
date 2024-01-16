@@ -7,7 +7,7 @@ const moment = require('moment');//현재시간
 const app = express()
 app.use('/static',express.static('static'));
 
- //mypage/record
+ //기록get
  router.get('/record', function (req, res) {
     res.render('mypageRecord.ejs',{
          resultString: 'resultString',
@@ -18,14 +18,11 @@ app.use('/static',express.static('static'));
 
 });
 
-//db 다른음식,체중신장,음수,걸음수 입력받음
+//기록 
 router.post('/input', async (req, res) => {
     try {
-       
-
-        const date = new Date(); // 날짜 생성
-       
-        // YYYY-MM-DD 형식으로 변환
+       //시간
+        const date = new Date();
         const year = date.getFullYear();
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const day = date.getDate().toString().padStart(2, '0');
@@ -52,11 +49,10 @@ router.post('/input', async (req, res) => {
             selectedResult += ` 0${i}`;
             console.log("Iteration", i);
             console.log("mealCd1:", mealCd1);
-            console.log("selectedResult:", selectedResult);
-            
+            console.log("selectedResult:", selectedResult);           
 
             if (selectedResult.indexOf('undefined') === -1 && (selectedResult.endsWith('01') || selectedResult.endsWith('02') || selectedResult.endsWith('03'))) {
-                // 선택된 값 분석
+                
                 const pattern = /\[([^\]]+)\]\s*([^:]+):([\d.]+)\s*(\d+)/;
                 const match = selectedResult.match(pattern);
 
@@ -65,17 +61,6 @@ router.post('/input', async (req, res) => {
                 const kcal = parseFloat(match[3]); // 소수점 포함된 값이어도 parseFloat로 숫자로 변환 수정하기
                 const mealCd = match[4];
                 console.log(userId,mealCd,foodCd,foodNm, kcal);
-                //console.log(selectedResult);
-                // let parts = selectedResult.split(' ');
-                // let foodCd = parts[0];
-                // let foodInfo = parts[1].split(':');
-                // let foodNm = foodInfo[0];
-                // let kcal = foodInfo[1];
-                // let mealCd = parts[2];
-
-                //console.log(typeof kcal);
-                console.log("Inside if block for selectedResult");
-                // db.js의 함수를 호출하여 데이터베이스에 삽입
               
                     console.log("db입력1");
                     db.saveApiMeal(userId,mealCd,foodCd,foodNm, kcal);
@@ -137,6 +122,7 @@ router.post('/input', async (req, res) => {
 
 //체중 get
 router.get('/weight', async function (req, res) {
+    //시간
     const date = new Date();
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -146,10 +132,10 @@ router.get('/weight', async function (req, res) {
     const userId = 'hyjkim'; // 테스트
   
     try {
-        
+    //체중 차트
       const weightData = await db.selectWeightWeek(userId);
-     const weightData2 = await db.selectWeightMonth(userId);
-     const weightData3 = await db.selectWeightYear(userId);
+      const weightData2 = await db.selectWeightMonth(userId);
+      const weightData3 = await db.selectWeightYear(userId);
 
       const weight = weightData.map(data => data.weight);
       const doDate = weightData.map(data => data.doDate);
@@ -157,14 +143,12 @@ router.get('/weight', async function (req, res) {
       const doDate2 = weightData2.map(data => data.doDate);
       const weight3 = weightData3.map(data => data.weight);
       const doDate3 = weightData3.map(data => data.doMonth);
-     
-      console.log(weight,doDate );
-      console.log("2", weight2,doDate2);
-      console.log("3", weight3,doDate3);
+      
+     //bmi
+      const selectBodyInfo = await db.selectBodyInfo(userId);
 
-      // weightData가 null이 아니라면 데이터를 렌더링합니다.
       if (weightData !== null) {
-        res.render('mypageWeight', { doDttm: doDttm, weight: weight, doDate: doDate });
+        res.render('mypageWeight', { doDttm: doDttm, weight: weight, doDate: doDate, weight2: weight2, doDate2: doDate2,weight3: weight3, doDate3: doDate3 });
        
       
       } else {
@@ -181,14 +165,31 @@ router.get('/weight', async function (req, res) {
   
 
 //칼로리 get
-router.get('/clalorie', function (req, res) {
+router.get('/clalorie', async function (req, res) {
+    const userId = 'hyjkim'; // test
+    //시간
     const date = new Date();
-
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0
     const day = String(date.getDate()).padStart(2, '0');
-    
     const doDttm = `${year}-${month}-${day}`;
+
+    let gender;
+
+    if (req.body.gender === 'male') {
+        gender = '01';
+    } else {
+        gender = '02';
+    }
+    
+    const selectBodyInfo = await db.selectBodyInfo(userId, gender);
+
+    const stddWeight = selectBodyInfo.map(data => data.stddWeight);
+    const bmi = selectBodyInfo.map(data => data.bmi);
+    const dayNeedKcal = selectBodyInfo.map(data => data.dayNeedKcal);
+    const bmiNm = selectBodyInfo.map(data => data.bmiNm);
+    const msg = selectBodyInfo.map(data => data.msg);
+    const height = selectBodyInfo.map(data => data.height);
 
     res.render('mypageClalorie.ejs',{ doDttm});
 
@@ -196,6 +197,12 @@ router.get('/clalorie', function (req, res) {
 //칼로리 post
 router.post('/clalorie',async function (req, res) {
     const userId = 'hyjkim'; // test
+
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0
+    const day = String(date.getDate()).padStart(2, '0');
+    const doDttm = `${year}-${month}-${day}`;
     let gender;
 
     if (req.body.gender === 'male') {
@@ -215,38 +222,80 @@ router.post('/clalorie',async function (req, res) {
    
 
 
-    console.log(gender,stddWeight,bmi,dayNeedKcal, bmiNm,msg,height);
-    res.render('mypageClalorie.ejs');
+    //console.log(gender,stddWeight,bmi,dayNeedKcal, bmiNm,msg,height);
+    res.render('mypageClalorie.ejs',{ doDttm});
     
 //응답처리하기
 });
 
-//음수량
-router.get('/water', function(req, res){
+//음수량 get
+router.get('/water', async function(req, res){
+    const userId = 'hyjkim'; // test
+    //시간
     const date = new Date();
-
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0
     const day = String(date.getDate()).padStart(2, '0');
-    
     const doDttm = `${year}-${month}-${day}`;
+    //권량 물 섭취량
+    const selectRecmDrinkAmntResult = await db.selectRecmDrinkAmnt(userId);
+    const formula = selectRecmDrinkAmntResult[0].formula;
+    const recmDrinkAmnt = selectRecmDrinkAmntResult[0].recmDrinkAmnt;
+
+    //음수량 차트
+    const selectDrinkWeek = await db.selectDrinkWeek(userId);
+    const selectDrinkMonth = await db.selectDrinkMonth(userId);
+    const selectDrinkYear = await db.selectDrinkYear(userId);
+
+    const drnkAmnt = selectDrinkWeek.map(data => data.drnkAmnt);
+    const doDate = selectDrinkWeek.map(data => data.doDate);
+    const drnkAmnt2 = selectDrinkMonth.map(data => data.drnkAmnt);
+    const doDate2 = selectDrinkMonth.map(data => data.doDate);
+    const drnkAmnt3 = selectDrinkYear.map(data => data.drnkAmnt);
+    const doDate3 = selectDrinkYear.map(data => data.doMonth);
+
 
     
-    res.render('mypageWater.ejs',{ doDttm});
+    res.render('mypageWater.ejs', { doDttm,formula,recmDrinkAmnt,drnkAmnt,doDate,drnkAmnt2,doDate2,drnkAmnt3,doDate3 });
+
 })
 
-//걸음수
-router.get('/walk', function(req, res){
+//걸음수 get
+    router.get('/walk', async function(req, res){
+    const userId = 'hyjkim'; // test
+//시간
     const date = new Date();
-
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0
     const day = String(date.getDate()).padStart(2, '0');
-    
     const doDttm = `${year}-${month}-${day}`;
+//오늘의 걸음수 //어떻게 저장되어있는지 확인 수정
+    const selectStepDay = await db.selectStepDay(userId);
+    const userNm = selectStepDay.map(data => data.userNm);
+    const daystepCnt = selectStepDay.map(data => data.stepCnt);
+    const stepConsKcal = selectStepDay.map(data => data.stepConsKcal);
 
-    res.render('mypageWalk.ejs',{ doDttm});
+    //const userNm = selectStepDay[0].userNm;
+    // const daystepCnt = selectStepDay[0].stepCnt;
+    // const stepConsKcal = selectStepDay[0].stepConsKcal;
+
+    console.log("1",userNm,daystepCnt,stepConsKcal);
+
+//걸음수차트
+    const selectStepWeek = await db.selectStepWeek(userId);
+    const selectStepMonth = await db.selectStepMonth(userId);
+    const selectStepYear = await db.selectStepYear(userId);
+
+    const stepCnt = selectStepWeek.map(data => data.stepCnt);
+    const doDate = selectStepWeek.map(data => data.doDate);
+    const stepCnt2 = selectStepMonth.map(data => data.stepCnt);
+    const doDate2 = selectStepMonth.map(data => data.doDate);
+    const stepCnt3 = selectStepYear.map(data => data.stepCnt);
+    const doDate3 = selectStepYear.map(data => data.doMonth);
+
+    res.render('mypageWalk.ejs',{ doDttm,stepCnt,doDate,stepCnt2,doDate2,stepCnt3,doDate3,userNm,daystepCnt,stepConsKcal});
 })
+
 
 // HTTP 요청 보내기
 router.post('/record', async (req, res) => {

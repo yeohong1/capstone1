@@ -54,10 +54,9 @@ router.post('/login_process', async function (req, res) {
     try {
         const userId = req.body.userId;
         const password = req.body.password;
-        const userNm = req.body.userNm;
-
-        if (userId != null && password != null && userNm != null) {
-            const results = await db.login('commUser', { userId, password, userNm });
+      
+        if (userId != null && password != null) {
+            const results = await db.login('commUser', { userId, password });
 
             console.log(results);
 
@@ -82,17 +81,17 @@ router.post('/login_process', async function (req, res) {
 
 
 //로그아웃
-router.get('mypage/logout', function (req, res) {
+router.get('/mypage/logout', function (req, res) {
     console.log("TEST!");
     if (req.session == null) { 
         res.send(`<script type="text/javascript">alert("로그인 정보가 없습니다."); 
-                                        document.location.href="/";</script>`);
+                                        document.location.href="/main";</script>`);
             
     } else { 
         req.session.destroy(function (err) {//세션 삭제
             console.log("callback event");
             res.send(`<script type="text/javascript">alert("성공적으로 로그아웃 하였습니다."); 
-                document.location.href="/";</script>`);   
+                document.location.href="/main";</script>`);   
         });
     }
 });

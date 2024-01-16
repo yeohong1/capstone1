@@ -62,6 +62,9 @@ app.get('/weight', (req, res) => {
 app.get('/clalorie', (req, res) => {
   res.render(path.join(__dirname, 'views', 'mypageClalorie'));
 });
+// app.get('/water', (req, res) => {
+//   res.render(path.join(__dirname, 'views', 'mypageWater'));
+// });
 
 // app.post('/placeholder', function (req, res) {
 //   const weight = req.body.Weight;

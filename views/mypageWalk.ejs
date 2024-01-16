@@ -56,15 +56,17 @@
           </p><br>
           <div class="walk">
             <h5>오늘 하루 몇 보나 걸으셨나요?</h5>
-            <h3>사용자님의 오늘 하루 걸음수는 <span>5000</span>보 입니다. 소비된 칼로리는 <span>350kcal</span>입니다.</h3>
-            <!-- 기본이미지 또는 1000보 미만 -->
-            <!-- <img src="../images/root0.png" alt="root"> -->
-            <!-- 1000보 이상 5000보 미만 -->
-            <!-- <img src="../images/root1.png" alt="root1"> -->
-            <!-- 5000보 이상 10000보 미만 -->
-            <img src="../images/root2.png" alt="root2">
-            <!-- 10000보 이상 -->
-            <!-- <img src="../images/root3.png" alt="root3"> -->
+            <h3><%=userNm%>님의 오늘 하루 걸음수는 <span><%=daystepCnt%></span>보 입니다. 소비된 칼로리는 <span><%=stepConsKcal%>kcal</span>입니다.</h3>
+            <% if (daystepCnt < 1000) { %>           
+            <img src="../images/root0.png" alt="root">
+          <% } else if (daystepCnt < 5000) { %>
+            <img src="../images/root1.png" alt="root1"> 
+          <% } else if (daystepCnt < 10000) { %>
+              <img src="../images/root2.png" alt="root2">
+          <% } else { %>
+              <img src="../images/root3.png" alt="root3"> 
+          <% } %>
+          
           </div>
         </li>
         <li class="week-chart">
@@ -107,55 +109,57 @@
   </footer>
 </body>
 <script>
-  new Chart(document.getElementsByClassName("weekly"), {
-    type: 'line',
-    data: {
-      labels: ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
-      datasets: [{
-        data: [1000, 1001, 1500, 1800, 1000, 2300, 5001],
-        borderColor: "#ff8b8bd9",
-        label: '나의 하루 걸음수',
-        tension: 0,
-        fill: false
-      }]
-    }
-  });
-  new Chart(document.getElementsByClassName("monthly"), {
-    type: 'line',
-    data: {
-      labels: [
-        "01/01", "01/02", "01/03", "01/04", "01/05", "01/06", "01/07",
-        "01/08", "01/09", "01/10", "01/11", "01/12", "01/13", "01/14",
-        "01/15", "01/16", "01/17", "01/18", "01/19", "01/20", "01/21",
-        "01/22", "01/23", "01/24", "01/25", "01/26", "01/27", "01/28",
-        "01/29", "01/30", "01/31"
-      ],
-      datasets: [{
-        data: [1000, 1000, 1000, 1000, 5300, 5000, 6000, 5000, 5000, 5000, 5000, 5100, 5003, 5004,
-          4008, 4009, 5004, 4400, 4003, 4006, 6000, 1000, 4005, 4005, 4005, 5009, 6600, 4500, 4000, 4005, 4003],
-        borderColor: "#ff8b8bd9",
-        label: '나의 하루 걸음수',
-        tension: 0,
-        fill: false
-      }]
-    }
-  });
-  new Chart(document.getElementsByClassName("yearly"), {
-    type: 'line',
-    data: {
-      labels: [
-        "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06",
-        "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"
-      ],
-      datasets: [{
-        data: [4000, 4001, 4200, 1000, 5003, 5000, 6000, 4000, 4100, 1000, 5500, 5003, 1000],
-        borderColor: "#ff8b8bd9",
-        label: '나의 하루 걸음수',
-        tension: 0,
-        fill: false
-      }]
-    }
-  });
+ var data = [<%= stepCnt %>];
+    var labels = [<% for (var i = 0; i < doDate.length+1; i++) { %>'<%= doDate[i] %>',<% } %>];
+    labels.pop();
+   const chartData = {
+     labels: labels,
+     datasets: [{
+       data: data,
+       borderColor: "#ff8b8bd9",
+       label: '나의 체중',
+       tension: 0,
+       fill: false
+     }]
+   };
+   new Chart(document.getElementsByClassName("weekly"), {
+     type: 'line',
+     data: chartData
+ });
+ var data = [<%= stepCnt2 %>];
+ var labels = [<% for (var i = 0; i < doDate2.length+1; i++) { %>'<%= doDate2[i] %>',<% } %>];
+    labels.pop();
+   const chartData2 = {
+     labels: labels,
+     datasets: [{
+       data: data,
+       borderColor: "#ff8b8bd9",
+       label: '나의 체중',
+       tension: 0,
+       fill: false
+     }]
+   };
+   new Chart(document.getElementsByClassName("monthly"), {
+     type: 'line',
+     data: chartData2
+ });
+ var data = [<%= stepCnt3 %>];
+ var labels = [<% for (var i = 0; i < doDate3.length+1; i++) { %>'<%= doDate3[i] %>',<% } %>];
+  labels.pop();
+   const chartData3 = {
+     labels: labels,
+     datasets: [{
+      data: data,
+      borderColor: "#ff8b8bd9",
+      label: '나의 체중',
+      tension: 0,
+      fill: false
+     }]
+   };
+   new Chart(document.getElementsByClassName("yearly"), {
+     type: 'line',
+     data: chartData3
+ });
 </script>
 
 </html>

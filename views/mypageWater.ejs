@@ -66,8 +66,8 @@
                 <h4>자신에게 맞는</h4>
                 <h5>하루 물 섭취 권장량</h5>
                 <div class="data">
-                  <h1>(160cm + 50kg) / 100</h1>
-                  <h1>=&nbsp;<span>2.1L</span></h1>
+                  <h1><%= formula %></h1>
+                  <h1>=&nbsp;<span><%= recmDrinkAmnt%>L</span></h1>
                 </div>
               </li>
             </ul>
@@ -113,55 +113,58 @@
   </footer>
 </body>
 <script>
-  new Chart(document.getElementsByClassName("weekly"), {
-    type: 'line',
-    data: {
-      labels: ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
-      datasets: [{
-        data: [1000, 1001, 1500, 1800, 1000, 2300, 5001],
-        borderColor: "#6ed5e9",
-        label: '나의 하루 음수량',
-        tension: 0,
-        fill: false
-      }]
-    }
-  });
-  new Chart(document.getElementsByClassName("monthly"), {
-    type: 'line',
-    data: {
-      labels: [
-        "01/01", "01/02", "01/03", "01/04", "01/05", "01/06", "01/07",
-        "01/08", "01/09", "01/10", "01/11", "01/12", "01/13", "01/14",
-        "01/15", "01/16", "01/17", "01/18", "01/19", "01/20", "01/21",
-        "01/22", "01/23", "01/24", "01/25", "01/26", "01/27", "01/28",
-        "01/29", "01/30", "01/31"
-      ],
-      datasets: [{
-        data: [1000, 1000, 1000, 1000, 5300, 5000, 6000, 5000, 5000, 5000, 5000, 5100, 5003, 5004,
-          4008, 4009, 5004, 4400, 4003, 4006, 6000, 1000, 4005, 4005, 4005, 5009, 6600, 4500, 4000, 4005, 4003],
-        borderColor: "#6ed5e9",
-        label: '나의 하루 음수량',
-        tension: 0,
-        fill: false
-      }]
-    }
-  });
-  new Chart(document.getElementsByClassName("yearly"), {
-    type: 'line',
-    data: {
-      labels: [
-        "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06",
-        "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"
-      ],
-      datasets: [{
-        data: [4000, 4001, 4200, 1000, 5003, 5000, 6000, 4000, 4100, 1000, 5500, 5003, 1000],
-        borderColor: "#6ed5e9",
-        label: '나의 하루 음수량',
-        tension: 0,
-        fill: false
-      }]
-    }
-  });
+  var data = [<%= drnkAmnt %>];
+    var labels = [<% for (var i = 0; i < doDate.length+1; i++) { %>'<%= doDate[i] %>',<% } %>];
+    labels.pop();
+   const chartData = {
+     labels: labels,
+     datasets: [{
+       data: data,
+       borderColor: "#6ed5e9",
+       label: '나의 체중',
+       tension: 0,
+       fill: false
+     }]
+   };
+   // 차트 생성
+   new Chart(document.getElementsByClassName("weekly"), {
+     type: 'line',
+     data: chartData
+ });
+ var data = [<%= drnkAmnt2 %>];
+    var labels = [<% for (var i = 0; i < doDate2.length+1; i++) { %>'<%= doDate2[i] %>',<% } %>];
+    labels.pop();
+   const chartData2 = {
+     labels: labels,
+     datasets: [{
+       data: data,
+       borderColor: "#6ed5e9",
+       label: '나의 체중',
+       tension: 0,
+       fill: false
+     }]
+   };
+   new Chart(document.getElementsByClassName("monthly"), {
+     type: 'line',
+     data: chartData2
+ });
+ var data = [<%= drnkAmnt3 %>];
+ var labels = [<% for (var i = 0; i < doDate3.length+1; i++) { %>'<%= doDate3[i] %>',<% } %>];
+  labels.pop();
+   const chartData3 = {
+     labels: labels,
+     datasets: [{
+       data: data,
+       borderColor: "#6ed5e9",
+       label: '나의 체중',
+       tension: 0,
+       fill: false
+     }]
+   };
+   new Chart(document.getElementsByClassName("yearly"), {
+     type: 'line',
+     data: chartData3
+ });
 </script>
 
 </html>

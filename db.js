@@ -133,123 +133,205 @@ async function selectWeightYear(userId) {
     throw err; // 에러를 호출한 곳으로 던집니다.
   }
 }
+//일주일 음수량
+async function selectDrinkWeek(userId) {
+  try {
+    const resp = await knex.raw(`exec selectDrinkWeek '${userId}'`);
+    console.log(resp);
 
-// selectDrinkWeek('hyjkim')
-//지난 일주일 간의 음수량 조회
-function selectDrinkWeek(userId) {
-  knex.raw(
-    `exec selectDrinkWeek '${userId}'`
-    ).then((resp) => {
-  console.log(resp);
+    // 반환값이 있을 경우 resp에서 데이터 추출
+    if (resp) {
+      const drinkData = resp;
+      return drinkData;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // 에러를 호출한 곳으로 던집니다.
   }
-).catch((err) => {
-    console.log(err);
-  });
+}
+//한달 음수량
+async function selectDrinkMonth(userId) {
+  try {
+    const resp = await knex.raw(`exec selectDrinkMonth '${userId}'`);
+    console.log(resp);
+
+    // 반환값이 있을 경우 resp에서 데이터 추출
+    if (resp) {
+      const drinkData = resp;
+      return drinkData;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // 에러를 호출한 곳으로 던집니다.
+  }
+}
+//일년음수량
+async function selectDrinkYear(userId) {
+  try {
+    const resp = await knex.raw(`exec selectDrinkYear '${userId}'`);
+    console.log(resp);
+
+    // 반환값이 있을 경우 resp에서 데이터 추출
+    if (resp) {
+      const drinkData = resp;
+      return drinkData;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // 에러를 호출한 곳으로 던집니다.
+  }
 }
 
-// selectDrinkMonth('hyjkim')
-//지난 한달 간의 음수량 조회
-function selectDrinkMonth(userId) {
-  knex.raw(
-    `exec selectDrinkMonth '${userId}'`
-    ).then((resp) => {
-  console.log(resp);
-  }
-).catch((err) => {
-    console.log(err);
-  });
-}
-
-// selectDrinkYear('hyjkim')
-//지난 1년 간의 월별평균 음수량 조회
-function selectDrinkYear(userId) {
-  knex.raw(
-    `exec selectDrinkYear '${userId}'`
-    ).then((resp) => {
-  console.log(resp);
-  }
-).catch((err) => {
-    console.log(err);
-  });
-}
 
 // selectRecmDrinkAmnt('hyjkim')
-//오늘의 권장 음수량 조회
-function selectRecmDrinkAmnt(userId) {
-  knex.raw(
-    `exec selectRecmDrinkAmnt '${userId}'`
-    ).then((resp) => {
-  console.log(resp);
-  }
-).catch((err) => {
-    console.log(err);
-  });
-}
+// 오늘의 권장 음수량 조회
+async function selectRecmDrinkAmnt(userId) {
+  try {
+    const resp = await knex.raw(`exec selectRecmDrinkAmnt '${userId}'`);
+    console.log(resp);
 
-// selectStepWeek('hyjkim')
-//지난 일주일 간의 걸음수 조회
-function selectStepWeek(userId) {
-  knex.raw(
-    `exec selectStepWeek '${userId}'`
-    ).then((resp) => {
-  console.log(resp);
+    // 반환값이 있을 경우 resp에서 데이터 추출
+    if (resp) {
+      const drinkData = resp;
+      return drinkData;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // 에러를 호출한 곳으로 던집니다.
   }
-).catch((err) => {
-    console.log(err);
-  });
-}
-
-// selectStepMonth('hyjkim')
-//지난 한달 간의 걸음수 조회
-function selectStepMonth(userId) {
-  knex.raw(
-    `exec selectStepMonth '${userId}'`
-    ).then((resp) => {
-  console.log(resp);
-  }
-).catch((err) => {
-    console.log(err);
-  });
-}
-
-// selectStepYear('hyjkim')
-//지난 1년 간의 월별평균 걸음수 조회
-function selectStepYear(userId) {
-  knex.raw(
-    `exec selectStepYear '${userId}'`
-    ).then((resp) => {
-  console.log(resp);
-  }
-).catch((err) => {
-    console.log(err);
-  });
-}
-
-// selectStepDay('hyjkim')
-//오늘의 걸음수(, 사용자명, 걸음당소모칼로리) 조회
-function selectStepDay(userId) {
-  knex.raw(
-    `exec selectStepDay '${userId}'`
-    ).then((resp) => {
-  console.log(resp);
-  }
-).catch((err) => {
-    console.log(err);
-  });
 }
 
 
-// selectDrinkDay('hyjkim')
-//오늘의 음수량 조회
-function selectDrinkDay(userId) {
-  knex.raw(
-    `exec selectDrinkDay '${userId}'`
-    ).then((resp) => {
-  console.log(resp);
+
+// async function selectStepWeek(userId) {
+//   try {
+//     const resp = await knex.raw(`exec selectStepWeek '${userId}'`);
+//     console.log(resp);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+// 지난 일주일 간의 걸음수 조회
+async function selectStepWeek(userId) {
+  try {
+    const resp = await knex.raw(`exec selectStepWeek '${userId}'`);
+    console.log(resp);
+
+    // 반환값이 있을 경우 resp에서 데이터 추출
+    if (resp) {
+      const stepdata = resp;
+      return stepdata;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // 에러를 호출한 곳으로 던집니다.
   }
-).catch((err) => {
+}
+
+
+// async function selectStepMonth(userId) {
+//   try {
+//     const resp = await knex.raw(`exec selectStepMonth '${userId}'`);
+//     console.log(resp);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+
+// 지난 한달 간의 걸음수 조회
+async function selectStepMonth(userId) {
+  try {
+    const resp = await knex.raw(`exec selectStepMonth '${userId}'`);
+    console.log(resp);
+
+    // 반환값이 있을 경우 resp에서 데이터 추출
+    if (resp) {
+      const stepdata = resp;
+      return stepdata;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // 에러를 호출한 곳으로 던집니다.
+  }
+}
+
+
+// async function selectStepYear(userId) {
+//   try {
+//     const resp = await knex.raw(`exec selectStepYear '${userId}'`);
+//     console.log(resp);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+
+// 지난 1년 간의 월별평균 걸음수 조회
+async function selectStepYear(userId) {
+  try {
+    const resp = await knex.raw(`exec selectStepYear '${userId}'`);
+    console.log(resp);
+
+    // 반환값이 있을 경우 resp에서 데이터 추출
+    if (resp) {
+      const stepdata = resp;
+      return stepdata;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // 에러를 호출한 곳으로 던집니다.
+  }
+}
+
+// 오늘의 걸음수(, 사용자명, 걸음당소모칼로리) 조회
+async function selectStepDay(userId) {
+  try {
+    const resp = await knex.raw(`exec selectStepDay '${userId}'`);
+    console.log(resp);
+
+    // 반환값이 있을 경우 resp에서 데이터 추출
+    if (resp) {
+      const stepData = resp;
+      return stepData;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // 에러를 호출한 곳으로 던집니다.
+  }
+}
+
+
+// 오늘의 음수량 조회
+async function selectDrinkDay(userId) {
+  try {
+    const resp = await knex.raw(`exec selectDrinkDay '${userId}'`);
+    console.log(resp);
+  } catch (err) {
     console.log(err);
-  });
+  }
 }
 
 function Insert(table,data) {//data는 {column:value} 형식
