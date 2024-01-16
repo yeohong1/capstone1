@@ -210,38 +210,6 @@ header .container .right .word-menu a+a {
     height: 250px;
 }
 
-.product .items dl {
-    margin-top: 15px;
-}
-
-.product .items dl dt {
-    font-size: 15px;
-    color: #333;
-    font-weight: 300;
-    margin-bottom: 10px;
-}
-
-.product .items dl dd {
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.product .items dl .sale-price {
-    font-size: 14px;
-    color: #999;
-    margin-top: 10px;
-    display: inline-block;
-    text-decoration: line-through;
-}
-
-.product .items dl .per {
-    font-size: 18px;
-    font-weight: 600;
-    color: #6C801A;
-    margin-left: 5px;
-    display: inline-block;
-}
-
 .product .items span {
     font-style: normal;
     background-color: #A89079;
