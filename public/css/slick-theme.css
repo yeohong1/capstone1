@@ -97,6 +97,9 @@
 [dir='rtl'] .slick-prev:before
 {
 }
+.product .slick-prev{
+    left: -50px!important;
+}
 .product .slick-prev,
 .record .images-sec .slick-prev{
     left: 0;
