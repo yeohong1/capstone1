@@ -32,7 +32,7 @@ router.post('/input', async (req, res) => {
         // "YYYYMMDD" 형식으로 변환
         const doDate = date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\D/g, '');
 
-        const userId = 'test'; // 테스트용 userId
+        const userId = 'hyjkim'; // 테스트용 userId
         const foodNm = req.body.foodNm;
         const weight = req.body.Weight;
         const height = req.body.Tall;
@@ -151,9 +151,9 @@ router.get('/weight', async function (req, res) {
       const bmiheight = selectUserBmi[0].height;
       const bmi = selectUserBmi[0].bmi;
       const bmiNm = selectUserBmi[0].bmiNm;
-      //const msg = selectUserBmi[0].msg;
-      
-      if(bmiweight.indexOf('undefined') != -1 || bmiheight.indexOf('undefined') != -1){//체중 또는 입력 없을 때 처리
+     // const msg = selectUserBmi[0].msg;
+      console.log(bmiweight);
+      if(bmiweight== 0|| bmiheight==0){//체중 또는 입력 없을 때 처리
         res.send(`<script type="text/javascript">alert("체중 또는 신장을 입력해주세요"); document.location.href="/mypage/record";</script>`);
       }
       else {
@@ -185,9 +185,23 @@ router.get('/clalorie', async function (req, res) {
 
     //칼로리 차트
 
-    req.session.showResult = true;//나중에 수정
 
-    res.render('mypageClalorie.ejs', { doDttm });
+    //하루 칼로리 열량
+    const selectUserBmi = await db.selectUserBmi(userId);
+
+    const bmiweight = selectUserBmi[0].weight;
+    const bmiheight = selectUserBmi[0].height;
+    const msg = selectUserBmi[0].msg;
+
+    
+   
+   if ( msg === null) {
+        console.log("1");
+        res.render('mypageClalorie.ejs', { doDttm,bmiweight,bmiheight });
+    }
+    else{
+        res.send(`<script type="text/javascript">alert("체중 또는 신장을 입력해주세요"); document.location.href="/mypage/record";</script>`);
+    }
 
 });
 //칼로리 post
@@ -206,19 +220,17 @@ router.post('/clalorie', async function (req, res) {
         gender = '02';
     }
     console.log(gender);
-
-    // 하루열량 계산
+    
+    if(gender){  // 하루열량 계산
     const selectUserDayNeedKcal = await db.selectUserDayNeedKcal(userId, gender);
 
-    const weight = selectUserDayNeedKcal[0].weight;
-    const height = selectUserDayNeedKcal[0].height;
     const bmi = selectUserDayNeedKcal[0].bmi;
     const bmiNm = selectUserDayNeedKcal[0].bmiNm;
     const stddWeight = selectUserDayNeedKcal[0].stddWeight;
     const dayNeedKcal = selectUserDayNeedKcal[0].dayNeedKcal;
+}
 
-
-   res.render('mypageClalorie.ejs',{weight,height,bmi,bmiNm ,stddWeight,dayNeedKcal });
+   res.render('mypageClalorie.ejs',{doDttm,bmi,bmiNm,stddWeight,dayNeedKcal} );
 });
 
 
@@ -263,31 +275,34 @@ router.get('/water', async function(req, res){
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0
     const day = String(date.getDate()).padStart(2, '0');
     const doDttm = `${year}-${month}-${day}`;
-//오늘의 걸음수 //어떻게 저장되어있는지 확인 수정
+//오늘의 걸음수 
     const selectStepDay = await db.selectStepDay(userId);
-    // const userNm = selectStepDay.map(data => data.userNm);
-    // const daystepCnt = selectStepDay.map(data => data.stepCnt);
-    // const stepConsKcal = selectStepDay.map(data => data.stepConsKcal);
-
-    const userNm = selectStepDay[0].userNm;
-    const daystepCnt = selectStepDay[0].stepCnt;
-    const stepConsKcal = selectStepDay[0].stepConsKcal;
-
-    console.log("1",userNm,daystepCnt,stepConsKcal);
-
-//걸음수차트
+//차트
     const selectStepWeek = await db.selectStepWeek(userId);
     const selectStepMonth = await db.selectStepMonth(userId);
     const selectStepYear = await db.selectStepYear(userId);
-
-    const stepCnt = selectStepWeek.map(data => data.stepCnt);
-    const doDate = selectStepWeek.map(data => data.doDate);
-    const stepCnt2 = selectStepMonth.map(data => data.stepCnt);
-    const doDate2 = selectStepMonth.map(data => data.doDate);
-    const stepCnt3 = selectStepYear.map(data => data.stepCnt);
-    const doDate3 = selectStepYear.map(data => data.doMonth);
+   
+   if (selectStepDay && selectStepDay.length > 0) {
+//오늘의걸음수
+         const userNm = selectStepDay[0].userNm;
+         const daystepCnt = selectStepDay[0].stepCnt;
+         const stepConsKcal = selectStepDay[0].stepConsKcal;
+//차트
+        const stepCnt = selectStepWeek.map(data => data.stepCnt);
+        const doDate = selectStepWeek.map(data => data.doDate);
+        const stepCnt2 = selectStepMonth.map(data => data.stepCnt);
+        const doDate2 = selectStepMonth.map(data => data.doDate);
+        const stepCnt3 = selectStepYear.map(data => data.stepCnt);
+        const doDate3 = selectStepYear.map(data => data.doMonth);
 
     res.render('mypageWalk.ejs',{ doDttm,stepCnt,doDate,stepCnt2,doDate2,stepCnt3,doDate3,userNm,daystepCnt,stepConsKcal});
+        
+    // 다른 속성에 액세스 및 처리
+    
+  } else {
+   
+    res.send(`<script type="text/javascript">alert("오늘의 걸음수를 입력해주세요"); document.location.href="/mypage/record";</script>`);
+  }
 })
 
 

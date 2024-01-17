@@ -49,26 +49,70 @@ function saveDrtMeal(userId, mealCd, foodNm, kcal) {
   });
 }
 
-//  selectBodyInfo('hyjkim', '02')
-//표준체중/bmi/하루필요열량 조회
-async function selectBodyInfo(userId, gender) {
+// selectUserBmi('hyjkim')
+//사용자의 체중/키/bmi 조회
+async function selectUserBmi(userId) {
   try {
-    const resp = await knex.raw(`selectBodyInfo '${userId}', '${gender}'`);
+    const resp = await knex.raw(`exec selectUserBmi '${userId}'`);
     console.log(resp);
 
-    // 반환값이 있을 경우 resp에서 데이터 추출
+    // If there is a return value, extract data from resp
     if (resp) {
-      const bodyInfo = resp;
-      return bodyInfo;
+      const bmiData = resp;
+      return bmiData;
     } else {
       console.error('데이터가 없음');
       return null;
     }
   } catch (err) {
     console.error('데이터베이스 쿼리 오류:', err);
-    throw err; // 에러를 호출한 곳으로 던집니다.
+    throw err; // Throw the error to the calling code
   }
 }
+
+
+// selectUserDayNeedKcal('hyjkim', '02')
+//사용자의 체중/키/bmi/표준체중/하루필요열량 조회
+async function selectUserDayNeedKcal(userId, gender) {
+  try {
+    const resp = await knex.raw(`exec selectUserDayNeedKcal '${userId}', '${gender}'`);
+    console.log(resp);
+
+    // If there is a return value, you can extract data from resp
+    if (resp) {
+      const kcalData = resp;
+      return kcalData;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // Throw the error to the calling code
+  }
+}
+
+
+//  selectBodyInfo('hyjkim', '02')
+//표준체중/bmi/하루필요열량 조회
+// async function selectBodyInfo(userId, gender) {
+//   try {
+//     const resp = await knex.raw(`selectBodyInfo '${userId}', '${gender}'`);
+//     console.log(resp);
+
+//     // 반환값이 있을 경우 resp에서 데이터 추출
+//     if (resp) {
+//       const bodyInfo = resp;
+//       return bodyInfo;
+//     } else {
+//       console.error('데이터가 없음');
+//       return null;
+//     }
+//   } catch (err) {
+//     console.error('데이터베이스 쿼리 오류:', err);
+//     throw err; // 에러를 호출한 곳으로 던집니다.
+//   }
+// }
 
 
 // selectWeightWeek('hyjkim')
@@ -214,15 +258,6 @@ async function selectRecmDrinkAmnt(userId) {
 }
 
 
-
-// async function selectStepWeek(userId) {
-//   try {
-//     const resp = await knex.raw(`exec selectStepWeek '${userId}'`);
-//     console.log(resp);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
 // 지난 일주일 간의 걸음수 조회
 async function selectStepWeek(userId) {
   try {
@@ -244,14 +279,6 @@ async function selectStepWeek(userId) {
 }
 
 
-// async function selectStepMonth(userId) {
-//   try {
-//     const resp = await knex.raw(`exec selectStepMonth '${userId}'`);
-//     console.log(resp);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
 
 // 지난 한달 간의 걸음수 조회
 async function selectStepMonth(userId) {
@@ -272,16 +299,6 @@ async function selectStepMonth(userId) {
     throw err; // 에러를 호출한 곳으로 던집니다.
   }
 }
-
-
-// async function selectStepYear(userId) {
-//   try {
-//     const resp = await knex.raw(`exec selectStepYear '${userId}'`);
-//     console.log(resp);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
 
 // 지난 1년 간의 월별평균 걸음수 조회
 async function selectStepYear(userId) {
@@ -432,7 +449,8 @@ module.exports = {
   saveApiMeal,
   saveDrtMeal,
 //bmi계산
-  selectBodyInfo,
+  selectUserBmi,//bmi
+  selectUserDayNeedKcal,//하루열량
 //몸무게
   selectWeightWeek, 
   selectWeightMonth, 

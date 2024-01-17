@@ -59,9 +59,9 @@ app.get('/record', (req, res) => {
 app.get('/weight', (req, res) => {
   res.render(path.join(__dirname, 'views', 'mypageWeight'));
 });
-app.get('/clalorie', (req, res) => {
-  res.render(path.join(__dirname, 'views', 'mypageClalorie'));
-});
+// app.get('/clalorie', (req, res) => {
+//   res.render(path.join(__dirname, 'views', 'mypageClalorie'));
+// });
 // app.get('/water', (req, res) => {
 //   res.render(path.join(__dirname, 'views', 'mypageWater'));
 // });
