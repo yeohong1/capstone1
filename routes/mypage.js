@@ -145,16 +145,25 @@ router.get('/weight', async function (req, res) {
       const doDate3 = weightData3.map(data => data.doMonth);
       
      //bmi
-      const selectBodyInfo = await db.selectBodyInfo(userId);
+      const selectUserBmi = await db.selectUserBmi(userId);
 
-      if (weightData !== null) {
-        res.render('mypageWeight', { doDttm: doDttm, weight: weight, doDate: doDate, weight2: weight2, doDate2: doDate2,weight3: weight3, doDate3: doDate3 });
+      const bmiweight = selectUserBmi[0].weight;
+      const bmiheight = selectUserBmi[0].height;
+      const bmi = selectUserBmi[0].bmi;
+      const bmiNm = selectUserBmi[0].bmiNm;
+      //const msg = selectUserBmi[0].msg;
+      
+      if(bmiweight.indexOf('undefined') != -1 || bmiheight.indexOf('undefined') != -1){//체중 또는 입력 없을 때 처리
+        res.send(`<script type="text/javascript">alert("체중 또는 신장을 입력해주세요"); document.location.href="/mypage/record";</script>`);
+      }
+      else {
+        res.render('mypageWeight', { doDttm , weight, doDate, weight2, doDate2, weight3, doDate3,bmiweight,bmiheight,bmi,bmiNm });
        
       
-      } else {
-        // 데이터가 없으면 적절한 응답을 보냅니다.
-        console.error('데이터가 없음');
-        res.status(404).send('데이터가 없습니다.');
+    //   } else {
+    //     // 데이터가 없으면 적절한 응답을 보냅니다.
+    //     console.error('데이터가 없음');
+    //     res.status(404).send('데이터가 없습니다.');
       }
     } catch (error) {
       // 에러 처리
@@ -170,32 +179,19 @@ router.get('/clalorie', async function (req, res) {
     //시간
     const date = new Date();
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
     const day = String(date.getDate()).padStart(2, '0');
     const doDttm = `${year}-${month}-${day}`;
 
-    let gender;
+    //칼로리 차트
 
-    if (req.body.gender === 'male') {
-        gender = '01';
-    } else {
-        gender = '02';
-    }
-    
-    const selectBodyInfo = await db.selectBodyInfo(userId, gender);
+    req.session.showResult = true;//나중에 수정
 
-    const stddWeight = selectBodyInfo.map(data => data.stddWeight);
-    const bmi = selectBodyInfo.map(data => data.bmi);
-    const dayNeedKcal = selectBodyInfo.map(data => data.dayNeedKcal);
-    const bmiNm = selectBodyInfo.map(data => data.bmiNm);
-    const msg = selectBodyInfo.map(data => data.msg);
-    const height = selectBodyInfo.map(data => data.height);
-
-    res.render('mypageClalorie.ejs',{ doDttm});
+    res.render('mypageClalorie.ejs', { doDttm });
 
 });
 //칼로리 post
-router.post('/clalorie',async function (req, res) {
+router.post('/clalorie', async function (req, res) {
     const userId = 'hyjkim'; // test
 
     const date = new Date();
@@ -203,30 +199,28 @@ router.post('/clalorie',async function (req, res) {
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0
     const day = String(date.getDate()).padStart(2, '0');
     const doDttm = `${year}-${month}-${day}`;
-    let gender;
 
     if (req.body.gender === 'male') {
         gender = '01';
     } else {
         gender = '02';
     }
-    
-    const selectBodyInfo = await db.selectBodyInfo(userId, gender);
+    console.log(gender);
 
-    const stddWeight = selectBodyInfo.map(data => data.stddWeight);
-    const bmi = selectBodyInfo.map(data => data.bmi);
-    const dayNeedKcal = selectBodyInfo.map(data => data.dayNeedKcal);
-    const bmiNm = selectBodyInfo.map(data => data.bmiNm);
-    const msg = selectBodyInfo.map(data => data.msg);
-    const height = selectBodyInfo.map(data => data.height);
-   
+    // 하루열량 계산
+    const selectUserDayNeedKcal = await db.selectUserDayNeedKcal(userId, gender);
+
+    const weight = selectUserDayNeedKcal[0].weight;
+    const height = selectUserDayNeedKcal[0].height;
+    const bmi = selectUserDayNeedKcal[0].bmi;
+    const bmiNm = selectUserDayNeedKcal[0].bmiNm;
+    const stddWeight = selectUserDayNeedKcal[0].stddWeight;
+    const dayNeedKcal = selectUserDayNeedKcal[0].dayNeedKcal;
 
 
-    //console.log(gender,stddWeight,bmi,dayNeedKcal, bmiNm,msg,height);
-    res.render('mypageClalorie.ejs',{ doDttm});
-    
-//응답처리하기
+   res.render('mypageClalorie.ejs',{weight,height,bmi,bmiNm ,stddWeight,dayNeedKcal });
 });
+
 
 //음수량 get
 router.get('/water', async function(req, res){
@@ -271,13 +265,13 @@ router.get('/water', async function(req, res){
     const doDttm = `${year}-${month}-${day}`;
 //오늘의 걸음수 //어떻게 저장되어있는지 확인 수정
     const selectStepDay = await db.selectStepDay(userId);
-    const userNm = selectStepDay.map(data => data.userNm);
-    const daystepCnt = selectStepDay.map(data => data.stepCnt);
-    const stepConsKcal = selectStepDay.map(data => data.stepConsKcal);
+    // const userNm = selectStepDay.map(data => data.userNm);
+    // const daystepCnt = selectStepDay.map(data => data.stepCnt);
+    // const stepConsKcal = selectStepDay.map(data => data.stepConsKcal);
 
-    //const userNm = selectStepDay[0].userNm;
-    // const daystepCnt = selectStepDay[0].stepCnt;
-    // const stepConsKcal = selectStepDay[0].stepConsKcal;
+    const userNm = selectStepDay[0].userNm;
+    const daystepCnt = selectStepDay[0].stepCnt;
+    const stepConsKcal = selectStepDay[0].stepConsKcal;
 
     console.log("1",userNm,daystepCnt,stepConsKcal);
 
