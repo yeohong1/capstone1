@@ -78,8 +78,9 @@
                   <tr>
                     <th>성별</th>
                     <td>
-                      <input type="radio" name="gender" value="male">남자
-                      <input type="radio" name="gender" value="female">여자
+                      <input type="radio" name="gender" id="maleRadio" value="male">남자
+                      <input type="radio" name="gender" id="femaleRadio" value="female">여자
+                      
                     </td>
                   </tr>
                 </table>
@@ -90,29 +91,30 @@
                 <table border="1">
                   <tr>
                     <th>표준체중</th>
-                    <td><span><%=  %></span> kg</td>
+                    <td><span class="stddWeight"><%= stddWeight %></span> kg</td>
                   </tr>
                   <tr>
                     <th>체질량지수</th>
-                    <td><span><%=  %></span> kg/㎡</td>
+                    <td><span class="bmi"><%= bmi %></span> kg/㎡</td>
                   </tr>
                   <tr>
                     <th>하루 필요열량</th>
-                    <td><span><%=  %></span> kcal</td>
+                    <td><span class="dayNeedKcal"><%= dayNeedKcal %></span> kcal</td>
                   </tr>
                 </table>
                 <p>
-                  표준체중은 <span><%=  %>kg</span>입니다.<br>
-                  현재체중은 <span><%=  %></span>입니다<br>
-                  [ <span>체중유지</span> ]를 위해 하루 <span><%=  %>kcal</span>의 열량 섭취가 권장됩니다.<br>
+                  표준체중은 <span class="stddWeight"><%= stddWeight %>kg</span>입니다.<br>
+                  현재체중은 <span class="bmiNm"><%= bmiNm %></span>입니다<br>
+                  [ <span>체중유지</span> ]를 위해 하루 <span class="dayNeedKcal"><%= dayNeedKcal %>kcal</span>의 열량 섭취가 권장됩니다.<br>
                   '보통의 활동을 하는 경우'에 해당되는 '하루 필요열량'입니다.<br>
-                </p>
+              </p>
               </li>
             </ul>
           </div>
         </form>
-       <script>
-  document.addEventListener("DOMContentLoaded", function () {
+        <script>
+         // 예시로 클라이언트 측에서 데이터 받아오기
+document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("calorieForm");
     const calcResult = document.querySelector(".calcResult");
 
@@ -120,12 +122,43 @@
     calcResult.style.display = "none";
 
     form.addEventListener("submit", async function (event) {
-     
-      calcResult.style.display = "flex";
+        event.preventDefault();
 
+        const gender = document.querySelector('input[name="gender"]:checked').value;
+
+        // 서버와 통신
+        const response = await fetch('/mypage/clalorie', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ gender }),
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+
+            // 받아온 데이터를 이용하여 결과를 표시
+            const stddWeightSpan = document.querySelector(".stddWeight");
+            const bmiSpan = document.querySelector(".bmi");
+            const dayNeedKcalSpan = document.querySelector(".dayNeedKcal");
+            const bmiNmSpan = document.querySelector(".bmiNm");
+          console.log(stddWeightSpan);
+            stddWeightSpan.textContent = responseData.stddWeight;
+            bmiSpan.textContent = responseData.bmi;
+            dayNeedKcalSpan.textContent = responseData.dayNeedKcal;
+            bmiNmSpan.textContent = responseData.bmiNm;
+
+            // 결과 섹션을 보이도록 설정
+            calcResult.style.display = "flex";
+        } else {
+            // Handle error case
+            console.error('Failed to fetch data');
+        }
     });
-  });
-</script>
+});
+
+        </script>
         </li>
         <li class="week-chart">
           <h3>일주일 간 섭취한 칼로리의 변화</h3>

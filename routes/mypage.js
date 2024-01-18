@@ -7,6 +7,7 @@ const moment = require('moment');//현재시간
 const app = express()
 app.use('/static',express.static('static'));
 
+
  //기록get
  router.get('/record', function (req, res) {
     res.render('mypageRecord.ejs',{
@@ -173,38 +174,47 @@ router.get('/weight', async function (req, res) {
   });
   
 
-//칼로리 get
+// 칼로리 get
+// GET 요청('/mypage/clalorie')
 router.get('/clalorie', async function (req, res) {
     const userId = 'hyjkim'; // test
-    //시간
+    // 시간
     const date = new Date();
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); 
     const day = String(date.getDate()).padStart(2, '0');
     const doDttm = `${year}-${month}-${day}`;
 
-    //칼로리 차트
-
-
-    //하루 칼로리 열량
+    // 하루 칼로리 열량
     const selectUserBmi = await db.selectUserBmi(userId);
+    const gender = req.body.gender === 'male' ? '01' : '02';
+    const selectUserDayNeedKcal = await db.selectUserDayNeedKcal(userId, gender);
 
     const bmiweight = selectUserBmi[0].weight;
     const bmiheight = selectUserBmi[0].height;
     const msg = selectUserBmi[0].msg;
 
-    
-   
-   if ( msg === null) {
+    if (msg === null) {
         console.log("1");
-        res.render('mypageClalorie.ejs', { doDttm,bmiweight,bmiheight });
-    }
-    else{
+        // 여기서 변수들을 정의하여 클라이언트에게 응답합니다.
+        // const stddWeight = 25; // 적절한 값으로 대체
+        // const bmi = 0; // 적절한 값으로 대체
+        // const dayNeedKcal = 0; // 적절한 값으로 대체
+        // const bmiNm = ""; // 적절한 값으로 대체
+
+        const bmi = selectUserDayNeedKcal[0].bmi;
+        const bmiNm = selectUserDayNeedKcal[0].bmiNm;
+        const stddWeight = selectUserDayNeedKcal[0].stddWeight;
+        const dayNeedKcal = selectUserDayNeedKcal[0].dayNeedKcal;
+
+        res.render('mypageClalorie.ejs', { doDttm, bmiweight, bmiheight, stddWeight, bmi, dayNeedKcal, bmiNm });
+    } else {
         res.send(`<script type="text/javascript">alert("체중 또는 신장을 입력해주세요"); document.location.href="/mypage/record";</script>`);
     }
-
 });
-//칼로리 post
+
+
+// 칼로리 post
 router.post('/clalorie', async function (req, res) {
     const userId = 'hyjkim'; // test
 
@@ -214,24 +224,33 @@ router.post('/clalorie', async function (req, res) {
     const day = String(date.getDate()).padStart(2, '0');
     const doDttm = `${year}-${month}-${day}`;
 
-    if (req.body.gender === 'male') {
-        gender = '01';
-    } else {
-        gender = '02';
-    }
-    console.log(gender);
+    const gender = req.body.gender === 'male' ? '01' : '02';
     
-    if(gender){  // 하루열량 계산
-    const selectUserDayNeedKcal = await db.selectUserDayNeedKcal(userId, gender);
 
-    const bmi = selectUserDayNeedKcal[0].bmi;
-    const bmiNm = selectUserDayNeedKcal[0].bmiNm;
-    const stddWeight = selectUserDayNeedKcal[0].stddWeight;
-    const dayNeedKcal = selectUserDayNeedKcal[0].dayNeedKcal;
-}
+    if (gender) {
+        // 하루열량 계산
+        console.log(gender);
+        const selectUserDayNeedKcal = await db.selectUserDayNeedKcal(userId, gender);
+        const selectUserBmi = await db.selectUserBmi(userId);
 
-   res.render('mypageClalorie.ejs',{doDttm,bmi,bmiNm,stddWeight,dayNeedKcal} );
+        const bmi = selectUserDayNeedKcal[0].bmi;
+        const bmiNm = selectUserDayNeedKcal[0].bmiNm;
+        const stddWeight = selectUserDayNeedKcal[0].stddWeight;
+        const dayNeedKcal = selectUserDayNeedKcal[0].dayNeedKcal;
+
+        const bmiweight = selectUserBmi[0].weight;
+    const bmiheight = selectUserBmi[0].height;
+       console.log("myapge.js");
+       // res.render('mypageClalorie.ejs',{ stddWeight,bmiweight, bmiheight,bmi, dayNeedKcal, bmiNm });
+       res.json(bmiheight,bmi, dayNeedKcal,stddWeight, bmiNm);
+    } else {
+        // Handle error case if gender is not provided
+        res.status(400).json({ error: 'Gender not provided' });
+    }
+
+    
 });
+
 
 
 //음수량 get
