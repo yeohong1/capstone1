@@ -1,4 +1,5 @@
-
+const multer = require('multer');
+const upload = multer({ dest: '../uploads' }); 
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
@@ -17,6 +18,23 @@ app.use('/static',express.static('static'));
         
         });
 
+});
+
+
+app.post("/upload", upload.single('image'), (req, res) => { 
+    //const inputNm = "image"
+    // 'image'는 input 요소의 name 속성 값입니다. 동일하게 설정해야 합니다.
+
+    // 업로드된 파일 정보는 req.file에 저장됩니다.
+    const file = req.file;
+
+    // 텍스트 필드 정보는 req.body에 저장됩니다.
+    const title = req.body.title;
+
+    // 파일 정보와 텍스트 필드 정보를 활용하여 원하는 작업을 수행합니다.
+
+    // 응답
+    res.json({ file, title });
 });
 
 //기록 

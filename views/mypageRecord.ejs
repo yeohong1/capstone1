@@ -99,9 +99,11 @@
                 </div>
               </form>
             </div>
-            <input type="file" class="fileupload">
+            <form action="/upload" method="post" enctype="multipart/form-data">
+              <input type="file" name="image" /> 
+                  <button type="submit">제출</button>
+                </form>
           </li>
-
           <li>
             <h3>Lunch</h3><img src="../images/lunch.png" alt="lunch" class="lunch"><br>
             <div class="dropdown">
