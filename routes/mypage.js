@@ -260,7 +260,8 @@ router.post('/clalorie', async function (req, res) {
     const bmiheight = selectUserBmi[0].height;
        console.log("myapge.js");
        // res.render('mypageClalorie.ejs',{ stddWeight,bmiweight, bmiheight,bmi, dayNeedKcal, bmiNm });
-       res.json(bmiheight,bmi, dayNeedKcal,stddWeight, bmiNm);
+       //res.json(bmiheight,bmi, dayNeedKcal,stddWeight, bmiNm);
+       res.json({ bmiheight, bmi, dayNeedKcal, stddWeight, bmiNm });
     } else {
         // Handle error case if gender is not provided
         res.status(400).json({ error: 'Gender not provided' });
