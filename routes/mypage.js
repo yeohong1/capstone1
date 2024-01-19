@@ -11,10 +11,18 @@ app.use('/static',express.static('static'));
 
  //기록get
  router.get('/record', function (req, res) {
+    const userId = req.session.userId;
+    const userNm = req.session.userNm;
+
+    console.log(userId,userNm);
+
     res.render('mypageRecord.ejs',{
          resultString: 'resultString',
          resultString2: 'resultString2',
-         resultString3: 'resultString3'
+         resultString3: 'resultString3',
+         userId,
+         userNm
+
         
         });
 
@@ -51,7 +59,8 @@ router.post('/input', async (req, res) => {
         // "YYYYMMDD" 형식으로 변환
         const doDate = date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\D/g, '');
 
-        const userId = 'hyjkim'; // 테스트용 userId
+        const userId = req.session.userId; // 테스트용 userId
+        console.log("userid:" ,userId);
         const foodNm = req.body.foodNm;
         const weight = req.body.Weight;
         const height = req.body.Tall;
@@ -114,7 +123,9 @@ router.post('/input', async (req, res) => {
         }
         // 다른 입력값에 대한 처리
         if (height) {
-            db.insertTable('commUser', { userId, height, inputDttm, updDttm });
+           // const password = req.session.password;
+            console.log(height);
+            db.insertTable('commUser', { userId,height, inputDttm, updDttm });
             console.log(userId, height, inputDttm, updDttm);
         }
         if (drnkAmnt) {
@@ -148,7 +159,8 @@ router.get('/weight', async function (req, res) {
     const day = String(date.getDate()).padStart(2, '0');
     const doDttm = `${year}-${month}-${day}`;
     
-    const userId = 'hyjkim'; // 테스트
+    const userId = req.session.userId; // 테스트
+    console.log(userId);
   
     try {
     //체중 차트
@@ -195,7 +207,7 @@ router.get('/weight', async function (req, res) {
 // 칼로리 get
 // GET 요청('/mypage/clalorie')
 router.get('/clalorie', async function (req, res) {
-    const userId = 'hyjkim'; // test
+    const userId = req.session.userId; 
     // 시간
     const date = new Date();
     const year = date.getFullYear();
@@ -234,7 +246,7 @@ router.get('/clalorie', async function (req, res) {
 
 // 칼로리 post
 router.post('/clalorie', async function (req, res) {
-    const userId = 'hyjkim'; // test
+    const userId = req.session.userId; 
 
     const date = new Date();
     const year = date.getFullYear();
@@ -257,7 +269,7 @@ router.post('/clalorie', async function (req, res) {
         const dayNeedKcal = selectUserDayNeedKcal[0].dayNeedKcal;
 
         const bmiweight = selectUserBmi[0].weight;
-    const bmiheight = selectUserBmi[0].height;
+        const bmiheight = selectUserBmi[0].height;
        console.log("myapge.js");
        // res.render('mypageClalorie.ejs',{ stddWeight,bmiweight, bmiheight,bmi, dayNeedKcal, bmiNm });
        //res.json(bmiheight,bmi, dayNeedKcal,stddWeight, bmiNm);
@@ -274,7 +286,7 @@ router.post('/clalorie', async function (req, res) {
 
 //음수량 get
 router.get('/water', async function(req, res){
-    const userId = 'hyjkim'; // test
+    const userId = req.session.userId; 
     //시간
     const date = new Date();
     const year = date.getFullYear();
@@ -306,7 +318,8 @@ router.get('/water', async function(req, res){
 
 //걸음수 get
     router.get('/walk', async function(req, res){
-    const userId = 'hyjkim'; // test
+    const userId = req.session.userId; // test
+    console.log(userId);
 //시간
     const date = new Date();
     const year = date.getFullYear();
@@ -347,7 +360,8 @@ router.get('/water', async function(req, res){
 // HTTP 요청 보내기
 router.post('/record', async (req, res) => {
    
-
+    const userId = req.session.userId;
+    const userNm = req.session.userNm;
     //api연동
     try {
         const foodName = req.body.foodName;
@@ -390,7 +404,7 @@ router.post('/record', async (req, res) => {
     });
 
          // 결과 저장
-         res.render('mypageRecord.ejs', { resultString, resultString2, resultString3 });
+         res.render('mypageRecord.ejs', { resultString, resultString2, resultString3,userId,userNm });
        // console.log(resultString.foodCd);
     } catch (error) {
             console.error('Error:', error);

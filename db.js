@@ -388,18 +388,64 @@ function Delete(table, targetColumn, targetData) {
     })
 }
 
-function Select(table) {
-  knex.select().table(table)
-    .then(resp => {
-        console.log(resp)
-        return resp
-      }
-    )
-    .catch(err => {
-      console.log(err)
-    })
-}
+// function Select(table) {
+//   knex.select().table(table)
+//     .then(resp => {
+//         console.log(resp)
+//         return resp
+//       }
+//     )
+//     .catch(err => {
+//       console.log(err)
+//     })
+// }
+// function selectTable(table) {
+//   return new Promise((resolve, reject) => {
+//     knex.select().table(table)
+//       .then(resp => {
+//         console.log(resp);
+//         resolve(resp);
+//       })
+//       .catch(err => {
+//         console.error(err);
+//         reject(err);
+//       });
+//   });
+// }
 
+// function selectTable(table, userId) {
+//   return new Promise((resolve, reject) => {
+//     knex(table)
+//       .count('* as count')
+//       .where('userId', '=', userId)  // 여기 수정
+//       .then(result => {
+//         const count = result[0].count;
+//         resolve(count > 0 ? 1 : 0);
+//       })
+//       .catch(err => {
+//         console.error(err);
+//         reject(err);
+//       });
+//   });
+// }
+
+
+async function selectTable(table, userId) {
+  try {
+    const results = await knex(table).select().where({ userId });
+
+    if (results && results.length > 0) {
+      // 중복되는 userId가 있다면 에러 발생
+      throw new Error('Duplicate userId found.');
+    } else {
+      // 중복되는 userId가 없으면 결과 반환
+      return results;
+    }
+  } catch (error) {
+    // 에러 발생 시 reject
+    throw error;
+  }
+}
 
 function GetTableColumns(table) {
   return new knex('INFORMATION_SCHEMA.COLUMNS').where({
@@ -430,9 +476,9 @@ module.exports = {
   getTableColumns: function (table) {
     return GetTableColumns(table);
   },
-  selectTable: function (table) {
-    return Select(table);
-  },
+  // selectTable: function (table) {
+  //   return Select(table);
+  // },
   login: function (table, data) {
     return login(table, data);
   },
@@ -467,5 +513,6 @@ module.exports = {
 //오늘의 걸음수
   selectStepDay,
   //오늘의 음수량
-  selectDrinkDay
+  selectDrinkDay,
+  selectTable
 };

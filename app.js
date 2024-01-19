@@ -18,6 +18,7 @@ var app = express();
 app.use(session({
   secret:'12345',
   resave: false,
+  cookie: {maxAge:60000},
   saveUninitialized: true,//세션을 수정할 때만 세션을 DB에 저장하고 쿠키를 넘겨줌
   store: new FileStore(),//확인필요 //세션 객체에 세션스토어를 적용
   
@@ -51,6 +52,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/static', express.static('static'));
 //app.use('/js', express.static(path.join(__dirname, 'js')));
 
+app.use((req,res,next)=> {
+
+res.locals.user_id = "";
+res.locals.name = "";
+
+if(req.session.userId && req.session.userNm){
+  res.locals.user_id =  req.session.userId
+  res.locals.name = req.session.userNm
+}
+
+  //next();
+})
+
 // "/mypage" 경로로 접근하면 "mypage" 파일을 제공
 app.get('/record', (req, res) => {
   res.render(path.join(__dirname, 'views', 'mypageRecord'));
@@ -59,9 +73,9 @@ app.get('/record', (req, res) => {
 app.get('/weight', (req, res) => {
   res.render(path.join(__dirname, 'views', 'mypageWeight'));
 });
-// app.get('/clalorie', (req, res) => {
-//   res.render(path.join(__dirname, 'views', 'mypageClalorie'));
-// });
+app.get('/clalorie', (req, res) => {
+  res.render(path.join(__dirname, 'views', 'mypageClalorie'));
+});
 // app.get('/water', (req, res) => {
 //   res.render(path.join(__dirname, 'views', 'mypageWater'));
 // });
