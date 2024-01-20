@@ -100,11 +100,11 @@ router.post('/input', async (req, res) => {
            
         }
         if (drnkAmnt) {
-            db.insertTable('hethDrnk', { userId, drnkAmnt, doDate, inputDttm, updDttm });
+            db.insertTable('hethDrnk', { userId,doDate, drnkAmnt, inputDttm, updDttm });
            
         }
         if (weight) {
-            db.insertTable('hethWegt', { userId, weight, doDate, inputDttm, updDttm });
+            db.insertTable('hethWegt', { userId, doDate,weight,inputDttm, updDttm });
             
         }
         if (stepCnt) {
