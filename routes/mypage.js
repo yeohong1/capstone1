@@ -108,7 +108,7 @@ router.post('/input', async (req, res) => {
             
         }
         if (stepCnt) {
-            db.insertTable('hethExer', { userId, stepCnt, doDate, inputDttm, updDttm });
+            db.insertTable('hethExer', { userId,doDate, stepCnt, inputDttm, updDttm });
             
         }
 
