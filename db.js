@@ -10,11 +10,12 @@ const knexConfiguration = {
 }
 const knex = require('knex')(knexConfiguration)
 
-//  selectUserYn('hyjkim')
-//회원 여부 조회
-function selectUserYn(userId) {
+
+// saveUserHeight('hyjkim', 160.7)
+//사용자 신장 저장
+function saveUserHeight(userId, height) {
   knex.raw(
-    `exec selectUserYn '${userId}'`
+    `exec saveUserHeight '${userId}', ${height}`
     ).then((resp) => {
   console.log(resp);
   }
@@ -92,29 +93,6 @@ async function selectUserDayNeedKcal(userId, gender) {
   }
 }
 
-
-//  selectBodyInfo('hyjkim', '02')
-//표준체중/bmi/하루필요열량 조회
-// async function selectBodyInfo(userId, gender) {
-//   try {
-//     const resp = await knex.raw(`selectBodyInfo '${userId}', '${gender}'`);
-//     console.log(resp);
-
-//     // 반환값이 있을 경우 resp에서 데이터 추출
-//     if (resp) {
-//       const bodyInfo = resp;
-//       return bodyInfo;
-//     } else {
-//       console.error('데이터가 없음');
-//       return null;
-//     }
-//   } catch (err) {
-//     console.error('데이터베이스 쿼리 오류:', err);
-//     throw err; // 에러를 호출한 곳으로 던집니다.
-//   }
-// }
-
-
 // selectWeightWeek('hyjkim')
 //지난 일주일 간의 체중 조회
 async function selectWeightWeek(userId) {
@@ -177,6 +155,70 @@ async function selectWeightYear(userId) {
     throw err; // 에러를 호출한 곳으로 던집니다.
   }
 }
+
+//  selectKcalWeek('hyjkim')
+//지난 일주일 간의 칼로리 조회
+async function selectKcalWeek(userId) {
+  try {
+    const resp = await knex.raw(`selectKcalWeek '${userId}'`);
+    console.log(resp);
+
+    // 반환값이 있을 경우 resp에서 데이터 추출
+    if (resp) {
+      const bodyInfo = resp;
+      return bodyInfo;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // 에러를 호출한 곳으로 던집니다.
+  }
+}
+
+//  selectKcalMonth('hyjkim')
+//지난 한 달 간의 칼로리 조회
+async function selectKcalMonth(userId) {
+  try {
+    const resp = await knex.raw(`selectKcalMonth '${userId}'`);
+    console.log(resp);
+
+    // 반환값이 있을 경우 resp에서 데이터 추출
+    if (resp) {
+      const bodyInfo = resp;
+      return bodyInfo;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // 에러를 호출한 곳으로 던집니다.
+  }
+}
+
+// selectKcalYear('hyjkim')
+//지난 일년 간의 칼로리 조회
+async function selectKcalYear(userId) {
+  try {
+    const resp = await knex.raw(`selectKcalYear '${userId}'`);
+    console.log(resp);
+
+    // 반환값이 있을 경우 resp에서 데이터 추출
+    if (resp) {
+      const bodyInfo = resp;
+      return bodyInfo;
+    } else {
+      console.error('데이터가 없음');
+      return null;
+    }
+  } catch (err) {
+    console.error('데이터베이스 쿼리 오류:', err);
+    throw err; // 에러를 호출한 곳으로 던집니다.
+  }
+}
+
 //일주일 음수량
 async function selectDrinkWeek(userId) {
   try {
@@ -388,48 +430,6 @@ function Delete(table, targetColumn, targetData) {
     })
 }
 
-// function Select(table) {
-//   knex.select().table(table)
-//     .then(resp => {
-//         console.log(resp)
-//         return resp
-//       }
-//     )
-//     .catch(err => {
-//       console.log(err)
-//     })
-// }
-// function selectTable(table) {
-//   return new Promise((resolve, reject) => {
-//     knex.select().table(table)
-//       .then(resp => {
-//         console.log(resp);
-//         resolve(resp);
-//       })
-//       .catch(err => {
-//         console.error(err);
-//         reject(err);
-//       });
-//   });
-// }
-
-// function selectTable(table, userId) {
-//   return new Promise((resolve, reject) => {
-//     knex(table)
-//       .count('* as count')
-//       .where('userId', '=', userId)  // 여기 수정
-//       .then(result => {
-//         const count = result[0].count;
-//         resolve(count > 0 ? 1 : 0);
-//       })
-//       .catch(err => {
-//         console.error(err);
-//         reject(err);
-//       });
-//   });
-// }
-
-
 async function selectTable(table, userId) {
   try {
     const results = await knex(table).select().where({ userId });
@@ -476,9 +476,6 @@ module.exports = {
   getTableColumns: function (table) {
     return GetTableColumns(table);
   },
-  // selectTable: function (table) {
-  //   return Select(table);
-  // },
   login: function (table, data) {
     return login(table, data);
   },
@@ -494,9 +491,15 @@ module.exports = {
   //식단 입력
   saveApiMeal,
   saveDrtMeal,
+  //키 저장
+  saveUserHeight,
 //bmi계산
   selectUserBmi,//bmi
   selectUserDayNeedKcal,//하루열량
+  //칼로리
+  selectKcalWeek,
+  selectKcalMonth,
+  selectKcalYear,
 //몸무게
   selectWeightWeek, 
   selectWeightMonth, 

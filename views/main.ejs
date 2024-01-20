@@ -17,22 +17,28 @@
     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   <script src="../slick.min.js"></script>
 </head>
-
 <body>
   <header>
     <div class="container">
       <div class="header-logo">
-        <img src="../images/health-logo.png" alt="logo-name" class="logo-name">
+        <a href="/main">
+          <img src="../images/health-logo.png" alt="logo-name" class="logo-name">
+        </a>
+        <a href="/main">
         <h1>Healthly Life</h1>
-        <nav class="word-menu">
-          <a href="/auth/login">로그인</a>
-          <a href="/auth/register">회원가입</a>
-        </nav>
-        <!-- 로그인 시 display: flex로 변경 -->
-        <nav class="word-menu" style="display: none;">
-          <a href="javascript">로그아웃</a>
-          <a href="javascript">마이페이지</a>
-        </nav>
+        </a>
+          <% if (userNm) { %>
+            <nav class="word-menu">
+              <a href="/auth/logout">로그아웃</a>
+              <a href="/mypage/record">마이페이지</a>
+            </nav>
+          <% } else { %>
+            <nav class="word-menu">
+              <a href="/auth/login">로그인</a>
+              <a href="/auth/register">회원가입</a>
+            </nav>
+          <% } %>
+        </script>
       </div>
     </div>
   </header>

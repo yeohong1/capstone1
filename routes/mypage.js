@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const db = require('../db');
-const moment = require('moment');//현재시간
+const moment = require('moment');
 const app = express()
 app.use('/static',express.static('static'));
 
@@ -14,8 +14,6 @@ app.use('/static',express.static('static'));
     const userId = req.session.userId;
     const userNm = req.session.userNm;
 
-    console.log(userId,userNm);
-
     res.render('mypageRecord.ejs',{
          resultString: 'resultString',
          resultString2: 'resultString2',
@@ -23,25 +21,16 @@ app.use('/static',express.static('static'));
          userId,
          userNm
 
-        
         });
 
 });
 
-
 app.post("/upload", upload.single('image'), (req, res) => { 
-    //const inputNm = "image"
-    // 'image'는 input 요소의 name 속성 값입니다. 동일하게 설정해야 합니다.
-
-    // 업로드된 파일 정보는 req.file에 저장됩니다.
+   
     const file = req.file;
 
-    // 텍스트 필드 정보는 req.body에 저장됩니다.
     const title = req.body.title;
 
-    // 파일 정보와 텍스트 필드 정보를 활용하여 원하는 작업을 수행합니다.
-
-    // 응답
     res.json({ file, title });
 });
 
@@ -59,8 +48,7 @@ router.post('/input', async (req, res) => {
         // "YYYYMMDD" 형식으로 변환
         const doDate = date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\D/g, '');
 
-        const userId = req.session.userId; // 테스트용 userId
-        console.log("userid:" ,userId);
+        const userId = req.session.userId; 
         const foodNm = req.body.foodNm;
         const weight = req.body.Weight;
         const height = req.body.Tall;
@@ -75,47 +63,32 @@ router.post('/input', async (req, res) => {
             let selectedResultKey = `selectedResult${i}`;
             let selectedResult = req.body[selectedResultKey];
             selectedResult += ` 0${i}`;
-            console.log("Iteration", i);
-            console.log("mealCd1:", mealCd1);
-            console.log("selectedResult:", selectedResult);           
-
+          
             if (selectedResult.indexOf('undefined') === -1 && (selectedResult.endsWith('01') || selectedResult.endsWith('02') || selectedResult.endsWith('03'))) {
                 
                 const pattern = /\[([^\]]+)\]\s*([^:]+):([\d.]+)\s*(\d+)/;
                 const match = selectedResult.match(pattern);
+                console.log("match: ",match);
 
                 const foodCd = match[1];
                 const foodNm = match[2];
-                const kcal = parseFloat(match[3]); // 소수점 포함된 값이어도 parseFloat로 숫자로 변환 수정하기
+                const kcal = parseFloat(match[3]); 
                 const mealCd = match[4];
-                console.log(userId,mealCd,foodCd,foodNm, kcal);
               
-                    console.log("db입력1");
                     db.saveApiMeal(userId,mealCd,foodCd,foodNm, kcal);
-                    console.log( userId,mealCd,foodCd,foodNm, kcal);
-                    console.log("ok");
-                    
-             
+                   
             } else {
-                console.log("Inside else block for selectedResult");
-                console.log("mealCd1", mealCd1);
-
-                
+              
                 // kcal1에 대한 처리
                 if (mealCd1.indexOf('undefined') === -1 && mealCd1.endsWith('01') || mealCd1.endsWith('02') || mealCd1.endsWith('03')) {
-                    console.log("3");
                     let parts = mealCd1.split(' ');
                     let kcal = parts[0];
                     let mealCd = parts[1];
-                    console.log(typeof kcal);
-
-                    console.log(kcal,mealCd);
-
+                   
                     // db.js의 함수를 호출하여 데이터베이스에 삽입
                     if (kcal.indexOf('undefined') === -1) {
-                        console.log("db입력2");
+                       
                         db.saveDrtMeal(userId, mealCd,foodNm, kcal );
-                        console.log(foodNm, kcal, userId, mealCd);
                       
                     }
                 }
@@ -123,22 +96,20 @@ router.post('/input', async (req, res) => {
         }
         // 다른 입력값에 대한 처리
         if (height) {
-           // const password = req.session.password;
-            console.log(height);
-            db.insertTable('commUser', { userId,height, inputDttm, updDttm });
-            console.log(userId, height, inputDttm, updDttm);
+            db.saveUserHeight(userId, height);
+           
         }
         if (drnkAmnt) {
             db.insertTable('hethDrnk', { userId, drnkAmnt, doDate, inputDttm, updDttm });
-            console.log(userId, drnkAmnt, doDate, inputDttm, updDttm);
+           
         }
         if (weight) {
             db.insertTable('hethWegt', { userId, weight, doDate, inputDttm, updDttm });
-            console.log(userId, weight, doDate, inputDttm, updDttm);
+            
         }
         if (stepCnt) {
             db.insertTable('hethExer', { userId, stepCnt, doDate, inputDttm, updDttm });
-            console.log(userId, stepCnt, doDate, inputDttm, updDttm);
+            
         }
 
         res.redirect('/mypage/record');
@@ -159,8 +130,8 @@ router.get('/weight', async function (req, res) {
     const day = String(date.getDate()).padStart(2, '0');
     const doDttm = `${year}-${month}-${day}`;
     
-    const userId = req.session.userId; // 테스트
-    console.log(userId);
+    const userId = req.session.userId; 
+   
   
     try {
     //체중 차트
@@ -182,22 +153,16 @@ router.get('/weight', async function (req, res) {
       const bmiheight = selectUserBmi[0].height;
       const bmi = selectUserBmi[0].bmi;
       const bmiNm = selectUserBmi[0].bmiNm;
-     // const msg = selectUserBmi[0].msg;
-      console.log(bmiweight);
+    
       if(bmiweight== 0|| bmiheight==0){//체중 또는 입력 없을 때 처리
         res.send(`<script type="text/javascript">alert("체중 또는 신장을 입력해주세요"); document.location.href="/mypage/record";</script>`);
       }
       else {
         res.render('mypageWeight', { doDttm , weight, doDate, weight2, doDate2, weight3, doDate3,bmiweight,bmiheight,bmi,bmiNm });
        
-      
-    //   } else {
-    //     // 데이터가 없으면 적절한 응답을 보냅니다.
-    //     console.error('데이터가 없음');
-    //     res.status(404).send('데이터가 없습니다.');
       }
     } catch (error) {
-      // 에러 처리
+     
       console.error('에러 발생:', error);
       res.status(500).send('내부 서버 오류');
     }
@@ -205,7 +170,6 @@ router.get('/weight', async function (req, res) {
   
 
 // 칼로리 get
-// GET 요청('/mypage/clalorie')
 router.get('/clalorie', async function (req, res) {
     const userId = req.session.userId; 
     // 시간
@@ -219,25 +183,30 @@ router.get('/clalorie', async function (req, res) {
     const selectUserBmi = await db.selectUserBmi(userId);
     const gender = req.body.gender === 'male' ? '01' : '02';
     const selectUserDayNeedKcal = await db.selectUserDayNeedKcal(userId, gender);
-
     const bmiweight = selectUserBmi[0].weight;
     const bmiheight = selectUserBmi[0].height;
     const msg = selectUserBmi[0].msg;
+    //칼로리 차트
+    const weightData = await db.selectKcalWeek(userId);
+      const weightData2 = await db.selectKcalMonth(userId);
+      const weightData3 = await db.selectKcalYear(userId);
+
+      const kcal = weightData.map(data => data.kcal);
+      const doDate = weightData.map(data => data.doDate);
+      const kcal2 = weightData2.map(data => data.kcal);
+      const doDate2 = weightData2.map(data => data.doDate);
+      const kcal3 = weightData3.map(data => data.Kcal);
+      const doDate3 = weightData3.map(data => data.doMonth);
+
+   
 
     if (msg === null) {
-        console.log("1");
-        // 여기서 변수들을 정의하여 클라이언트에게 응답합니다.
-        // const stddWeight = 25; // 적절한 값으로 대체
-        // const bmi = 0; // 적절한 값으로 대체
-        // const dayNeedKcal = 0; // 적절한 값으로 대체
-        // const bmiNm = ""; // 적절한 값으로 대체
-
         const bmi = selectUserDayNeedKcal[0].bmi;
         const bmiNm = selectUserDayNeedKcal[0].bmiNm;
         const stddWeight = selectUserDayNeedKcal[0].stddWeight;
         const dayNeedKcal = selectUserDayNeedKcal[0].dayNeedKcal;
 
-        res.render('mypageClalorie.ejs', { doDttm, bmiweight, bmiheight, stddWeight, bmi, dayNeedKcal, bmiNm });
+        res.render('mypageClalorie.ejs', { doDttm, bmiweight, bmiheight, stddWeight, bmi, dayNeedKcal, bmiNm, kcal,doDate, kcal2,doDate2, kcal3,doDate3});
     } else {
         res.send(`<script type="text/javascript">alert("체중 또는 신장을 입력해주세요"); document.location.href="/mypage/record";</script>`);
     }
@@ -250,7 +219,7 @@ router.post('/clalorie', async function (req, res) {
 
     const date = new Date();
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
     const day = String(date.getDate()).padStart(2, '0');
     const doDttm = `${year}-${month}-${day}`;
 
@@ -259,7 +228,7 @@ router.post('/clalorie', async function (req, res) {
 
     if (gender) {
         // 하루열량 계산
-        console.log(gender);
+      
         const selectUserDayNeedKcal = await db.selectUserDayNeedKcal(userId, gender);
         const selectUserBmi = await db.selectUserBmi(userId);
 
@@ -270,12 +239,10 @@ router.post('/clalorie', async function (req, res) {
 
         const bmiweight = selectUserBmi[0].weight;
         const bmiheight = selectUserBmi[0].height;
-       console.log("myapge.js");
-       // res.render('mypageClalorie.ejs',{ stddWeight,bmiweight, bmiheight,bmi, dayNeedKcal, bmiNm });
-       //res.json(bmiheight,bmi, dayNeedKcal,stddWeight, bmiNm);
+     
        res.json({ bmiheight, bmi, dayNeedKcal, stddWeight, bmiNm });
     } else {
-        // Handle error case if gender is not provided
+       
         res.status(400).json({ error: 'Gender not provided' });
     }
 
@@ -290,7 +257,7 @@ router.get('/water', async function(req, res){
     //시간
     const date = new Date();
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
     const day = String(date.getDate()).padStart(2, '0');
     const doDttm = `${year}-${month}-${day}`;
     //권량 물 섭취량
@@ -310,20 +277,18 @@ router.get('/water', async function(req, res){
     const drnkAmnt3 = selectDrinkYear.map(data => data.drnkAmnt);
     const doDate3 = selectDrinkYear.map(data => data.doMonth);
 
-
-    
     res.render('mypageWater.ejs', { doDttm,formula,recmDrinkAmnt,drnkAmnt,doDate,drnkAmnt2,doDate2,drnkAmnt3,doDate3 });
 
 })
 
 //걸음수 get
     router.get('/walk', async function(req, res){
-    const userId = req.session.userId; // test
-    console.log(userId);
+    const userId = req.session.userId;
+    
 //시간
     const date = new Date();
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
     const day = String(date.getDate()).padStart(2, '0');
     const doDttm = `${year}-${month}-${day}`;
 //오늘의 걸음수 
@@ -348,8 +313,7 @@ router.get('/water', async function(req, res){
 
     res.render('mypageWalk.ejs',{ doDttm,stepCnt,doDate,stepCnt2,doDate2,stepCnt3,doDate3,userNm,daystepCnt,stepConsKcal});
         
-    // 다른 속성에 액세스 및 처리
-    
+   
   } else {
    
     res.send(`<script type="text/javascript">alert("오늘의 걸음수를 입력해주세요"); document.location.href="/mypage/record";</script>`);
@@ -357,7 +321,7 @@ router.get('/water', async function(req, res){
 })
 
 
-// HTTP 요청 보내기
+// api처리
 router.post('/record', async (req, res) => {
    
     const userId = req.session.userId;
@@ -365,24 +329,20 @@ router.post('/record', async (req, res) => {
     //api연동
     try {
         const foodName = req.body.foodName;
-        console.log(foodName);
+       
         // 인증키
         const apiKey = 'e171d9fac4cc4db0ae29';
         const serviceName = 'I2790';
         const requestFileType = 'json';
         const requestStartPoint = 0;
         const requestEndPoint = 1000;
-        var calories;
-        var foodname;
-       
+      
         // API 요청 URL 생성
         const apiUrl = `http://openapi.foodsafetykorea.go.kr/api/${apiKey}/${serviceName}/${requestFileType}/${requestStartPoint}/${requestEndPoint}/DESC_KOR=${encodeURIComponent(foodName)}`;
 
         // API 호출
         const response = await axios.get(apiUrl);
-
-      
-         // 응답에서 5개의 결과를 추출
+         // 응답 추출
          const resultArray = response.data.I2790.row.slice(0, 100);
 
          // 각 결과를 출력
@@ -390,22 +350,20 @@ router.post('/record', async (req, res) => {
          let resultString2 = '';  
          let resultString3 = ''; 
          resultArray.forEach((result, index) => {
-             var calories = result.NUTR_CONT1;
-             var foodname = result.DESC_KOR;
-             var foodCd= result.FOOD_CD;
-           // 조건에 따라 각각의 resultString에 추가
-           //if (resultString) {
-            resultString +=`[${foodCd}] ${foodname}:${calories}칼로리\n`;
+        var calories = result.NUTR_CONT1;
+        var foodname = result.DESC_KOR;
+        var foodCd= result.FOOD_CD;
+        
+        resultString +=`[${foodCd}] ${foodname}:${calories}칼로리\n`;
+        
+        resultString2 +=`[${foodCd}] ${foodname}:${calories}칼로리\n`;
+        
+        resultString3 +=`[${foodCd}] ${foodname}:${calories}칼로리\n`;
            
-            resultString2 +=`[${foodCd}] ${foodname}:${calories}칼로리\n`;
-         
-            resultString3 +=`[${foodCd}] ${foodname}:${calories}칼로리\n`;
-           // }
     });
 
-         // 결과 저장
          res.render('mypageRecord.ejs', { resultString, resultString2, resultString3,userId,userNm });
-       // console.log(resultString.foodCd);
+       
     } catch (error) {
             console.error('Error:', error);
             res.status(500).send('Internal Server Error');

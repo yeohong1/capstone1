@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('./../db');
 const session = require('express-session')
-//var index = require('./index');//추가
+
 
 //register
 router.get('/register', function (req, res, next) {
@@ -49,7 +49,7 @@ router.post('/register_process', async (req, res, next) => {
 router.get('/login', function (req, res) {
     console.log("login evnet!)");
     res.render('login');
-    // res.send('login');//수정 render->send
+
 });
 
 //login 프로세스
@@ -71,12 +71,11 @@ router.post('/login_process', async function (req, res) {
             const userId = loginResults[0].userId;
             const password =  loginResults[0].password;
           
-
             req.session.userId = userId;
             req.session.userNm = userNm; 
             req.session.password = password;
             req.session.save(() => {
-                res.send(`<script type="text/javascript">alert("로그인 성공. 환영합니다, ${userNm}님!"); document.location.href="/mypage/record";</script>`);
+                res.send(`<script type="text/javascript">alert("환영합니다, ${userNm}님!"); document.location.href="/main";</script>`);
             });
         } else {
             res.send(`<script type="text/javascript">alert("로그인 정보가 일치하지 않습니다."); document.location.href="/auth/login";</script>`);
@@ -88,10 +87,9 @@ router.post('/login_process', async function (req, res) {
 });
 
 
-
 //로그아웃
-router.get('/mypage/logout', function (req, res) {
-   
+router.get('/logout', function (req, res) {
+   console.log("1");
     if (req.session == null) { 
         res.send(`<script type="text/javascript">alert("로그인 정보가 없습니다."); 
                                         document.location.href="/main";</script>`);

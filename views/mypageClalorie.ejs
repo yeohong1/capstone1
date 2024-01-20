@@ -24,7 +24,7 @@
         <h1>Healthly Life</h1>
         </a>
         <nav class="word-menu">
-          <a href="javascript">로그아웃</a>
+          <a href="/auth/logout" method="get">로그아웃</a>
         </nav>
       </div>
     </div>
@@ -113,50 +113,45 @@
           </div>
         </form>
         <script>
-         // 예시로 클라이언트 측에서 데이터 받아오기
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("calorieForm");
-    const calcResult = document.querySelector(".calcResult");
+          document.addEventListener("DOMContentLoaded", function () {
+          const form = document.getElementById("calorieForm");
+          const calcResult = document.querySelector(".calcResult");
 
-    // 초기 로딩 시 결과 섹션을 none으로 설정
-    calcResult.style.display = "none";
+          calcResult.style.display = "none";
 
-    form.addEventListener("submit", async function (event) {
-        event.preventDefault();
+          form.addEventListener("submit", async function (event) {
+              event.preventDefault();
+              const gender = document.querySelector('input[name="gender"]:checked').value;
 
-        const gender = document.querySelector('input[name="gender"]:checked').value;
+              // 서버와 통신
+              const response = await fetch('/mypage/clalorie', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ gender }),
+              });
 
-        // 서버와 통신
-        const response = await fetch('/mypage/clalorie', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ gender }),
-        });
+              if (response.ok) {
+                  const responseData = await response.json();
 
-        if (response.ok) {
-            const responseData = await response.json();
+                  const stddWeightSpan = document.querySelector(".stddWeight");
+                  const bmiSpan = document.querySelector(".bmi");
+                  const dayNeedKcalSpan = document.querySelector(".dayNeedKcal");
+                  const bmiNmSpan = document.querySelector(".bmiNm");
+              
+                  stddWeightSpan.textContent = responseData.stddWeight;
+                  bmiSpan.textContent = responseData.bmi;
+                  dayNeedKcalSpan.textContent = responseData.dayNeedKcal;
+                  bmiNmSpan.textContent = responseData.bmiNm;
 
-            // 받아온 데이터를 이용하여 결과를 표시
-            const stddWeightSpan = document.querySelector(".stddWeight");
-            const bmiSpan = document.querySelector(".bmi");
-            const dayNeedKcalSpan = document.querySelector(".dayNeedKcal");
-            const bmiNmSpan = document.querySelector(".bmiNm");
-        
-            stddWeightSpan.textContent = responseData.stddWeight;
-            bmiSpan.textContent = responseData.bmi;
-            dayNeedKcalSpan.textContent = responseData.dayNeedKcal;
-            bmiNmSpan.textContent = responseData.bmiNm;
-
-            // 결과 섹션을 보이도록 설정
-            calcResult.style.display = "flex";
-        } else {
-            // Handle error case
-            console.error('Failed to fetch data');
-        }
-    });
-});
+                  calcResult.style.display = "flex";
+              } else {
+                 
+                  console.error('Failed to fetch data');
+              }
+          });
+      });
 
         </script>
         </li>
@@ -200,55 +195,58 @@ document.addEventListener("DOMContentLoaded", function () {
   </footer>
 </body>
 <script>
-  new Chart(document.getElementsByClassName("weekly"), {
-    type: 'line',
-    data: {
-      labels: ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
-      datasets: [{
-        data: [1000, 1001, 1500, 1800, 1000, 2300, 5001],
-        borderColor: "#ff8b8bd9",
-        label: '나의 하루 칼로리',
-        tension: 0,
-        fill: false
-      }]
-    }
-  });
-  new Chart(document.getElementsByClassName("monthly"), {
-    type: 'line',
-    data: {
-      labels: [
-        "01/01", "01/02", "01/03", "01/04", "01/05", "01/06", "01/07",
-        "01/08", "01/09", "01/10", "01/11", "01/12", "01/13", "01/14",
-        "01/15", "01/16", "01/17", "01/18", "01/19", "01/20", "01/21",
-        "01/22", "01/23", "01/24", "01/25", "01/26", "01/27", "01/28",
-        "01/29", "01/30", "01/31"
-      ],
-      datasets: [{
-        data: [4000, 400, 4200, 5500, 5300, 5000, 6000, 5000, 5000, 5000, 5000, 5100, 5003, 5004,
-          4008, 4009, 5004, 4400, 4003, 4006, 6000, 6006, 4005, 4005, 4005, 5009, 6600, 4500, 4000, 4005, 4003],
-        borderColor: "#ff8b8bd9",
-        label: '나의 하루 칼로리',
-        tension: 0,
-        fill: false
-      }]
-    }
-  });
-  new Chart(document.getElementsByClassName("yearly"), {
-    type: 'line',
-    data: {
-      labels: [
-        "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06",
-        "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12"
-      ],
-      datasets: [{
-        data: [4000, 4001, 4200, 5500, 5003, 5000, 6000, 4000, 4100, 4200, 5500, 5003, 5000],
-        borderColor: "#ff8b8bd9",
-        label: '나의 하루 칼로리',
-        tension: 0,
-        fill: false
-      }]
-    }
-  });
+  var data = [<%= kcal %>];
+    var labels = [<% for (var i = 0; i < doDate.length+1; i++) { %>'<%= doDate[i] %>',<% } %>];
+    labels.pop();
+   const chartData = {
+     labels: labels,
+     datasets: [{
+       data: data,
+       borderColor: "#ff8b8bd9",
+       label: '나의 체중',
+       tension: 0,
+       fill: false
+     }]
+   };
+   new Chart(document.getElementsByClassName("weekly"), {
+     type: 'line',
+     data: chartData
+ });
+    var data = [<%= kcal2 %>];
+    var labels = [<% for (var i = 0; i < doDate2.length+1; i++) { %>'<%= doDate2[i] %>',<% } %>];
+    labels.pop();
+   const chartData2 = {
+     labels: labels,
+     datasets: [{
+       data: data,
+       borderColor: "#ff8b8bd9",
+       label: '나의 체중',
+       tension: 0,
+       fill: false
+     }]
+   };
+   new Chart(document.getElementsByClassName("monthly"), {
+     type: 'line',
+     data: chartData2
+ });
+ var data = [<%= kcal3 %>];
+ var labels = [<% for (var i = 0; i < doDate3.length+1; i++) { %>'<%= doDate3[i] %>',<% } %>];
+  labels.pop();
+   const chartData3 = {
+     labels: labels,
+     datasets: [{
+       data: data,
+       borderColor: "#ff8b8bd9",
+       label: '나의 체중',
+       tension: 0,
+       fill: false
+     }]
+   };
+   new Chart(document.getElementsByClassName("yearly"), {
+     type: 'line',
+     data: chartData3
+  
+ });
 </script>
 
 </html>

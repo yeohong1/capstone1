@@ -53,16 +53,16 @@ app.use('/static', express.static('static'));
 //app.use('/js', express.static(path.join(__dirname, 'js')));
 
 app.use((req,res,next)=> {
+console.log("app.js: ",req.session);
+res.locals.userId = "";
+res.locals.userNm = "";
 
-res.locals.user_id = "";
-res.locals.name = "";
-
-if(req.session.userId && req.session.userNm){
-  res.locals.user_id =  req.session.userId
-  res.locals.name = req.session.userNm
+if(req.session.userId){
+  res.locals.userId =  req.session.userId
+  res.locals.userNm = req.session.userNm
 }
 
-  //next();
+  next();
 })
 
 // "/mypage" 경로로 접근하면 "mypage" 파일을 제공
