@@ -73,6 +73,7 @@ router.post('/input', async (req, res) => {
                 const foodCd = match[1];
                 const foodNm = match[2];
                 const kcal = parseFloat(match[3]); 
+                
                 const mealCd = match[4];
               
                     db.saveApiMeal(userId,mealCd,foodCd,foodNm, kcal);
