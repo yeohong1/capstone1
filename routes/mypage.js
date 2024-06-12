@@ -68,8 +68,7 @@ router.post('/input', async (req, res) => {
                 
                 const pattern = /\[([^\]]+)\]\s*([^:]+):([\d.]+)\s*(\d+)/;
                 const match = selectedResult.match(pattern);
-                console.log("match: ",match);
-
+            
                 const foodCd = match[1];
                 const foodNm = match[2];
                 const kcal = parseFloat(match[3]); 
