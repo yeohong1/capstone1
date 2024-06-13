@@ -207,7 +207,7 @@ router.get('/clalorie', async function (req, res) {
 
         res.render('mypageClalorie.ejs', { doDttm, bmiweight, bmiheight, stddWeight, bmi, dayNeedKcal, bmiNm, kcal,doDate, kcal2,doDate2, kcal3,doDate3});
     } else {
-        res.send(`<script type="text/javascript">alert("체중 또는 신장을 입력해주세요"); document.location.href="/mypage/record";</script>`);
+        res.send(`<script type="text/javascript">alert("칼로리를 입력해주세요"); document.location.href="/mypage/record";</script>`);
     }
 });
 
