@@ -1,8 +1,8 @@
 const knexConfiguration = {
   client: 'mssql',
   connection: {
-    user: 'test',
-    password: '1234',
+    user: 'capstone',
+    password: '3jocap',
     server: '125.135.61.140',
     database: 'CAPD',
     port: 1433,
